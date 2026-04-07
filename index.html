@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>税理士ポータル</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#1a3a5c;--primary-light:#2d5f8a;--accent:#c8a84b;
+  --bg:#f4f6f9;--surface:#fff;--text:#1e2d3d;--text-muted:#6b7a8d;
+  --border:#dde3ec;--sidebar:260px;
+}
+body{font-family:'Hiragino Kaku Gothic ProN','Meiryo','Yu Gothic',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh}
+
+/* SIDEBAR */
+#sidebar{width:var(--sidebar);background:var(--primary);color:#fff;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100}
+.sb-logo{padding:26px 22px 18px;border-bottom:1px solid rgba(255,255,255,.12)}
+.sb-logo h1{font-size:16px;font-weight:700;line-height:1.4}
+.sb-logo span{font-size:11px;color:rgba(255,255,255,.5);display:block;margin-top:3px}
+.sb-label{font-size:10px;letter-spacing:.1em;color:rgba(255,255,255,.4);padding:18px 22px 5px;text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:10px;padding:11px 22px;cursor:pointer;border-left:3px solid transparent;transition:all .2s;font-size:13px;color:rgba(255,255,255,.8);user-select:none}
+.nav-item:hover{background:rgba(255,255,255,.08);color:#fff}
+.nav-item.active{background:rgba(255,255,255,.12);border-left-color:var(--accent);color:#fff;font-weight:600}
+.nav-item .ic{font-size:16px;width:20px;text-align:center}
+.sb-footer{margin-top:auto;padding:14px 22px;border-top:1px solid rgba(255,255,255,.12);font-size:11px;color:rgba(255,255,255,.3)}
+
+/* MAIN */
+#main{margin-left:var(--sidebar);flex:1;display:flex;flex-direction:column}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 28px;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.topbar h2{font-size:17px;font-weight:700;color:var(--primary)}
+
+/* PAGES */
+.page{display:none;padding:28px}
+.page.active{display:block}
+
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:18px}
+.card-title{font-size:14px;font-weight:700;color:var(--primary);margin-bottom:18px;padding-bottom:10px;border-bottom:2px solid var(--accent);display:inline-block}
+
+/* DASHBOARD */
+.dash-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px}
+.dc{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 20px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.dc:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,58,92,.1);border-color:var(--primary-light)}
+.dc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent)}
+.dc .ic{font-size:26px;margin-bottom:10px}
+.dc h3{font-size:13px;font-weight:700;color:var(--primary);margin-bottom:5px}
+.dc p{font-size:11px;color:var(--text-muted);line-height:1.5}
+.dc .badge{position:absolute;top:12px;right:12px;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600}
+.b-in{background:#e3f2fd;color:#1565c0}
+.b-pub{background:#e8f5e9;color:#2e7d32}
+
+/* FORMS */
+.fg{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.fg label{font-size:12px;font-weight:600;color:var(--text-muted)}
+.fg input,.fg select{border:1px solid var(--border);border-radius:8px;padding:9px 13px;font-size:13px;font-family:inherit;background:#fafbfc;transition:border-color .2s}
+.fg input:focus,.fg select:focus{outline:none;border-color:var(--primary-light);background:#fff}
+.fg .hint{font-size:11px;color:var(--text-muted)}
+.fg2{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+.fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 16px}
+
+/* RESULT */
+.result-box{background:linear-gradient(135deg,var(--primary),var(--primary-light));border-radius:12px;padding:22px 26px;color:#fff;margin-top:18px}
+.result-box h3{font-size:12px;opacity:.75;margin-bottom:7px}
+.result-main{font-size:34px;font-weight:700;letter-spacing:-.5px}
+.result-main span{font-size:15px;font-weight:400;margin-left:4px;opacity:.8}
+.result-bd{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:14px;margin-top:18px;padding-top:18px;border-top:1px solid rgba(255,255,255,.2)}
+.ri-label{font-size:11px;opacity:.7;margin-bottom:3px}
+.ri-value{font-size:17px;font-weight:600}
+.ri-value.danger{color:#ff8a80}
+.ri-value.success{color:#a5d6a7}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:all .2s}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{background:var(--primary-light)}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text)}
+.btn-outline:hover{background:var(--bg)}
+
+/* TABS */
+.tabs{display:flex;gap:4px;margin-bottom:20px}
+.tab{padding:7px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text-muted);transition:all .2s}
+.tab.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.tp{display:none}
+.tp.active{display:block}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{background:var(--primary);color:#fff;padding:9px 13px;text-align:left;font-weight:600}
+.tbl th:first-child{border-radius:8px 0 0 0}
+.tbl th:last-child{border-radius:0 8px 0 0}
+.tbl td{padding:9px 13px;border-bottom:1px solid var(--border)}
+.tbl tr:hover td{background:#f8fafc}
+.tbl .r{text-align:right}
+.tbl .total td{font-weight:700;background:#eef3f9}
+
+/* CF */
+.cf-input{width:100%;border:none;background:transparent;font-size:12px;text-align:right;font-family:inherit;padding:4px}
+.cf-input:focus{outline:none;background:#eef3f9;border-radius:4px}
+
+/* CHART */
+.chart-box{position:relative;height:260px}
+
+/* STEPS */
+.step{display:flex;gap:18px;padding:18px 0;border-bottom:1px solid var(--border)}
+.step:last-child{border-bottom:none}
+.step-num{width:38px;height:38px;background:var(--primary);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
+.step-content h4{font-size:14px;font-weight:700;color:var(--primary);margin-bottom:5px}
+.step-content p{font-size:12px;color:var(--text-muted);line-height:1.65}
+.step-meta{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 9px;border-radius:20px;font-weight:600}
+.tag-p{background:#fff3e0;color:#e65100}
+.tag-c{background:#f3e5f5;color:#6a1b9a}
+.tag-o{background:#e0f7fa;color:#00695c}
+
+/* ALERT */
+.alert{border-radius:10px;padding:13px 17px;margin-bottom:14px;font-size:13px;line-height:1.6}
+.alert-info{background:#e3f2fd;border-left:4px solid #1565c0;color:#0d47a1}
+.alert-warn{background:#fff8e1;border-left:4px solid #f57f17;color:#e65100}
+
+/* PRINT */
+@media print{
+  #sidebar,.topbar,.no-print{display:none!important}
+  #main{margin-left:0}
+  .page{display:block!important;padding:0}
+  .page:not(.active){display:none!important}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+
+<nav id="sidebar">
+  <div class="sb-logo">
+    <h1>税理士ポータル</h1>
+    <span>経営分析・シミュレーション</span>
+  </div>
+  <div class="sb-label">シミュレーション</div>
+  <div class="nav-item" data-page="tax"       onclick="nav('tax')"><span class="ic">🧮</span>税金シミュレーション</div>
+  <div class="nav-item" data-page="executive" onclick="nav('executive')"><span class="ic">👔</span>役員報酬</div>
+  <div class="nav-item" data-page="furusato"  onclick="nav('furusato')"><span class="ic">🎁</span>ふるさと納税</div>
+  <div class="nav-item" data-page="cashflow"  onclick="nav('cashflow')"><span class="ic">💰</span>キャッシュフロー</div>
+  <div class="sb-label">分析・ガイド</div>
+  <div class="nav-item" data-page="financial" onclick="nav('financial')"><span class="ic">📊</span>財務分析</div>
+  <div class="nav-item" data-page="guide"     onclick="nav('guide')"><span class="ic">🏢</span>法人設立ガイド</div>
+  <div class="sb-label">ホーム</div>
+  <div class="nav-item" data-page="dashboard" onclick="nav('dashboard')"><span class="ic">🏠</span>ダッシュボード</div>
+  <div class="sb-footer">税理士専用ツール © 2025</div>
+</nav>
+
+<div id="main">
+  <div class="topbar">
+    <h2 id="topbar-title">ダッシュボード</h2>
+    <div class="no-print">
+      <button class="btn btn-outline" onclick="window.print()">🖨️ 印刷 / PDF保存</button>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="page active" id="page-dashboard">
+    <div class="alert alert-info">📌 このツールは<strong>税理士専用</strong>です。結果は印刷してクライアントへご提供ください。</div>
+    <div class="dash-grid">
+      <div class="dc" onclick="nav('tax')"><span class="badge b-in">内部専用</span><div class="ic">🧮</div><h3>税金シミュレーション</h3><p>個人所得税・法人税の試算。</p></div>
+      <div class="dc" onclick="nav('executive')"><span class="badge b-in">内部専用</span><div class="ic">👔</div><h3>役員報酬シミュレーション</h3><p>個人税・社保・法人税の合計負担を比較。</p></div>
+      <div class="dc" onclick="nav('furusato')"><span class="badge b-pub">共有可</span><div class="ic">🎁</div><h3>ふるさと納税</h3><p>控除上限額をPDFでクライアントへ。</p></div>
+      <div class="dc" onclick="nav('cashflow')"><span class="badge b-in">内部専用</span><div class="ic">💰</div><h3>キャッシュフロー</h3><p>月次CF表を作成・グラフ化。</p></div>
+      <div class="dc" onclick="nav('financial')"><span class="badge b-in">内部専用</span><div class="ic">📊</div><h3>財務分析</h3><p>BS/PLから財務指標を自動算出。</p></div>
+      <div class="dc" onclick="nav('guide')"><span class="badge b-pub">共有可</span><div class="ic">🏢</div><h3>法人設立ガイド</h3><p>設立から開業までのステップ解説。</p></div>
+    </div>
+  </div>
+
+  <!-- 税金シミュレーション -->
+  <div class="page" id="page-tax">
+    <div class="tabs no-print">
+      <div class="tab active" id="tab-personal" onclick="switchTab('personal')">個人（給与所得）</div>
+      <div class="tab" id="tab-corporate" onclick="switchTab('corporate')">法人</div>
+    </div>
+    <div class="tp active" id="tp-personal">
+      <div class="card">
+        <div class="card-title">個人所得税・住民税シミュレーション</div>
+        <div class="fg2">
+          <div class="fg"><label>給与収入（万円）</label><input type="number" id="pt-income" placeholder="例: 800" step="10"></div>
+          <div class="fg"><label>配偶者</label><select id="pt-haifusha"><option value="0">なし</option><option value="1">あり（控除対象）</option></select></div>
+          <div class="fg"><label>扶養親族数（16歳以上）</label><input type="number" id="pt-dependents" placeholder="0" min="0"></div>
+          <div class="fg"><label>社会保険料（万円）</label><input type="number" id="pt-insurance" placeholder="例: 120"><span class="hint">給与の約14〜15%が目安</span></div>
+          <div class="fg"><label>ふるさと納税額（万円）</label><input type="number" id="pt-furusato" placeholder="0"></div>
+        </div>
+        <div class="no-print" style="margin-top:8px"><button class="btn btn-primary" onclick="calcPersonalTax()">計算する</button></div>
+        <div id="pt-result"></div>
+      </div>
+    </div>
+    <div class="tp" id="tp-corporate">
+      <div class="card">
+        <div class="card-title">法人税等シミュレーション（中小企業）</div>
+        <div class="fg2">
+          <div class="fg"><label>課税所得（万円）</label><input type="number" id="ct-profit" placeholder="例: 1000" step="10"></div>
+          <div class="fg"><label>資本金（万円）</label><input type="number" id="ct-capital" placeholder="例: 300"><span class="hint">1億円超は大法人税率</span></div>
+        </div>
+        <div class="no-print" style="margin-top:8px"><button class="btn btn-primary" onclick="calcCorporateTax()">計算する</button></div>
+        <div id="ct-result"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 役員報酬 -->
+  <div class="page" id="page-executive">
+    <div class="card">
+      <div class="card-title">役員報酬最適化シミュレーション</div>
+      <div class="alert alert-info">会社利益から役員報酬を支払う際の、個人・法人あわせた総負担を試算します。</div>
+      <div class="fg2">
+        <div class="fg"><label>役員報酬支払前の会社利益（万円）</label><input type="number" id="ex-profit" placeholder="例: 3000" step="100"></div>
+        <div class="fg"><label>役員報酬（年額・万円）</label><input type="number" id="ex-salary" placeholder="例: 1200" step="50"></div>
+        <div class="fg"><label>健康保険</label><select id="ex-kenpo"><option value="1">協会けんぽ加入</option><option value="0">国民健康保険</option></select></div>
+      </div>
+      <div class="no-print" style="margin-top:8px"><button class="btn btn-primary" onclick="calcExecutive()">計算する</button></div>
+      <div id="ex-result"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">負担内訳グラフ</div>
+      <div class="chart-box"><canvas id="ex-chart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ふるさと納税 -->
+  <div class="page" id="page-furusato">
+    <div class="alert alert-info">📌 クライアントへのPDF共有に適しています。計算後、右上の「印刷 / PDF保存」をご利用ください。</div>
+    <div class="card">
+      <div class="card-title">ふるさと納税 控除上限額シミュレーション</div>
+      <div class="fg2">
+        <div class="fg"><label>給与収入（万円）</label><input type="number" id="fs-income" placeholder="例: 600" step="10"></div>
+        <div class="fg"><label>配偶者</label><select id="fs-spouse"><option value="0">なし</option><option value="1">配偶者控除（103万円以下）</option><option value="2">配偶者特別控除（103〜201万円）</option></select></div>
+        <div class="fg"><label>扶養親族数（16歳以上）</label><input type="number" id="fs-dependents" placeholder="0" min="0"></div>
+        <div class="fg"><label>社会保険料（万円）</label><input type="number" id="fs-insurance" placeholder="例: 80"></div>
+        <div class="fg"><label>医療費実費（万円）</label><input type="number" id="fs-medical" placeholder="0"><span class="hint">医療費控除がある場合</span></div>
+      </div>
+      <div class="no-print" style="margin-top:8px"><button class="btn btn-primary" onclick="calcFurusato()">計算する</button></div>
+      <div id="fs-result"></div>
+    </div>
+  </div>
+
+  <!-- キャッシュフロー -->
+  <div class="page" id="page-cashflow">
+    <div class="card no-print">
+      <div style="display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap">
+        <div class="fg" style="flex:1;min-width:180px;margin:0"><label>期首現金残高（万円）</label><input type="number" id="cf-opening" placeholder="例: 500" step="10" oninput="recalcCf()"></div>
+        <button class="btn btn-outline" onclick="clearCf()">クリア</button>
+        <button class="btn btn-outline" onclick="exportCsv()">📥 CSV</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">月次キャッシュフロー（万円単位）</div>
+      <div id="cf-container" style="overflow-x:auto"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">月末残高推移</div>
+      <div class="chart-box"><canvas id="cf-chart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- 財務分析 -->
+  <div class="page" id="page-financial">
+    <div class="card">
+      <div class="card-title">財務データ入力（万円）</div>
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;font-weight:600">▼ 貸借対照表（BS）</p>
+      <div class="fg3">
+        <div class="fg"><label>流動資産</label><input type="number" id="fa-ca" placeholder="0" step="100"></div>
+        <div class="fg"><label>総資産</label><input type="number" id="fa-ta" placeholder="0" step="100"></div>
+        <div class="fg"><label>流動負債</label><input type="number" id="fa-cl" placeholder="0" step="100"></div>
+        <div class="fg"><label>総負債</label><input type="number" id="fa-tl" placeholder="0" step="100"></div>
+        <div class="fg"><label>純資産（自己資本）</label><input type="number" id="fa-eq" placeholder="0" step="100"></div>
+        <div class="fg"><label>売上債権</label><input type="number" id="fa-rec" placeholder="0" step="100"></div>
+      </div>
+      <p style="font-size:12px;color:var(--text-muted);margin:12px 0;font-weight:600">▼ 損益計算書（PL）</p>
+      <div class="fg3">
+        <div class="fg"><label>売上高</label><input type="number" id="fa-sales" placeholder="0" step="100"></div>
+        <div class="fg"><label>売上原価</label><input type="number" id="fa-cogs" placeholder="0" step="100"></div>
+        <div class="fg"><label>営業利益</label><input type="number" id="fa-op" placeholder="0" step="100"></div>
+        <div class="fg"><label>当期純利益</label><input type="number" id="fa-np" placeholder="0" step="100"></div>
+        <div class="fg"><label>減価償却費</label><input type="number" id="fa-dep" placeholder="0" step="100"></div>
+        <div class="fg"><label>支払利息</label><input type="number" id="fa-int" placeholder="0" step="10"></div>
+      </div>
+      <div class="no-print" style="margin-top:8px"><button class="btn btn-primary" onclick="calcFinancial()">分析する</button></div>
+      <div id="fa-result"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">財務レーダーチャート</div>
+      <div class="chart-box" style="height:300px"><canvas id="fa-radar"></canvas></div>
+    </div>
+  </div>
+
+  <!-- 法人設立ガイド -->
+  <div class="page" id="page-guide">
+    <div class="alert alert-info">📌 クライアントへのPDF共有に適しています。右上の「印刷 / PDF保存」をご利用ください。</div>
+    <div class="card">
+      <div class="card-title">株式会社・合同会社 設立手順ガイド</div>
+      <div id="steps-list">
+        <!-- steps injected by JS -->
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">設立費用比較</div>
+      <table class="tbl">
+        <thead><tr><th>費用項目</th><th class="r">株式会社</th><th class="r">合同会社</th><th>備考</th></tr></thead>
+        <tbody>
+          <tr><td>定款認証手数料</td><td class="r">約52,000円</td><td class="r">不要</td><td>公証役場</td></tr>
+          <tr><td>定款収入印紙</td><td class="r">0円（電子定款）</td><td class="r">0円（電子定款）</td><td>紙の場合40,000円</td></tr>
+          <tr><td>登録免許税</td><td class="r">150,000円〜</td><td class="r">60,000円〜</td><td>資本金×0.7%と比較</td></tr>
+          <tr><td>印鑑作成</td><td class="r">約10,000〜30,000円</td><td class="r">約10,000〜30,000円</td><td>代表者印・法人印</td></tr>
+          <tr class="total"><td>合計（概算）</td><td class="r">約20〜25万円</td><td class="r">約6〜10万円</td><td>司法書士費用除く</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div><!-- /main -->
+
+<script>
+// ===== CORE =====
+const PAGES={dashboard:'ダッシュボード',tax:'税金シミュレーション',executive:'役員報酬シミュレーション',furusato:'ふるさと納税シミュレーション',cashflow:'キャッシュフロー',financial:'財務分析',guide:'法人設立ガイド'};
+
+function nav(id){
+  document.querySelectorAll('.page').forEach(e=>e.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(e=>e.classList.remove('active'));
+  document.getElementById('page-'+id)?.classList.add('active');
+  document.querySelector(`[data-page="${id}"]`)?.classList.add('active');
+  document.getElementById('topbar-title').textContent=PAGES[id]||id;
+  if(id==='cashflow')initCf();
+  window.scrollTo(0,0);
+}
+
+function switchTab(t){
+  document.querySelectorAll('.tab').forEach(e=>e.classList.remove('active'));
+  document.querySelectorAll('.tp').forEach(e=>e.classList.remove('active'));
+  document.getElementById('tab-'+t)?.classList.add('active');
+  document.getElementById('tp-'+t)?.classList.add('active');
+}
+
+function fmt(v){return Math.round(v||0).toLocaleString('ja-JP')}
+
+// ===== 税金（個人） =====
+function calcPersonalTax(){
+  const income=+(document.getElementById('pt-income').value||0)*10000;
+  const haifusha=+(document.getElementById('pt-haifusha').value||0);
+  const dep=+(document.getElementById('pt-dependents').value||0);
+  const ins=+(document.getElementById('pt-insurance').value||0)*10000;
+  const furu=+(document.getElementById('pt-furusato').value||0)*10000;
+
+  let kd;
+  if(income<=1625000)kd=550000;
+  else if(income<=1800000)kd=income*.4-100000;
+  else if(income<=3600000)kd=income*.3+80000;
+  else if(income<=6600000)kd=income*.2+440000;
+  else if(income<=8500000)kd=income*.1+1100000;
+  else kd=1950000;
+
+  const ks=income-kd;
+  const kiso=income<=24000000?480000:320000;
+  const haifuKojo=haifusha?380000:0;
+  const fuuyoKojo=dep*380000;
+  const furuKojo=furu>2000?furu-2000:0;
+  const taxable=Math.max(0,ks-kiso-haifuKojo-fuuyoKojo-ins-furuKojo);
+
+  const it=calcIT(taxable);
+  const fukko=Math.floor(it*.021);
+  const rt=Math.floor(Math.max(0,ks-(kiso-50000)-haifuKojo-fuuyoKojo-ins-furuKojo)*.10);
+  const total=it+fukko+rt;
+  const rate=income>0?(total/income*100).toFixed(1):0;
+
+  document.getElementById('pt-result').innerHTML=resultBox('年間税負担合計（概算）',total,[
+    ['給与所得',fmt(ks)+'円'],
+    ['課税所得',fmt(taxable)+'円'],
+    ['所得税',fmt(it)+'円','danger'],
+    ['復興特別所得税',fmt(fukko)+'円','danger'],
+    ['住民税（概算）',fmt(rt)+'円','danger'],
+    ['実効税率',rate+'%'],
+    ['手取り（税・社保除く）',fmt(income-total-ins)+'円','success'],
+  ]);
+}
+
+function calcIT(ti){
+  const b=[[1950000,.05,0],[3300000,.1,97500],[6950000,.2,427500],[9000000,.23,636000],[18000000,.33,1536000],[40000000,.4,2796000],[Infinity,.45,4796000]];
+  for(const[lim,r,d]of b)if(ti<=lim)return Math.max(0,Math.floor(ti*r-d));
+  return 0;
+}
+
+// ===== 税金（法人） =====
+function calcCorporateTax(){
+  const p=+(document.getElementById('ct-profit').value||0)*10000;
+  const cap=+(document.getElementById('ct-capital').value||0)*10000;
+  if(!p){alert('課税所得を入力してください');return;}
+  const small=cap<=100000000;
+  let ct=small?Math.floor(Math.min(p,8000000)*.15+Math.max(0,p-8000000)*.232):Math.floor(p*.232);
+  const lct=Math.floor(ct*.103);
+  const rct=Math.floor(ct*.207);
+  const bt=small?Math.floor(Math.min(p,4000000)*.035+Math.min(Math.max(0,p-4000000),4000000)*.053+Math.max(0,p-8000000)*.07):Math.floor(p*.096);
+  const sbt=Math.floor(bt*.372);
+  const total=ct+lct+rct+bt+sbt;
+  const rate=p>0?(total/p*100).toFixed(1):0;
+
+  document.getElementById('ct-result').innerHTML=resultBox('法人税等合計（概算）',total,[
+    ['法人税',fmt(ct)+'円','danger'],
+    ['地方法人税',fmt(lct)+'円','danger'],
+    ['法人住民税',fmt(rct)+'円','danger'],
+    ['事業税',fmt(bt)+'円','danger'],
+    ['特別法人事業税',fmt(sbt)+'円','danger'],
+    ['実効税率',rate+'%'],
+    ['税引後利益',fmt(p-total)+'円','success'],
+  ]);
+}
+
+// ===== 役員報酬 =====
+let exChart=null;
+function calcExecutive(){
+  const profit=+(document.getElementById('ex-profit').value||0)*10000;
+  const salary=+(document.getElementById('ex-salary').value||0)*10000;
+  const kenpo=document.getElementById('ex-kenpo').value==='1';
+
+  let kd;
+  if(salary<=1625000)kd=550000;else if(salary<=1800000)kd=salary*.4-100000;
+  else if(salary<=3600000)kd=salary*.3+80000;else if(salary<=6600000)kd=salary*.2+440000;
+  else if(salary<=8500000)kd=salary*.1+1100000;else kd=1950000;
+  const ks=Math.max(0,salary-kd);
+
+  const ms=salary/12;
+  const kr=kenpo?.1182/2:0;
+  const yr=.183/2;
+  const yb=Math.min(ms,650000);
+  const shaM=ms*kr+yb*yr;
+  const shaA=Math.floor(shaM*12);
+
+  const kiso=salary<=24000000?480000:320000;
+  const taxable=Math.max(0,ks-shaA-kiso);
+  const it=calcIT(taxable);
+  const fukko=Math.floor(it*.021);
+  const rt=Math.floor(taxable*.10);
+  const pTax=it+fukko+rt;
+  const pBurden=pTax+shaA;
+  const takeHome=salary-pBurden;
+
+  const corpP=Math.max(0,profit-salary);
+  let cTax=0;
+  if(corpP>0){
+    const ct=Math.floor(Math.min(corpP,8000000)*.15+Math.max(0,corpP-8000000)*.232);
+    const lct=Math.floor(ct*.103);
+    const rct=Math.floor(ct*.207);
+    const bt=Math.floor(Math.min(corpP,4000000)*.035+Math.min(Math.max(0,corpP-4000000),4000000)*.053+Math.max(0,corpP-8000000)*.07);
+    cTax=ct+lct+rct+bt+Math.floor(bt*.372);
+  }
+  const cShakai=kenpo?shaA:0;
+  const total=pBurden+cTax+cShakai;
+  const eff=profit>0?(total/profit*100).toFixed(1):0;
+  const retained=Math.max(0,corpP-cTax);
+
+  document.getElementById('ex-result').innerHTML=resultBox('合計負担（個人税金＋社保＋法人税等）',total,[
+    ['役員報酬',fmt(salary)+'円'],
+    ['個人所得税等',fmt(pTax)+'円','danger'],
+    ['社保（個人）',fmt(shaA)+'円','danger'],
+    ['法人税等',fmt(cTax)+'円','danger'],
+    ['社保（会社）',fmt(cShakai)+'円','danger'],
+    ['実質総負担率',eff+'%'],
+    ['手取り',fmt(takeHome)+'円','success'],
+    ['法人内留保',fmt(retained)+'円','success'],
+  ]);
+
+  const ctx=document.getElementById('ex-chart');
+  if(exChart)exChart.destroy();
+  exChart=new Chart(ctx,{
+    type:'doughnut',
+    data:{
+      labels:['個人所得税等','社保(個人)','法人税等','社保(会社)','手取り','法人内留保'],
+      datasets:[{data:[pTax,shaA,cTax,cShakai,Math.max(0,takeHome),retained],
+        backgroundColor:['#ef5350','#ef9a9a','#1a237e','#5c6bc0','#4caf50','#81c784'],
+        borderWidth:2,borderColor:'#fff'}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right'}}}
+  });
+}
+
+// ===== ふるさと納税 =====
+function calcFurusato(){
+  const income=+(document.getElementById('fs-income').value||0)*10000;
+  const spouse=document.getElementById('fs-spouse').value;
+  const dep=+(document.getElementById('fs-dependents').value||0);
+  const ins=+(document.getElementById('fs-insurance').value||0)*10000;
+  const med=+(document.getElementById('fs-medical').value||0)*10000;
+
+  let kd;
+  if(income<=1625000)kd=550000;else if(income<=1800000)kd=income*.4-100000;
+  else if(income<=3600000)kd=income*.3+80000;else if(income<=6600000)kd=income*.2+440000;
+  else if(income<=8500000)kd=income*.1+1100000;else kd=1950000;
+  const ks=income-kd;
+  const kiso=income<=24000000?480000:0;
+  const spouseK=spouse==='1'?380000:spouse==='2'?260000:0;
+  const fuuyoK=dep*380000;
+  const medK=Math.max(0,med-Math.min(income*.01,100000));
+  const taxable=Math.max(0,ks-kiso-spouseK-fuuyoK-ins-medK);
+
+  const brackets=[[1950000,.05],[3300000,.1],[6950000,.2],[9000000,.23],[18000000,.33],[40000000,.4],[Infinity,.45]];
+  let taxRate=.05;
+  for(const[lim,r]of brackets){if(taxable<=lim){taxRate=r;break;}}
+
+  const rtBase=Math.max(0,ks-(kiso-50000)-spouseK-fuuyoK-ins-medK);
+  const rtAmt=Math.floor(rtBase*.10);
+  const denom=.9-taxRate*1.021;
+  const limit=denom>0?Math.floor(rtAmt*.2/denom)+2000:0;
+
+  document.getElementById('fs-result').innerHTML=resultBox('ふるさと納税 控除上限額（概算）',limit,[
+    ['給与所得',fmt(ks)+'円'],
+    ['課税所得',fmt(taxable)+'円'],
+    ['適用所得税率',(taxRate*100).toFixed(0)+'%'],
+    ['住民税所得割',fmt(rtAmt)+'円'],
+    ['実質控除額（-2,000円）',fmt(Math.max(0,limit-2000))+'円','success'],
+    ['自己負担','2,000円','danger'],
+  ])+`<div class="alert alert-warn" style="margin-top:14px">⚠️ この計算は概算です。住宅ローン控除・iDeCo等がある場合は上限額が変わります。正確な金額は税理士にご相談ください。</div>`;
+}
+
+// ===== キャッシュフロー =====
+const CF_MONTHS=['4月','5月','6月','7月','8月','9月','10月','11月','12月','1月','2月','3月'];
+const CF_DEFS=[
+  {sec:'【営業収入】',rows:[{k:'sales',l:'売上収入'},{k:'other_in',l:'その他収入'}],pfx:'in'},
+  {sec:'【営業支出】',rows:[{k:'purchase',l:'仕入・外注費'},{k:'labor',l:'人件費'},{k:'rent',l:'地代家賃'},{k:'utility',l:'水道光熱費'},{k:'tax_p',l:'税金支払'},{k:'other_ex',l:'その他経費'}],pfx:'ex'},
+  {sec:'【投資】',rows:[{k:'capex',l:'設備投資'}],pfx:'iv'},
+  {sec:'【財務】',rows:[{k:'borrow',l:'借入'},{k:'repay',l:'借入返済'}],pfx:'fn'},
+];
+let cfChart=null;
+
+function initCf(){
+  const c=document.getElementById('cf-container');
+  if(!c||c.dataset.init)return;
+  c.dataset.init='1';
+  let h=`<table class="tbl" id="cf-tbl"><thead><tr><th style="min-width:120px">項目</th>${CF_MONTHS.map(m=>`<th style="min-width:80px;text-align:right">${m}</th>`).join('')}<th style="min-width:80px;text-align:right">合計</th></tr></thead><tbody>`;
+  for(const d of CF_DEFS){
+    h+=`<tr><td colspan="${CF_MONTHS.length+2}" style="background:#eef3f9;font-weight:700;font-size:11px;color:#1a3a5c;padding:7px 13px">${d.sec}</td></tr>`;
+    for(const r of d.rows){
+      const id=`${d.pfx}_${r.k}`;
+      h+=`<tr><td style="font-size:12px">${r.l}</td>${CF_MONTHS.map((_,i)=>`<td><input class="cf-input" type="number" id="${id}_${i}" placeholder="0" oninput="recalcCf()" step="10000"></td>`).join('')}<td class="r" id="${id}_tot" style="font-weight:600">0</td></tr>`;
+    }
+  }
+  h+=`<tr class="total"><td>営業CF</td>${CF_MONTHS.map((_,i)=>`<td class="r" id="ops_${i}">0</td>`).join('')}<td class="r" id="ops_tot">0</td></tr>`;
+  h+=`<tr class="total"><td>月末残高</td>${CF_MONTHS.map((_,i)=>`<td class="r" id="bal_${i}">0</td>`).join('')}<td class="r">-</td></tr>`;
+  h+=`</tbody></table>`;
+  c.innerHTML=h;
+}
+
+function recalcCf(){
+  const opening=+(document.getElementById('cf-opening')?.value||0)*10000;
+  const gv=(pfx,k,i)=>+(document.getElementById(`${pfx}_${k}_${i}`)?.value||0)*10000;
+  let bal=opening;
+  const balances=[];
+  for(let i=0;i<12;i++){
+    const inT=CF_DEFS[0].rows.reduce((s,r)=>s+gv('in',r.k,i),0);
+    const exT=CF_DEFS[1].rows.reduce((s,r)=>s+gv('ex',r.k,i),0);
+    const ivT=CF_DEFS[2].rows.reduce((s,r)=>s+gv('iv',r.k,i),0);
+    const fnIn=gv('fn','borrow',i);const fnOut=gv('fn','repay',i);
+    const ops=inT-exT-ivT+fnIn-fnOut;
+    bal+=ops;
+    balances.push(bal);
+    const oe=document.getElementById(`ops_${i}`);if(oe){oe.textContent=fs(ops);oe.style.color=ops<0?'#c62828':'';}
+    const be=document.getElementById(`bal_${i}`);if(be){be.textContent=fs(bal);be.style.color=bal<0?'#c62828':'';}
+  }
+  for(const d of CF_DEFS){
+    for(const r of d.rows){
+      const id=`${d.pfx}_${r.k}`;
+      const tot=Array.from({length:12},(_,i)=>gv(d.pfx,r.k,i)).reduce((a,b)=>a+b,0);
+      const te=document.getElementById(id+'_tot');if(te)te.textContent=fs(tot);
+    }
+  }
+  const totOps=Array.from({length:12},(_,i)=>{
+    const inT=CF_DEFS[0].rows.reduce((s,r)=>s+gv('in',r.k,i),0);
+    const exT=CF_DEFS[1].rows.reduce((s,r)=>s+gv('ex',r.k,i),0);
+    const ivT=CF_DEFS[2].rows.reduce((s,r)=>s+gv('iv',r.k,i),0);
+    return inT-exT-ivT+gv('fn','borrow',i)-gv('fn','repay',i);
+  }).reduce((a,b)=>a+b,0);
+  const ote=document.getElementById('ops_tot');if(ote){ote.textContent=fs(totOps);ote.style.color=totOps<0?'#c62828':'';}
+
+  const ctx=document.getElementById('cf-chart');
+  if(!ctx)return;
+  if(cfChart)cfChart.destroy();
+  cfChart=new Chart(ctx,{
+    type:'line',
+    data:{labels:CF_MONTHS,datasets:[{label:'月末残高',data:balances.map(v=>Math.round(v/10000)),borderColor:'#1a3a5c',backgroundColor:'rgba(26,58,92,0.08)',borderWidth:2,pointRadius:4,fill:true}]},
+    options:{responsive:true,maintainAspectRatio:false,scales:{y:{title:{display:true,text:'万円'},ticks:{callback:v=>v.toLocaleString()+'万'}}}}
+  });
+}
+
+function fs(v){return Math.round(v/10000).toLocaleString()+'万'}
+function clearCf(){document.querySelectorAll('.cf-input').forEach(e=>e.value='');recalcCf();}
+function exportCsv(){
+  const t=document.getElementById('cf-tbl');if(!t)return;
+  let csv='';
+  for(const row of t.rows){const cells=Array.from(row.cells).map(c=>{const i=c.querySelector('input');return`"${i?i.value||'0':c.textContent.trim()}"`;});csv+=cells.join(',')+'\n';}
+  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='cf.csv';a.click();
+}
+
+// ===== 財務分析 =====
+let radarChart=null;
+function calcFinancial(){
+  const ca=+(document.getElementById('fa-ca').value||0)*10000;
+  const ta=+(document.getElementById('fa-ta').value||0)*10000;
+  const cl=+(document.getElementById('fa-cl').value||0)*10000;
+  const tl=+(document.getElementById('fa-tl').value||0)*10000;
+  const eq=+(document.getElementById('fa-eq').value||0)*10000;
+  const rec=+(document.getElementById('fa-rec').value||0)*10000;
+  const sales=+(document.getElementById('fa-sales').value||0)*10000;
+  const cogs=+(document.getElementById('fa-cogs').value||0)*10000;
+  const op=+(document.getElementById('fa-op').value||0)*10000;
+  const np=+(document.getElementById('fa-np').value||0)*10000;
+  const dep=+(document.getElementById('fa-dep').value||0)*10000;
+  const intE=+(document.getElementById('fa-int').value||0)*10000;
+  if(!sales||!ta){document.getElementById('fa-result').innerHTML='<div class="alert alert-warn">売上高と総資産を入力してください。</div>';return;}
+
+  const gp=sales-cogs;
+  const gm=p(gp,sales);const om=p(op,sales);const nm=p(np,sales);
+  const roe=eq>0?p(np,eq):null;const roa=p(np,ta);
+  const cr=cl>0?(ca/cl*100).toFixed(1):null;
+  const dr=ta>0?(tl/ta*100).toFixed(1):null;
+  const er=ta>0?(eq/ta*100).toFixed(1):null;
+  const rd=rec>0?(rec/sales*365).toFixed(0):null;
+  const at=(sales/ta).toFixed(2);
+  const ebitda=op+dep;
+  const ic=intE>0?(op/intE).toFixed(1):null;
+
+  const scores={om:scoreBy(+om,[2,5,10,15]),cr:scoreBy(+cr,[80,100,150,200]),er:scoreBy(+er,[10,20,30,50]),roe:roe!==null?scoreBy(+roe,[0,5,10,15]):2,at:scoreBy(+at,[.3,.6,1,1.5])};
+  const avg=Object.values(scores).reduce((a,b)=>a+b,0)/5;
+  const rank=avg>=4.5?'A+':avg>=3.5?'A':avg>=2.5?'B':avg>=1.5?'C':'D';
+
+  document.getElementById('fa-result').innerHTML=resultBox(`財務健全性スコア: ${rank}（${avg.toFixed(1)}/5.0）`,null,[
+    ['売上総利益率',gm+'%'],['営業利益率',om+'%'],['純利益率',nm+'%'],
+    ['ROE',roe+'%'],['ROA',roa+'%'],
+    ['流動比率',(cr||'-')+'%'],['自己資本比率',(er||'-')+'%'],['負債比率',(dr||'-')+'%'],
+    ['総資産回転率',at+'回'],['売上債権回転日数',(rd||'-')+'日'],
+    ['EBITDA',fmt(ebitda)+'円'],['インタレストカバー',(ic||'-')+'倍'],
+  ],true);
+
+  const ctx=document.getElementById('fa-radar');
+  if(radarChart)radarChart.destroy();
+  radarChart=new Chart(ctx,{
+    type:'radar',
+    data:{
+      labels:['収益性\n(営業利益率)','安全性\n(流動比率)','安定性\n(自己資本)','効率性\n(回転率)','成長性\n(ROE)'],
+      datasets:[{label:'自社',data:[scores.om,scores.cr,scores.er,scores.at,scores.roe],
+        backgroundColor:'rgba(26,58,92,0.2)',borderColor:'#1a3a5c',pointBackgroundColor:'#c8a84b',borderWidth:2,pointRadius:5}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,scales:{r:{min:0,max:5,ticks:{stepSize:1}}},plugins:{legend:{display:false}}}
+  });
+}
+function p(num,den){if(!den)return'0.0';return(num/den*100).toFixed(1);}
+function scoreBy(v,t){if(isNaN(v))return 2;if(v>=t[3])return 5;if(v>=t[2])return 4;if(v>=t[1])return 3;if(v>=t[0])return 2;return 1;}
+
+// ===== 法人設立ガイド =====
+const STEPS=[
+  {t:'会社形態の決定',p:'株式会社（信頼性・資金調達に有利）か合同会社（設立費用安・意思決定柔軟）かを選択します。',tags:[{l:'事前検討',c:'tag-p'},{l:'株式会社:約20〜25万円 / 合同会社:約6〜10万円',c:'tag-c'}]},
+  {t:'基本事項の決定',p:'①商号 ②本店所在地 ③事業目的 ④資本金額 ⑤発起人・出資者 ⑥役員構成 ⑦事業年度を決定します。',tags:[{l:'1〜2週間',c:'tag-p'},{l:'定款に記載必須',c:'tag-o'}]},
+  {t:'定款の作成・認証',p:'定款を作成し、株式会社は公証役場で認証を受けます（合同会社は不要）。電子定款で収入印紙代4万円を節約できます。',tags:[{l:'1〜3日',c:'tag-p'},{l:'認証手数料:約5万2千円（株式会社）',c:'tag-c'},{l:'公証役場',c:'tag-o'}]},
+  {t:'資本金の払込',p:'発起人の個人口座に資本金を振り込み、通帳のコピーを保管します。資本金1円から設立可能ですが、許認可・取引先信頼度の観点から100万円以上が推奨されることが多いです。',tags:[{l:'定款認証後すぐ',c:'tag-p'}]},
+  {t:'設立登記申請',p:'必要書類（設立登記申請書・定款・払込証明書・役員就任承諾書等）を作成し、法務局に申請します。',tags:[{l:'申請後1〜2週間で登記完了',c:'tag-p'},{l:'株式会社:15万円〜 / 合同会社:6万円〜',c:'tag-c'},{l:'法務局',c:'tag-o'}]},
+  {t:'各種届出（税務署・都道府県・市区町村）',p:'①法人設立届出書（設立後2ヶ月以内）②青色申告の承認申請書（設立後3ヶ月以内）③給与支払事務所等の開設届（1ヶ月以内）④源泉所得税の納期の特例申請書（任意）',tags:[{l:'登記完了後なるべく早く',c:'tag-p'},{l:'税務署・都道府県税事務所・市区町村',c:'tag-o'}]},
+  {t:'社会保険の加入手続き',p:'法人は規模に関わらず社会保険（健康保険・厚生年金）への加入が義務です。年金事務所に新規適用届を提出します。',tags:[{l:'設立後5日以内',c:'tag-p'},{l:'所轄年金事務所',c:'tag-o'}]},
+  {t:'法人口座の開設・各種準備',p:'登記事項証明書・印鑑証明書を取得し、法人銀行口座を開設します。会計ソフトの導入・クレジットカードの申請・名刺作成なども行います。',tags:[{l:'登記後1〜2週間',c:'tag-p'}]},
+  {t:'許認可・資格の取得（業種による）',p:'飲食・建設・不動産・医療・介護など許認可が必要な業種は、営業開始前に取得が必要です。',tags:[{l:'業種により異なる（1ヶ月〜数ヶ月）',c:'tag-p'},{l:'各所管官庁',c:'tag-o'}]},
+  {t:'税理士・顧問契約の締結',p:'設立直後から適切な会計処理・節税対策を行うために顧問契約を締結します。役員報酬の決定は設立後3ヶ月以内に行う必要があります（定期同額給与の要件）。',tags:[{l:'設立後3ヶ月以内に役員報酬決定',c:'tag-p'},{l:'税理士事務所',c:'tag-o'}]},
+];
+
+function initGuide(){
+  const el=document.getElementById('steps-list');
+  if(!el||el.dataset.init)return;
+  el.dataset.init='1';
+  el.innerHTML=STEPS.map((s,i)=>`
+    <div class="step">
+      <div class="step-num">${i+1}</div>
+      <div class="step-content">
+        <h4>${s.t}</h4>
+        <p>${s.p}</p>
+        <div class="step-meta">${s.tags.map(t=>`<span class="tag ${t.c}">${t.l}</span>`).join('')}</div>
+      </div>
+    </div>`).join('');
+}
+
+// ===== HELPERS =====
+function resultBox(title,main,rows,noMain=false){
+  const mainHtml=noMain?'':
+    `<div class="result-main">${fmt(main)} <span>円</span></div>`;
+  return `<div class="result-box">
+    <h3>${title}</h3>
+    ${mainHtml}
+    <div class="result-bd">
+      ${rows.map(([l,v,cls=''])=>`<div><div class="ri-label">${l}</div><div class="ri-value ${cls}">${v}</div></div>`).join('')}
+    </div>
+  </div>`;
+}
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded',()=>{
+  nav('dashboard');
+  initGuide();
+});
+</script>
+</body>
+</html>
