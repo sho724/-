@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>税理士ポータル</title>
+<title>FinTax Cloud</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -17,7 +17,10 @@ body{font-family:'Hiragino Kaku Gothic ProN','Meiryo','Yu Gothic',sans-serif;bac
 /* SIDEBAR */
 #sidebar{width:var(--sidebar);background:var(--primary);color:#fff;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100}
 .sb-logo{padding:16px 14px;border-bottom:1px solid rgba(255,255,255,.12)}
-.sb-logo .app-name{font-size:11px;color:rgba(255,255,255,.4);margin-bottom:8px;letter-spacing:.05em}
+.sb-logo .app-name{margin-bottom:8px}
+.sb-logo .app-name .brand-main{font-size:18px;font-weight:800;color:#fff;letter-spacing:.03em;line-height:1.2}
+.sb-logo .app-name .brand-main span{color:#c8a84b}
+.sb-logo .app-name .brand-sub{font-size:10px;color:rgba(255,255,255,.4);margin-top:2px;letter-spacing:.05em}
 .company-btn{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:10px 14px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .2s;text-align:left}
 .company-btn:hover{background:rgba(255,255,255,.18)}
 .company-btn .cb-avatar{width:34px;height:34px;border-radius:8px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:var(--primary);flex-shrink:0}
@@ -91,6 +94,42 @@ body{font-family:'Hiragino Kaku Gothic ProN','Meiryo','Yu Gothic',sans-serif;bac
 
 /* RESULT */
 .result-box{background:linear-gradient(135deg,var(--primary),var(--primary-light));border-radius:12px;padding:22px 26px;color:#fff;margin-top:18px}
+
+/* 納税額予測 */
+.tax-banner{background:linear-gradient(135deg,#1a3a5c,#2a5298);border-radius:14px;padding:22px 26px;color:#fff;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;box-shadow:0 6px 20px rgba(26,58,92,.2)}
+.tax-banner .tb-lbl{font-size:11px;opacity:.65;letter-spacing:.05em;margin-bottom:6px}
+.tax-banner .tb-amt{font-size:36px;font-weight:800;letter-spacing:-1px}
+.tax-banner .tb-amt span{font-size:13px;font-weight:400;opacity:.75;margin-left:4px}
+.tax-banner .tb-eff-lbl{font-size:10px;opacity:.65;text-align:right;margin-bottom:3px}
+.tax-banner .tb-eff-val{font-size:30px;font-weight:700;color:#f0c040;text-align:right}
+.tax-banner .tb-net{font-size:11px;opacity:.55;margin-top:5px;text-align:right}
+.tax-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+.tax-card{background:#fff;border-radius:12px;padding:15px 17px;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.tax-card-hd{display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.tax-ic{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.tax-ic.corp{background:#fff0f0}.tax-ic.cons{background:#fff8e8}.tax-ic.sal{background:#eef3ff}
+.tax-card-name{font-size:12px;font-weight:700;color:#1a3a5c}
+.tax-card-total{font-size:19px;font-weight:800;margin-bottom:9px}
+.tax-card-total.red{color:#e53935}.tax-card-total.org{color:#f57c00}.tax-card-total.blue{color:#1565c0}
+.tax-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #f0f4f8;font-size:11px;color:#777}
+.tax-row:last-of-type{border:none}
+.tax-row b{color:#1a3a5c;font-weight:600}
+.tax-row-ref{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dashed #e8eef4;font-size:10.5px;color:#bbb}
+.tax-row-ref:last-of-type{border:none}
+.tax-row-ref b{color:#bbb;font-weight:500}
+.tax-ref-hd{font-size:9.5px;color:#ccc;letter-spacing:.05em;margin:6px 0 2px;padding-top:4px;border-top:1px solid #f0f4f8}
+.tax-tag{display:inline-block;background:#fff3e0;color:#e65100;font-size:10px;font-weight:700;padding:2px 9px;border-radius:16px;margin-top:7px}
+.tax-tl-card{background:#fff;border-radius:12px;padding:16px 18px;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.tax-tl-title{font-size:11px;font-weight:700;color:#888;letter-spacing:.06em;margin-bottom:12px}
+.tax-tl{position:relative;padding-left:34px}
+.tax-tl::before{content:'';position:absolute;left:11px;top:6px;bottom:6px;width:2px;background:#e8f0f8;border-radius:1px}
+.tax-tl-ev{position:relative;margin-bottom:11px;display:grid;grid-template-columns:42px 1fr auto;align-items:baseline;gap:4px}
+.tax-tl-ev:last-child{margin-bottom:0}
+.tax-tl-dot{position:absolute;left:-27px;top:3px;width:11px;height:11px;border-radius:50%;border:2.5px solid #fff}
+.tax-tl-m{font-size:10.5px;font-weight:700;color:#bbb}
+.tax-tl-n{font-size:12px;font-weight:600;color:#1a3a5c}
+.tax-tl-a{font-size:12px;font-weight:700;white-space:nowrap}
+.tax-tl-note{font-size:10px;color:#bbb;grid-column:2/4;margin-top:-2px}
 .result-box h3{font-size:12px;opacity:.75;margin-bottom:7px}
 .result-main{font-size:34px;font-weight:700;letter-spacing:-.5px}
 .result-main span{font-size:15px;font-weight:400;margin-left:4px;opacity:.8}
@@ -148,6 +187,22 @@ body{font-family:'Hiragino Kaku Gothic ProN','Meiryo','Yu Gothic',sans-serif;bac
 .alert-info{background:#e3f2fd;border-left:4px solid #1565c0;color:#0d47a1}
 .alert-warn{background:#fff8e1;border-left:4px solid #f57f17;color:#e65100}
 
+/* ALERT CELLS */
+.cell-warn{background:#fff3e0!important;position:relative}
+.cell-alert{background:#ffebee!important;position:relative}
+.cell-warn-text{color:#e65100!important;font-weight:700}
+.cell-alert-text{color:#c62828!important;font-weight:700}
+.alert-icon{font-size:9px;cursor:help;position:absolute;left:4px;top:50%;transform:translateY(-50%);line-height:1}
+[data-tip]{position:relative}
+[data-tip]:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1a3a5c;color:#fff;font-size:11px;padding:6px 10px;border-radius:6px;white-space:nowrap;z-index:999;pointer-events:none;line-height:1.4}
+[data-tip]:hover::before{content:'';position:absolute;bottom:calc(100% + 1px);left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#1a3a5c;z-index:999}
+.anomaly-box{border-radius:10px;padding:12px 16px;margin-bottom:14px;font-size:12px;line-height:1.8;border-left:4px solid #e65100;background:#fff8f0}
+.anomaly-box.no-alert{border-left-color:#2e7d32;background:#f0fff4}
+.anomaly-item{display:flex;align-items:baseline;gap:6px}
+.anomaly-item .a-icon{flex-shrink:0}
+.anomaly-item .a-red{color:#c62828;font-weight:600}
+.anomaly-item .a-orange{color:#e65100;font-weight:600}
+
 /* PRINT */
 @media print{
   #sidebar,.topbar,.no-print{display:none!important}
@@ -162,7 +217,10 @@ body{font-family:'Hiragino Kaku Gothic ProN','Meiryo','Yu Gothic',sans-serif;bac
 
 <nav id="sidebar">
   <div class="sb-logo">
-    <div class="app-name">税理士ポータル</div>
+    <div class="app-name">
+      <div class="brand-main">FinTax <span>Cloud</span></div>
+      <div class="brand-sub">南部翔税理士事務所</div>
+    </div>
     <button class="company-btn" onclick="openCompanyModal()">
       <div class="cb-avatar" id="sb-avatar">？</div>
       <div class="cb-info">
@@ -172,11 +230,13 @@ body{font-family:'Hiragino Kaku Gothic ProN','Meiryo','Yu Gothic',sans-serif;bac
       <span class="cb-arrow">▼</span>
     </button>
   </div>
+  <div class="sb-label">予測・スケジュール</div>
+  <div class="nav-item" data-page="plcash"    onclick="nav('plcash')"><span class="ic">📋</span>損益・Cash予測</div>
   <div class="sb-label">シミュレーション</div>
   <div class="nav-item" data-page="tax"       onclick="nav('tax')"><span class="ic">🧮</span>税金シミュレーション</div>
   <div class="nav-item" data-page="executive" onclick="nav('executive')"><span class="ic">👔</span>役員報酬</div>
   <div class="nav-item" data-page="furusato"  onclick="nav('furusato')"><span class="ic">🎁</span>ふるさと納税</div>
-  <div class="nav-item" data-page="cashflow"  onclick="nav('cashflow')"><span class="ic">💰</span>キャッシュフロー</div>
+  <div class="nav-item" data-page="cashflow"  onclick="nav('cashflow')"><span class="ic">💰</span>キャッシュフロー（簡易）</div>
   <div class="sb-label">分析・ガイド</div>
   <div class="nav-item" data-page="financial" onclick="nav('financial')"><span class="ic">📊</span>財務分析</div>
   <div class="nav-item" data-page="guide"     onclick="nav('guide')"><span class="ic">🏢</span>法人設立ガイド</div>
@@ -197,6 +257,7 @@ body{font-family:'Hiragino Kaku Gothic ProN','Meiryo','Yu Gothic',sans-serif;bac
   <div class="page active" id="page-dashboard">
     <div class="alert alert-info">📌 このツールは<strong>税理士専用</strong>です。結果は印刷してクライアントへご提供ください。</div>
     <div class="dash-grid">
+      <div class="dc" onclick="nav('plcash')" style="grid-column:span 3;border-color:var(--accent)"><span class="badge b-in">メイン機能</span><div class="ic">📋</div><h3>損益・Cash予測スケジュール</h3><p>Excelと同じロジックで損益予測・納税額予測・月次Cashフローを一括管理。freee CSV取込対応。</p></div>
       <div class="dc" onclick="nav('tax')"><span class="badge b-in">内部専用</span><div class="ic">🧮</div><h3>税金シミュレーション</h3><p>個人所得税・法人税の試算。</p></div>
       <div class="dc" onclick="nav('executive')"><span class="badge b-in">内部専用</span><div class="ic">👔</div><h3>役員報酬シミュレーション</h3><p>個人税・社保・法人税の合計負担を比較。</p></div>
       <div class="dc" onclick="nav('furusato')"><span class="badge b-pub">共有可</span><div class="ic">🎁</div><h3>ふるさと納税</h3><p>控除上限額をPDFでクライアントへ。</p></div>
@@ -298,7 +359,13 @@ body{font-family:'Hiragino Kaku Gothic ProN','Meiryo','Yu Gothic',sans-serif;bac
   <div class="page" id="page-financial">
     <div class="card">
       <div class="card-title">財務データ入力（万円）</div>
-      <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;font-weight:600">▼ 貸借対照表（BS）</p>
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-weight:600">▼ 貸借対照表（BS）</p>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap">
+        <select id="fa-bs-month" style="font-size:12px;padding:5px 10px;border:1px solid #c8d6e5;border-radius:6px;color:#1a3a5c" onchange="applyBsToFinancial()">
+          <option value="">月を選択してください</option>
+        </select>
+        <span id="fa-bs-status" style="font-size:11px;color:#888"></span>
+      </div>
       <div class="fg3">
         <div class="fg"><label>流動資産</label><input type="number" id="fa-ca" placeholder="0" step="100"></div>
         <div class="fg"><label>総資産</label><input type="number" id="fa-ta" placeholder="0" step="100"></div>
@@ -308,6 +375,9 @@ body{font-family:'Hiragino Kaku Gothic ProN','Meiryo','Yu Gothic',sans-serif;bac
         <div class="fg"><label>売上債権</label><input type="number" id="fa-rec" placeholder="0" step="100"></div>
       </div>
       <p style="font-size:12px;color:var(--text-muted);margin:12px 0;font-weight:600">▼ 損益計算書（PL）</p>
+      <div class="no-print" style="margin-bottom:10px">
+        <button class="btn" style="font-size:12px;padding:6px 14px;background:#eef3f9;color:#1a3a5c;border:1px solid #c8d6e5" onclick="applyPlToFinancial()">📋 損益スケジュールから自動反映</button>
+      </div>
       <div class="fg3">
         <div class="fg"><label>売上高</label><input type="number" id="fa-sales" placeholder="0" step="100"></div>
         <div class="fg"><label>売上原価</label><input type="number" id="fa-cogs" placeholder="0" step="100"></div>
@@ -348,6 +418,101 @@ body{font-family:'Hiragino Kaku Gothic ProN','Meiryo','Yu Gothic',sans-serif;bac
       </table>
     </div>
   </div>
+
+  <!-- ========== 損益・Cash予測スケジュール ========== -->
+  <div class="page" id="page-plcash">
+    <!-- 設定バー -->
+    <div class="card no-print" style="padding:16px 22px">
+      <div style="display:flex;gap:20px;align-items:flex-end;flex-wrap:wrap">
+        <div class="fg" style="margin:0;min-width:140px">
+          <label>期首月</label>
+          <select id="pc-start-month" onchange="initPlCash()">
+            <option value="8">8月（7月期）</option>
+            <option value="4">4月（3月期）</option>
+            <option value="1">1月（12月期）</option>
+            <option value="7">7月（6月期）</option>
+            <option value="10">10月（9月期）</option>
+          </select>
+        </div>
+        <div class="fg" style="margin:0;min-width:140px">
+          <label>期首現金残高（万円）</label>
+          <input type="number" id="pc-opening-cash" placeholder="例: 294" step="1" oninput="calcPlCash()">
+        </div>
+        <div class="fg" style="margin:0;min-width:100px">
+          <label>実績月数</label>
+          <select id="pc-actual-months" onchange="calcPlCash()">
+            <option value="0">0（全予測）</option>
+            <option value="1">1ヶ月</option>
+            <option value="2">2ヶ月</option>
+            <option value="3">3ヶ月</option>
+            <option value="4">4ヶ月</option>
+            <option value="5">5ヶ月</option>
+            <option value="6">6ヶ月</option>
+            <option value="7">7ヶ月</option>
+            <option value="8" selected>8ヶ月</option>
+            <option value="9">9ヶ月</option>
+            <option value="10">10ヶ月</option>
+            <option value="11">11ヶ月</option>
+            <option value="12">12（全実績）</option>
+          </select>
+        </div>
+        <button class="btn btn-outline" onclick="clearPlCash()">クリア</button>
+        <button class="btn btn-accent" onclick="fillForecastByAvg()">📈 直近3ヶ月平均で予測</button>
+        <button class="btn btn-outline" id="pc-sync-btn" onclick="showSyncInfo()">🔄 freeeと同期</button>
+        <button class="btn btn-outline" onclick="showCsvImport()">📥 CSV手動取込</button>
+        <button class="btn btn-primary" onclick="calcPlCash()">再計算</button>
+      </div>
+    </div>
+
+    <!-- CSV取込モーダル -->
+    <div id="csv-import-area" style="display:none" class="no-print">
+      <div class="card" style="border:2px dashed var(--accent)">
+        <div class="card-title">freee 月次推移レポート CSV取込</div>
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px">freee会計 → レポート → 月次推移 → CSVエクスポート したデータをここに貼り付けてください。</p>
+        <textarea id="csv-paste" rows="8" style="width:100%;border:1px solid var(--border);border-radius:8px;padding:10px;font-size:12px;font-family:monospace" placeholder="CSVデータをここに貼り付け..."></textarea>
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <button class="btn btn-primary" onclick="importFreeCsv()">取込実行</button>
+          <button class="btn btn-outline" onclick="hideCsvImport()">キャンセル</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- タブ -->
+    <div class="tabs no-print">
+      <div class="tab active" id="pctab-pl"   onclick="pcTab('pl')">📊 損益スケジュール</div>
+      <div class="tab"        id="pctab-cash" onclick="pcTab('cash')">💰 Cashスケジュール</div>
+      <div class="tab"        id="pctab-tax"  onclick="pcTab('tax')">🧾 納税額予測</div>
+    </div>
+
+    <!-- 損益スケジュール -->
+    <div id="pcpanel-pl" class="card" style="overflow-x:auto">
+      <div class="card-title">■ 損益スケジュール（万円）</div>
+      <table class="tbl" id="pl-table" style="font-size:12px;min-width:900px">
+        <thead id="pl-head"></thead>
+        <tbody id="pl-body"></tbody>
+      </table>
+    </div>
+
+    <!-- Cashスケジュール -->
+    <div id="pcpanel-cash" class="card" style="display:none;overflow-x:auto">
+      <div class="card-title">■ Cashスケジュール（万円）</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px">
+        ※ 青字は自動計算（売掛回収=前月売上、社会保険=法定福利費×2）。手動上書き可。
+      </div>
+      <table class="tbl" id="cash-table" style="font-size:12px;min-width:900px">
+        <thead id="cash-head"></thead>
+        <tbody id="cash-body"></tbody>
+      </table>
+      <div class="chart-box" style="height:240px;margin-top:20px"><canvas id="pc-cash-chart"></canvas></div>
+    </div>
+
+    <!-- 納税額予測 -->
+    <div id="pcpanel-tax" class="card" style="display:none">
+      <div class="card-title">■ 納税額予測</div>
+      <div id="pc-tax-result"></div>
+    </div>
+  </div>
+
 </div><!-- /main -->
 
 <!-- 事業者切替モーダル -->
@@ -418,7 +583,8 @@ function switchCompany(id){
   updateSidebarCompany();
   renderCompanyList();
   closeCompanyModal();
-  // キャッシュフローページをリセット
+  // 損益・Cash予測データをリセット（事業者切替時）
+  pcData={};cashData={};
   const cfContainer=document.getElementById('cf-container');
   if(cfContainer){cfContainer.dataset.init='';cfContainer.innerHTML='';}
   if(document.getElementById('page-cashflow')?.classList.contains('active')){initCf();loadCfData();}
@@ -434,12 +600,12 @@ function updateSidebarCompany(){
     nameEl.textContent=c.name;
     typeEl.textContent=c.type+(c.memo?' · '+c.memo:'');
     avatarEl.textContent=c.name.charAt(0);
-    document.title=c.name+' - 税理士ポータル';
+    document.title=c.name+' - FinTax Cloud';
   }else{
     nameEl.textContent='事業者を選択';
     typeEl.textContent='クリックして切替';
     avatarEl.textContent='？';
-    document.title='税理士ポータル';
+    document.title='FinTax Cloud';
   }
 }
 
@@ -488,7 +654,7 @@ function loadClientData(key){
 }
 
 // ===== CORE =====
-const PAGES={dashboard:'ダッシュボード',tax:'税金シミュレーション',executive:'役員報酬シミュレーション',furusato:'ふるさと納税シミュレーション',cashflow:'キャッシュフロー',financial:'財務分析',guide:'法人設立ガイド'};
+const PAGES={dashboard:'ダッシュボード',plcash:'損益・Cash予測スケジュール',tax:'税金シミュレーション',executive:'役員報酬シミュレーション',furusato:'ふるさと納税シミュレーション',cashflow:'キャッシュフロー（簡易）',financial:'財務分析',guide:'法人設立ガイド'};
 
 function nav(id){
   document.querySelectorAll('.page').forEach(e=>e.classList.remove('active'));
@@ -497,6 +663,8 @@ function nav(id){
   document.querySelector(`[data-page="${id}"]`)?.classList.add('active');
   document.getElementById('topbar-title').textContent=PAGES[id]||id;
   if(id==='cashflow')initCf();
+  if(id==='plcash')initPlCash();
+  if(id==='financial')initFinancialBsSelector();
   window.scrollTo(0,0);
 }
 
@@ -766,6 +934,69 @@ function exportCsv(){
 }
 
 // ===== 財務分析 =====
+
+function applyPlToFinancial() {
+  if(!pcData || !Object.keys(pcData).length){
+    alert('損益スケジュールにデータがありません。先にデータを入力してください。');
+    return;
+  }
+  // calc行を計算
+  const d = {...pcData};
+  PL_ROWS.filter(r=>r.calc).forEach(row=>{
+    d[row.key] = Array.from({length:12},(_,i)=>row.fn(d,i));
+  });
+  const sum = k => (d[k]||Array(12).fill(0)).reduce((a,b)=>a+b,0);
+
+  const set = (id, val) => {
+    const el = document.getElementById(id);
+    if(el) el.value = val ? (Math.round(val*10)/10) : '';
+  };
+  set('fa-sales', sum('revenue'));
+  set('fa-cogs',  sum('cogs'));
+  set('fa-op',    sum('op_profit'));
+  set('fa-np',    sum('net'));
+  set('fa-dep',   sum('deprec'));
+  set('fa-int',   sum('int_exp'));
+}
+
+function initFinancialBsSelector() {
+  const sel = document.getElementById('fa-bs-month');
+  if (!sel) return;
+  while (sel.options.length > 1) sel.remove(1);
+  Object.entries(FREEE_ACTUAL_DATA).forEach(([compId, data]) => {
+    if (!data.bs_months) return;
+    data.bs_months.slice().reverse().forEach((bs, idx) => {
+      const opt = document.createElement('option');
+      opt.value = compId + ':' + (data.bs_months.length - 1 - idx);
+      opt.textContent = data.company_name + ' ' + bs.label;
+      sel.appendChild(opt);
+    });
+  });
+}
+
+function applyBsToFinancial() {
+  const sel = document.getElementById('fa-bs-month');
+  const status = document.getElementById('fa-bs-status');
+  if (!sel || !status) return;
+  const val = sel.value;
+  if (!val) { status.textContent = ''; return; }
+  const [compId, idxStr] = val.split(':');
+  const data = FREEE_ACTUAL_DATA[compId];
+  if (!data || !data.bs_months) { status.textContent = 'データなし'; return; }
+  const bs = data.bs_months[parseInt(idxStr)];
+  if (!bs) { status.textContent = 'データなし'; return; }
+  const toMan = v => v ? (Math.round(v / 10000 * 10) / 10) : (v === 0 ? 0 : '');
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+  set('fa-ca',  toMan(bs.ca));
+  set('fa-ta',  toMan(bs.ta));
+  set('fa-cl',  toMan(bs.cl));
+  set('fa-tl',  toMan(bs.tl));
+  set('fa-eq',  toMan(bs.eq));
+  set('fa-rec', toMan(bs.rec));
+  status.textContent = '✓ ' + bs.label + ' のBSデータを反映しました';
+  status.style.color = '#2e7d32';
+}
+
 let radarChart=null;
 function calcFinancial(){
   const ca=+(document.getElementById('fa-ca').value||0)*10000;
@@ -862,8 +1093,853 @@ function resultBox(title,main,rows,noMain=false){
   </div>`;
 }
 
+// ===== freee実績データ（Claudeが同期・更新） =====
+// ※ 「〇〇社のfreeeデータを同期して」とClaudeに頼むと最新データに更新されます
+// キー: 'f' + freeeのcompany_id、月次データは円単位
+const FREEE_ACTUAL_DATA = {
+  'f10848563': {
+    company_name: '株式会社DonDot',
+    freee_id: 10848563,
+    fiscal_year: 2024,
+    start_month: 8,
+    updated_at: '2026-04-08',
+    months: [
+      {month:8, revenue:0,       cogs:0, exec_sal:280000, hoken:55100,  outsource:181556,  entertainment:13992, koukoku:4681,  kaigi:11581, travel:7713,  comm:65044,  supplies:3490,  fee:42240,  rent:164485, deprec:0, hoken_ryou:0, sozei:0,     other_sga:0, int_inc:54,  misc_inc:0,     int_exp:0,     corp_tax:0},
+      {month:9, revenue:717200,  cogs:0, exec_sal:280000, hoken:55100,  outsource:25846,   entertainment:0,     koukoku:21030, kaigi:4965,  travel:0,     comm:19613,  supplies:0,     fee:38337,  rent:161889, deprec:0, hoken_ryou:0, sozei:0,     other_sga:0, int_inc:35,  misc_inc:40000, int_exp:0,     corp_tax:0},
+      {month:10,revenue:619300,  cogs:0, exec_sal:280000, hoken:55100,  outsource:492326,  entertainment:30515, koukoku:25740, kaigi:11665, travel:20607, comm:13770,  supplies:1090,  fee:180465, rent:161889, deprec:0, hoken_ryou:0, sozei:410,   other_sga:0, int_inc:23,  misc_inc:20000, int_exp:0,     corp_tax:0},
+      {month:11,revenue:1057635, cogs:0, exec_sal:280000, hoken:55100,  outsource:812250,  entertainment:47994, koukoku:37710, kaigi:14320, travel:6725,  comm:13645,  supplies:0,     fee:72765,  rent:161900, deprec:0, hoken_ryou:0, sozei:29200, other_sga:0, int_inc:108, misc_inc:20000, int_exp:0,     corp_tax:0},
+      {month:12,revenue:556600,  cogs:0, exec_sal:280000, hoken:40600,  outsource:888552,  entertainment:4100,  koukoku:52260, kaigi:2790,  travel:4324,  comm:37457,  supplies:13980, fee:23600,  rent:161889, deprec:0, hoken_ryou:0, sozei:0,     other_sga:0, int_inc:356, misc_inc:20000, int_exp:0,     corp_tax:0},
+      {month:1, revenue:1388200, cogs:0, exec_sal:280000, hoken:40600,  outsource:1044896, entertainment:7330,  koukoku:37680, kaigi:11470, travel:3481,  comm:33305,  supplies:0,     fee:23160,  rent:161933, deprec:0, hoken_ryou:0, sozei:0,     other_sga:0, int_inc:376, misc_inc:20000, int_exp:25314, corp_tax:0},
+      {month:2, revenue:1006500, cogs:0, exec_sal:280000, hoken:40600,  outsource:1011887, entertainment:6215,  koukoku:21780, kaigi:0,     travel:5187,  comm:32204,  supplies:0,     fee:23160,  rent:162384, deprec:0, hoken_ryou:0, sozei:0,     other_sga:0, int_inc:303, misc_inc:20000, int_exp:8054,  corp_tax:0},
+      {month:3, revenue:1322056, cogs:0, exec_sal:280000, hoken:40502,  outsource:1111121, entertainment:40613, koukoku:39600, kaigi:20768, travel:6555,  comm:32130,  supplies:0,     fee:26036,  rent:161889, deprec:0, hoken_ryou:0, sozei:0,     other_sga:0, int_inc:257, misc_inc:20000, int_exp:8917,  corp_tax:0},
+      {month:4, revenue:910800,  cogs:0, exec_sal:280000, hoken:40502,  outsource:946687,  entertainment:23398, koukoku:19140, kaigi:17990, travel:55634, comm:60677,  supplies:0,     fee:26200,  rent:161889, deprec:0, hoken_ryou:0, sozei:0,     other_sga:0, int_inc:284, misc_inc:20000, int_exp:8630,  corp_tax:0},
+      {month:5, revenue:1420650, cogs:0, exec_sal:280000, hoken:40502,  outsource:1113295, entertainment:1500,  koukoku:66800, kaigi:7558,  travel:7932,  comm:56556,  supplies:0,     fee:89426,  rent:162989, deprec:0, hoken_ryou:0, sozei:0,     other_sga:0, int_inc:426, misc_inc:20000, int_exp:0,     corp_tax:0},
+      {month:6, revenue:1146200, cogs:0, exec_sal:280000, hoken:40502,  outsource:887480,  entertainment:0,     koukoku:8580,  kaigi:8100,  travel:7205,  comm:49735,  supplies:0,     fee:121441, rent:161889, deprec:0, hoken_ryou:0, sozei:55000, other_sga:0, int_inc:399, misc_inc:20000, int_exp:17547, corp_tax:0},
+      {month:7, revenue:1093400, cogs:0, exec_sal:280000, hoken:40502,  outsource:848444,  entertainment:0,     koukoku:87560, kaigi:2910,  travel:9962,  comm:85142,  supplies:0,     fee:97276,  rent:161889, deprec:0, hoken_ryou:9100, sozei:0,   other_sga:0, int_inc:321, misc_inc:20000, int_exp:8917,  corp_tax:70000},
+    ],
+    bs_months: [
+      {month:8,  label:'2025年8月末',  ca:1403945,   ta:1403945,   cl:1007869, tl:6007869, eq:-4603924,  rec:980100},
+      {month:9,  label:'2025年9月末',  ca:186099,    ta:186099,    cl:1062755, tl:6062755, eq:-5876656,  rec:0},
+      {month:10, label:'2025年10月末', ca:139041,    ta:139041,    cl:1374240, tl:6374240, eq:-6235199,  rec:0},
+      {month:11, label:'2025年11月末', ca:387950,    ta:387950,    cl:1329984, tl:6329984, eq:-5942034,  rec:5500},
+      {month:12, label:'2025年12月末', ca:209921,    ta:209921,    cl:1045301, tl:6045301, eq:-5835380,  rec:0},
+      {month:1,  label:'2026年1月末',  ca:-811171,   ta:-811171,   cl:741446,  tl:5741446, eq:-6552617,  rec:0},
+      {month:2,  label:'2026年2月末',  ca:-1478904,  ta:-1478904,  cl:784480,  tl:5784480, eq:-7263384,  rec:0},
+      {month:3,  label:'2026年3月末',  ca:-2256779,  ta:-2256779,  cl:825105,  tl:5825105, eq:-8081884,  rec:0},
+    ]
+  }
+};
+
+// freee実績データをPCデータに適用する関数（Claudeが同期後に呼ばれる）
+function applyFreeeData(companyId){
+  const data = FREEE_ACTUAL_DATA[companyId];
+  if(!data) return false;
+
+  // 期首月設定を合わせる
+  const smSel = document.getElementById('pc-start-month');
+  if(smSel) smSel.value = String(data.start_month);
+
+  // 実績月数をデータから推定（今日の日付と会計年度から）
+  const today = new Date();
+  const fiscalStart = new Date(data.start_month <= 7 ? today.getFullYear() : today.getFullYear()-1, data.start_month-1, 1);
+  const monthsElapsed = Math.min(12, Math.max(0, Math.round((today - fiscalStart)/(1000*60*60*24*30))));
+  const actSel = document.getElementById('pc-actual-months');
+  if(actSel) actSel.value = String(Math.min(monthsElapsed, 12));
+
+  // 月次データをpcDataにロード（円→万円変換）
+  const keyMap = {revenue:'revenue',cogs:'cogs',exec_sal:'exec_sal',hoken:'hoken',outsource:'outsource',
+    entertainment:'entertainment',koukoku:'koukoku',kaigi:'kaigi',travel:'travel',comm:'comm',supplies:'supplies',fee:'fee',
+    rent:'rent',deprec:'deprec',hoken_ryou:'hoken_ryou',sozei:'sozei',other_sga:'other_sga',
+    int_inc:'int_inc',misc_inc:'misc_inc',int_exp:'int_exp',corp_tax:'corp_tax'};
+
+  PL_INPUT_KEYS.forEach(k=>{ pcData[k]=Array(12).fill(0); });
+
+  data.months.forEach((m,i)=>{
+    Object.entries(keyMap).forEach(([src,dst])=>{
+      if(pcData[dst]) pcData[dst][i] = Math.round((m[src]||0)/10000*10)/10;
+    });
+  });
+
+  return true;
+}
+
+// ===== freee連動データ =====
+// ※ Claudeに「freeeと同期して」と頼むと最新データに更新されます
+const FREEE_COMPANIES = [
+  {id:'f75435',     name:'株式会社イアクーム',          type:'法人', memo:'freee連携', freeeId:75435},
+  {id:'f1634436',   name:'株式会社Basedon',              type:'法人', memo:'freee連携', freeeId:1634436},
+  {id:'f2600892',   name:'JDAI株式会社',                 type:'法人', memo:'freee連携', freeeId:2600892},
+  {id:'f2613489',   name:'サオドワ合同会社',             type:'法人', memo:'freee連携', freeeId:2613489},
+  {id:'f2654379',   name:'アルムナイ株式会社',           type:'法人', memo:'freee連携', freeeId:2654379},
+  {id:'f2866995',   name:'株式会社UMEDA',                type:'法人', memo:'freee連携', freeeId:2866995},
+  {id:'f3178074',   name:'株式会社Picture Technology',   type:'法人', memo:'freee連携', freeeId:3178074},
+  {id:'f3378079',   name:'合同会社MASHRIQ',              type:'法人', memo:'freee連携', freeeId:3378079},
+  {id:'f3412881',   name:'合同会社O3-WORKS',             type:'法人', memo:'freee連携', freeeId:3412881},
+  {id:'f3613437',   name:'O3-WORKS',                     type:'法人', memo:'freee連携', freeeId:3613437},
+  {id:'f10136740',  name:'明靖堂',                       type:'その他',memo:'freee連携', freeeId:10136740},
+  {id:'f10156743',  name:'BANDAI TRANSPORT',             type:'法人', memo:'freee連携', freeeId:10156743},
+  {id:'f10189841',  name:'emope合同会社',                type:'法人', memo:'freee連携', freeeId:10189841},
+  {id:'f10256887',  name:'株式会社ミツユビ',             type:'法人', memo:'freee連携', freeeId:10256887},
+  {id:'f10521994',  name:'株式会社vidro',                type:'法人', memo:'freee連携', freeeId:10521994},
+  {id:'f10674585',  name:'門仲STAND',                    type:'その他',memo:'freee連携', freeeId:10674585},
+  {id:'f10848563',  name:'株式会社DonDot',               type:'法人', memo:'freee連携', freeeId:10848563},
+  {id:'f10965531',  name:'芝崎　陸斗',                   type:'個人', memo:'freee連携', freeeId:10965531},
+  {id:'f11032365',  name:'株式会社CyPhoenix',            type:'法人', memo:'freee連携', freeeId:11032365},
+  {id:'f11246202',  name:'TRNK',                         type:'その他',memo:'freee連携', freeeId:11246202},
+  {id:'f11381277',  name:'株式会社テクノナイト',         type:'法人', memo:'freee連携', freeeId:11381277},
+  {id:'f11680616',  name:'株式会社EDUCERE',              type:'法人', memo:'freee連携', freeeId:11680616},
+  {id:'f11732388',  name:'Flock 株式会社',               type:'法人', memo:'freee連携', freeeId:11732388},
+  {id:'f11999385',  name:'泉　雄太',                     type:'個人', memo:'freee連携', freeeId:11999385},
+  {id:'f12022318',  name:'株式会社AIS Consulting',       type:'法人', memo:'freee連携', freeeId:12022318},
+  {id:'f12107730',  name:'LKA合同会社',                  type:'法人', memo:'freee連携', freeeId:12107730},
+  {id:'f12396926',  name:'太田　タイ',                   type:'個人', memo:'freee連携', freeeId:12396926},
+  {id:'f12435534',  name:'髙山　由香',                   type:'個人', memo:'freee連携', freeeId:12435534},
+  {id:'f12435796',  name:'髙山　文子',                   type:'個人', memo:'freee連携', freeeId:12435796},
+  {id:'f12470368',  name:'吹野　生知',                   type:'個人', memo:'freee連携', freeeId:12470368},
+  {id:'f12497141',  name:'近藤　タカ',                   type:'個人', memo:'freee連携', freeeId:12497141},
+  {id:'f12499065',  name:'東　恵理',                     type:'個人', memo:'freee連携', freeeId:12499065},
+];
+
+function syncFreeeCompanies(){
+  const existing = loadCompanies();
+  const existingIds = new Set(existing.map(c=>c.id));
+  let added = 0;
+  const today = new Date().toLocaleDateString('ja-JP');
+  for(const fc of FREEE_COMPANIES){
+    if(!existingIds.has(fc.id)){
+      existing.push({...fc, createdAt: today});
+      added++;
+    }
+  }
+  saveCompanies(existing);
+  return added;
+}
+
+// ===== 損益・Cash予測スケジュール =====
+
+// PL行定義
+const PL_ROWS = [
+  {key:'revenue',    label:'売上高',         cat:'rev',  calc:false, bold:true},
+  {key:'cogs',       label:'売上原価',        cat:'cost', calc:false},
+  {key:'gross',      label:'売上総利益',      cat:'calc', calc:true,  bold:true,
+    fn:(d,i)=>d.revenue[i]-d.cogs[i]},
+  {key:'sep1',       label:'【販売費及び一般管理費】', cat:'head'},
+  {key:'exec_sal',   label:'　役員報酬',      cat:'sga',  calc:false},
+  {key:'salary',     label:'　給料手当',      cat:'sga',  calc:false},
+  {key:'hoken',      label:'　法定福利費',    cat:'sga',  calc:false},
+  {key:'outsource',  label:'　外注費',        cat:'sga',  calc:false},
+  {key:'entertainment',label:'　交際費',      cat:'sga',  calc:false, alertRule:{type:'pct', threshold:5, label:'売上比5%超'}},
+  {key:'koukoku',      label:'　広告宣伝費',  cat:'sga',  calc:false},
+  {key:'kaigi',        label:'　会議費',       cat:'sga',  calc:false},
+  {key:'travel',     label:'　旅費交通費',    cat:'sga',  calc:false},
+  {key:'comm',       label:'　通信費',        cat:'sga',  calc:false},
+  {key:'supplies',   label:'　消耗品費',      cat:'sga',  calc:false},
+  {key:'fee',        label:'　支払手数料',    cat:'sga',  calc:false},
+  {key:'rent',       label:'　地代家賃',      cat:'sga',  calc:false},
+  {key:'deprec',     label:'　減価償却費',    cat:'sga',  calc:false},
+  {key:'hoken_ryou', label:'　保険料',        cat:'sga',  calc:false},
+  {key:'sozei',      label:'　租税公課',      cat:'sga',  calc:false},
+  {key:'other_sga',  label:'　その他販管費',  cat:'sga',  calc:false},
+  {key:'sga_total',  label:'販管費合計',      cat:'calc', calc:true,  bold:true,
+    fn:(d,i)=>['exec_sal','salary','hoken','outsource','entertainment','koukoku','kaigi','travel','comm','supplies','fee','rent','deprec','hoken_ryou','sozei','other_sga'].reduce((s,k)=>s+(d[k]?.[i]||0),0)},
+  {key:'op_profit',  label:'営業利益',        cat:'calc', calc:true,  bold:true,
+    fn:(d,i)=>d.gross[i]-d.sga_total[i]},
+  {key:'sep2',       label:'【営業外損益】',  cat:'head'},
+  {key:'int_inc',    label:'　受取利息',      cat:'non',  calc:false},
+  {key:'misc_inc',   label:'　雑収入',        cat:'non',  calc:false},
+  {key:'int_exp',    label:'　支払利息',      cat:'non',  calc:false},
+  {key:'ord_profit', label:'経常利益',        cat:'calc', calc:true,  bold:true,
+    fn:(d,i)=>d.op_profit[i]+( d.int_inc[i]||0)+(d.misc_inc[i]||0)-(d.int_exp[i]||0)},
+  {key:'corp_tax',   label:'法人税等',        cat:'tax',  calc:false},
+  {key:'net',        label:'当期純利益',      cat:'calc', calc:true,  bold:true,
+    fn:(d,i)=>d.ord_profit[i]-(d.corp_tax[i]||0)},
+];
+
+const PL_INPUT_KEYS = PL_ROWS.filter(r=>!r.calc&&r.cat!=='head').map(r=>r.key);
+
+// Cash行定義
+const CASH_ROWS = [
+  {key:'open',      label:'月初Cash',       bold:true,  auto:false},
+  {key:'sep_in',    label:'【収　入】',      head:true},
+  {key:'ar_coll',   label:'　売掛金回収',    auto:true,  note:'前月売上'},
+  {key:'other_in',  label:'　その他収入',    auto:false},
+  {key:'borrowing', label:'　借入',          auto:false},
+  {key:'in_total',  label:'収入合計',        bold:true,  sum:['ar_coll','other_in','borrowing']},
+  {key:'sep_out',   label:'【支　出】',      head:true},
+  {key:'ap_pay',    label:'　買掛金支払',    auto:true,  note:'前月原価'},
+  {key:'sga_cash',  label:'　通常販管費',    auto:true,  note:'販管費-法定福利費-減価償却'},
+  {key:'corp_pay',  label:'　法人税等支払',  auto:false},
+  {key:'cons_tax',  label:'　消費税支払',    auto:false},
+  {key:'withhold',  label:'　源泉所得税',    auto:false},
+  {key:'res_tax',   label:'　住民税特別徴収',auto:false},
+  {key:'shakai',    label:'　社会保険料',    auto:true,  note:'法定福利費×2'},
+  {key:'loan_rep',  label:'　借入返済',      auto:false},
+  {key:'other_out', label:'　その他支出',    auto:false},
+  {key:'out_total', label:'支出合計',        bold:true,  sum:['ap_pay','sga_cash','corp_pay','cons_tax','withhold','res_tax','shakai','loan_rep','other_out']},
+  {key:'net_chg',   label:'増　減',          bold:true,  diff:['in_total','out_total']},
+  {key:'close',     label:'月末Cash',        bold:true,  closeRow:true},
+];
+
+let pcData = {}; // PL input data: {key: [m0..m11]}
+let cashData = {}; // Cash override data
+let pcCashChart = null;
+
+function getMonths(){
+  const start = +document.getElementById('pc-start-month').value || 8;
+  const months = [];
+  for(let i=0;i<12;i++) months.push(((start-1+i)%12)+1);
+  return months;
+}
+
+function monthLabel(m){ return m+'月'; }
+
+function initPlCash(){
+  // 現在の事業者にfreeeデータがあれば自動ロード
+  const currentId = getCurrentId();
+  const company = getCurrentCompany();
+  if(currentId && FREEE_ACTUAL_DATA[currentId] && !pcData._loaded){
+    pcData._loaded = true;
+    applyFreeeData(currentId);
+  }
+
+  // 同期ボタンの状態更新
+  const syncBtn = document.getElementById('pc-sync-btn');
+  if(syncBtn && company){
+    const hasData = !!FREEE_ACTUAL_DATA[currentId];
+    const updatedAt = FREEE_ACTUAL_DATA[currentId]?.updated_at || '';
+    syncBtn.textContent = hasData ? `🔄 freee同期済 (${updatedAt})` : '🔄 freeeと同期';
+    syncBtn.style.background = hasData ? '#e8f5e9' : '';
+    syncBtn.style.color = hasData ? '#2e7d32' : '';
+    syncBtn.onclick = ()=>showSyncInfo(company, currentId);
+  }
+
+  const months = getMonths();
+  const actualN = +document.getElementById('pc-actual-months').value;
+
+  // ヘッダー生成（PL）
+  const plHead = document.getElementById('pl-head');
+  const cashHead = document.getElementById('cash-head');
+  const hRow = `<tr>
+    <th style="min-width:160px;text-align:left">項目</th>
+    ${months.map((m,i)=>`<th style="min-width:72px;text-align:right;background:${i<actualN?'#1a3a5c':'#2d5f8a'}">${monthLabel(m)}<br><span style="font-size:9px;opacity:.7">${i<actualN?'実績':'予測'}</span></th>`).join('')}
+    <th style="min-width:80px;text-align:right;background:#0d2640">合計</th>
+    <th style="min-width:56px;text-align:right;background:#0d2640">対売上</th>
+  </tr>`;
+  if(plHead) plHead.innerHTML = hRow;
+  if(cashHead) cashHead.innerHTML = `<tr>
+    <th style="min-width:160px;text-align:left">項目</th>
+    ${months.map((m,i)=>`<th style="min-width:72px;text-align:right;background:${i<actualN?'#1a3a5c':'#2d5f8a'}">${monthLabel(m)}<br><span style="font-size:9px;opacity:.7">${i<actualN?'実績':'予測'}</span></th>`).join('')}
+    <th style="min-width:80px;text-align:right;background:#0d2640">合計</th>
+  </tr>`;
+
+  // PL行初期化
+  if(!Object.keys(pcData).length){
+    PL_INPUT_KEYS.forEach(k=>{ if(!pcData[k]) pcData[k]=Array(12).fill(0); });
+  }
+
+  buildPlTable(months, actualN);
+  buildCashTable(months, actualN);
+  calcPlCash();
+}
+
+function buildPlTable(months, actualN){
+  const tbody = document.getElementById('pl-body');
+  if(!tbody) return;
+  let html='';
+  PL_ROWS.forEach(row=>{
+    if(row.cat==='head'){
+      html+=`<tr><td colspan="${12+3}" style="background:#f0f4f8;font-size:11px;font-weight:700;color:#1a3a5c;padding:7px 10px">${row.label}</td></tr>`;
+      return;
+    }
+    const bold = row.bold?'font-weight:700;':'';
+    const bg = row.calc?'background:#f8fafc;':'';
+    html+=`<tr>
+      <td style="${bold}${bg}font-size:12px">`;
+    html+=`${row.label}${row.note?`<span style="font-size:10px;color:#c8a84b;margin-left:4px">${row.note}</span>`:''}`;
+    html+=`</td>`;
+    for(let i=0;i<12;i++){
+      if(row.calc){
+        html+=`<td class="r" id="pl_${row.key}_${i}" style="${bg}font-size:12px;${bold}color:#1a3a5c">-</td>`;
+      } else {
+        const isActual = i<actualN;
+        html+=`<td style="padding:2px"><input type="number" id="pli_${row.key}_${i}" value="${pcData[row.key]?.[i]||''}" placeholder="0" style="width:100%;border:none;border-radius:4px;padding:4px 6px;font-size:12px;text-align:right;font-family:inherit;background:${isActual?'#eef3f9':'#fff'};color:${isActual?'#1a3a5c':'#1e2d3d'}" oninput="onPlInput('${row.key}',${i},this.value)"></td>`;
+      }
+    }
+    html+=`<td class="r" id="pl_${row.key}_tot" style="${bold}${bg}font-size:12px">-</td>`;
+    html+=`<td class="r" id="pl_${row.key}_pct" style="font-size:11px;color:var(--text-muted)"></td>`;
+    html+=`</tr>`;
+
+  });
+  tbody.innerHTML = html;
+}
+
+function buildCashTable(months, actualN){
+  const tbody = document.getElementById('cash-body');
+  if(!tbody) return;
+  let html='';
+  CASH_ROWS.forEach(row=>{
+    if(row.head){
+      html+=`<tr><td colspan="${12+2}" style="background:#f0f4f8;font-size:11px;font-weight:700;color:#1a3a5c;padding:7px 10px">${row.label}</td></tr>`;
+      return;
+    }
+    const bold=row.bold?'font-weight:700;':'';
+    const isCalc=row.sum||row.closeRow||row.diff;
+    html+=`<tr><td style="${bold}font-size:12px">${row.label}${row.note?`<span style="font-size:10px;color:#c8a84b;margin-left:4px">${row.note}</span>`:''}`;
+    html+=`</td>`;
+    for(let i=0;i<12;i++){
+      if(isCalc||row.key==='open'){
+        html+=`<td class="r" id="cash_${row.key}_${i}" style="font-size:12px;${bold}"></td>`;
+      } else {
+        html+=`<td style="padding:2px"><input type="number" id="cashi_${row.key}_${i}" placeholder="自動" style="width:100%;border:none;border-radius:4px;padding:4px 6px;font-size:12px;text-align:right;font-family:inherit;color:#666" oninput="onCashInput('${row.key}',${i},this.value)"></td>`;
+      }
+    }
+    html+=`<td class="r" id="cash_${row.key}_tot" style="${bold}font-size:12px"></td>`;
+    html+=`</tr>`;
+  });
+  tbody.innerHTML=html;
+}
+
+
+function onPlInput(key,idx,val){
+  if(!pcData[key]) pcData[key]=Array(12).fill(0);
+  pcData[key][idx]=parseFloat(val)||0;
+  calcPlCash();
+}
+
+function onCashInput(key,idx,val){
+  if(!cashData[key]) cashData[key]=Array(12).fill(null);
+  cashData[key][idx] = val===''?null:(parseFloat(val)||0);
+  calcPlCash();
+}
+
+function calcPlCash(){
+  const actualN = +document.getElementById('pc-actual-months').value;
+
+  // --- PL計算 ---
+  // 入力値を読み取り
+  PL_INPUT_KEYS.forEach(k=>{
+    if(!pcData[k]) pcData[k]=Array(12).fill(0);
+    for(let i=0;i<12;i++){
+      const el=document.getElementById(`pli_${k}_${i}`);
+      if(el) pcData[k][i]=parseFloat(el.value)||0;
+    }
+  });
+
+  // calc行を計算
+  const d = {...pcData};
+  PL_ROWS.filter(r=>r.calc).forEach(row=>{
+    d[row.key] = Array.from({length:12},(_,i)=>row.fn(d,i));
+  });
+
+  // PL表示
+  PL_ROWS.forEach(row=>{
+    if(row.cat==='head') return;
+    const vals = d[row.key]||Array(12).fill(0);
+    const tot = vals.reduce((a,b)=>a+b,0);
+    for(let i=0;i<12;i++){
+      const el=document.getElementById(`pl_${row.key}_${i}`);
+      if(el) el.textContent = fmtM(vals[i]);
+    }
+    const te=document.getElementById(`pl_${row.key}_tot`);
+    if(te){te.textContent=fmtM(tot);te.style.color=tot<0?'#c62828':'';}
+    const pe=document.getElementById(`pl_${row.key}_pct`);
+    if(pe&&d.revenue){
+      const rev=d.revenue.reduce((a,b)=>a+b,0);
+      pe.textContent=rev?p(tot,rev)+'%':'';
+    }
+  });
+
+  // --- Cash計算 ---
+  const openingCash = (parseFloat(document.getElementById('pc-opening-cash')?.value)||0);
+  const cashCalc = {};
+
+  // 自動計算値（オーバーライドがなければ自動）
+  const auto = {
+    ar_coll: [openingCash,...d.revenue.slice(0,11)], // 前月売上（期首はBS売掛金≒前月売上として期首現金で代用、実際はar入力）
+    ap_pay:  [0,...d.cogs.slice(0,11)],
+    sga_cash: Array.from({length:12},(_,i)=>(d.sga_total[i]||0)-(d.hoken?.[i]||0)-(d.deprec?.[i]||0)),
+    shakai:   Array.from({length:12},(_,i)=>(d.hoken?.[i]||0)*2),
+  };
+
+  // マージ（手動入力 > 自動）
+  CASH_ROWS.filter(r=>!r.head&&!r.sum&&!r.diff&&!r.closeRow&&r.key!=='open').forEach(row=>{
+    cashCalc[row.key]=Array.from({length:12},(_,i)=>{
+      const manual=cashData[row.key]?.[i];
+      if(manual!==null&&manual!==undefined) return manual;
+      return auto[row.key]?.[i]??0;
+    });
+    // inputに自動値を表示
+    for(let i=0;i<12;i++){
+      const el=document.getElementById(`cashi_${row.key}_${i}`);
+      if(el&&(cashData[row.key]?.[i]==null||cashData[row.key]?.[i]===undefined)){
+        el.placeholder=auto[row.key]?.[i]!=null?fmtM(auto[row.key][i]):'0';
+        if(row.auto&&el.value==='') el.style.color='#2d5f8a';
+      }
+    }
+  });
+
+  // sum行
+  CASH_ROWS.filter(r=>r.sum).forEach(row=>{
+    cashCalc[row.key]=Array.from({length:12},(_,i)=>row.sum.reduce((s,k)=>s+(cashCalc[k]?.[i]||0),0));
+  });
+
+  // 月末残高チェーン
+  const closingArr=[];
+  let runningCash=openingCash;
+  cashCalc['open']=[];
+  cashCalc['net_chg']=[];
+  cashCalc['close']=[];
+  for(let i=0;i<12;i++){
+    cashCalc['open'][i]=runningCash;
+    const netChg=(cashCalc['in_total']?.[i]||0)-(cashCalc['out_total']?.[i]||0);
+    cashCalc['net_chg'][i]=netChg;
+    runningCash+=netChg;
+    cashCalc['close'][i]=runningCash;
+    closingArr.push(runningCash);
+  }
+
+  // Cash表示
+  CASH_ROWS.forEach(row=>{
+    if(row.head) return;
+    const vals=cashCalc[row.key]||Array(12).fill(0);
+    const tot=vals.reduce((a,b)=>a+b,0);
+    for(let i=0;i<12;i++){
+      const el=document.getElementById(`cash_${row.key}_${i}`);
+      if(el){
+        el.textContent=fmtM(vals[i]);
+        el.style.color=vals[i]<0?'#c62828':'';
+      }
+    }
+    const te=document.getElementById(`cash_${row.key}_tot`);
+    if(te){
+      te.textContent=row.key==='open'||row.key==='close'?fmtM(closingArr[11]):fmtM(tot);
+      te.style.color=(row.key==='open'||row.key==='close')&&closingArr[11]<0?'#c62828':'';
+    }
+  });
+
+  // Cash残高グラフ
+  renderPcCashChart(getMonths().map(monthLabel), closingArr);
+
+  // 納税額予測
+  calcTaxForecast(d, cashCalc);
+
+  // アラート判定
+  checkAnomalies(d);
+}
+
+function calcTaxForecast(d, cashCalc){
+  const el=document.getElementById('pc-tax-result');
+  if(!el) return;
+
+  const annualRev  = d.revenue.reduce((a,b)=>a+b,0);
+  const annualCogs = d.cogs.reduce((a,b)=>a+b,0);
+  const annualSga  = d.sga_total.reduce((a,b)=>a+b,0);
+  const annualNet  = d.net.reduce((a,b)=>a+b,0); // 万円
+
+  // ── 法人税等（中小企業・資本金1億円以下の税率を適用） ──
+  const p = annualNet * 10000; // 円
+  let ct=0,lct=0,rct=0,bt=0,sbt=0,corpTaxTotal=0;
+  if(p > 0){
+    ct  = Math.floor(Math.min(p,8000000)*.15 + Math.max(0,p-8000000)*.232);
+    lct = Math.floor(ct*.103);
+    rct = Math.floor(ct*.207);
+    bt  = Math.floor(Math.min(p,4000000)*.035 + Math.min(Math.max(0,p-4000000),4000000)*.053 + Math.max(0,p-8000000)*.07);
+    sbt = Math.floor(bt*.372);
+    corpTaxTotal = ct+lct+rct+bt+sbt;
+  }
+  const effRate = p>0 ? (corpTaxTotal/p*100).toFixed(1) : '—';
+
+  // すでにスケジュール上で計上済みの法人税（corp_taxフィールド）を差し引いて追加納付額を算出
+  const corpTaxScheduled = d.corp_tax ? d.corp_tax.reduce((a,b)=>a+b,0)*10000 : 0;
+  const corpTaxRemain = Math.max(corpTaxTotal - corpTaxScheduled, 0);
+
+  // ── 消費税（原則課税・概算） ──
+  const taxableExp = (annualCogs+annualSga)*10000;
+  const consTaxPaid = (cashCalc.cons_tax||[]).reduce((a,b)=>a+b,0)*10000;
+  const consTaxEst = Math.max((annualRev*10000/1.1*0.1)-(taxableExp/1.1*0.1)-consTaxPaid, 0);
+
+  // ── 源泉・住民税・社保（スケジュール入力値の合計） ──
+  const withholdTotal = (cashCalc.withhold||[]).reduce((a,b)=>a+b,0)*10000;
+  const resTaxTotal   = (cashCalc.res_tax  ||[]).reduce((a,b)=>a+b,0)*10000;
+  const shakaiTotal   = (cashCalc.shakai   ||[]).reduce((a,b)=>a+b,0)*10000;
+
+  const shakaiCompany  = Math.round(shakaiTotal/2); // 会社負担分（労使折半）
+  const shakaiEmployee = Math.round(shakaiTotal/2); // 従業員負担分（天引き）
+  const totalBurden = corpTaxTotal+consTaxEst+shakaiCompany; // 会社実負担（源泉・住民税・従業員社保は除く）
+  const totalRemit  = withholdTotal+resTaxTotal+shakaiEmployee; // 天引き納付分合計（参考）
+  const netAfterTax = p - corpTaxTotal;
+
+  // 納付月（決算月の翌々月）
+  const settleMon = document.getElementById('pc-start-month') ? (((+document.getElementById('pc-start-month').value||8)+11)%12+1) : 9;
+  const settleMonLabel = settleMon + '月';
+  const midMonLabel = (((settleMon-2+12-6)%12)+1) + '月';
+  const withholdMon = Math.round(withholdTotal/12);
+  const resTaxMon   = Math.round(resTaxTotal/12);
+  const consMid     = Math.round(consTaxEst/2);
+
+  el.innerHTML=`
+    <!-- バナー -->
+    <div class="tax-banner">
+      <div>
+        <div class="tb-lbl">会社負担 税・社保（年間予測）</div>
+        <div class="tb-amt">${fmt(totalBurden)} <span>円</span></div>
+        <div class="tb-net" style="margin-top:6px;opacity:.6;font-size:11px">＋天引き納付（参考）源泉 ${fmt(withholdTotal)}円 ／ 住民税 ${fmt(resTaxTotal)}円 ／ 社保(従業員) ${fmt(shakaiEmployee)}円</div>
+      </div>
+      <div>
+        <div class="tb-eff-lbl">実効税率</div>
+        <div class="tb-eff-val">${p>0?effRate:'—'}%</div>
+        <div class="tb-net">税引後利益 ${fmt(netAfterTax)}円</div>
+      </div>
+    </div>
+
+    <!-- 3カード -->
+    <div class="tax-cards">
+      <div class="tax-card">
+        <div class="tax-card-hd"><div class="tax-ic corp">🏛️</div><div class="tax-card-name">法人税等</div></div>
+        <div class="tax-card-total red">${fmt(corpTaxTotal)}円</div>
+        <div class="tax-row"><span>法人税（軽減15%/23.2%）</span><b>${fmt(ct)}円</b></div>
+        <div class="tax-row"><span>地方法人税</span><b>${fmt(lct)}円</b></div>
+        <div class="tax-row"><span>法人住民税</span><b>${fmt(rct)}円</b></div>
+        <div class="tax-row"><span>事業税</span><b>${fmt(bt)}円</b></div>
+        <div class="tax-row"><span>特別法人事業税</span><b>${fmt(sbt)}円</b></div>
+        ${corpTaxRemain>0?`<div class="tax-tag">⚡ 期末追加納付 ${fmt(corpTaxRemain)}円</div>`:''}
+      </div>
+      <div class="tax-card">
+        <div class="tax-card-hd"><div class="tax-ic cons">🧾</div><div class="tax-card-name">消費税（原則課税）</div></div>
+        <div class="tax-card-total org">${fmt(consTaxEst)}円</div>
+        <div class="tax-row"><span>課税売上（税抜）</span><b>${fmt(annualRev*10000/1.1)}円</b></div>
+        <div class="tax-row"><span>仕入税額控除</span><b>▲ ${fmt((annualCogs+annualSga)*10000/1.1*0.1)}円</b></div>
+        <div class="tax-row"><span>納付消費税（概算）</span><b>${fmt(consTaxEst)}円</b></div>
+      </div>
+      <div class="tax-card">
+        <div class="tax-card-hd"><div class="tax-ic sal">👥</div><div class="tax-card-name">給与関連税・社保</div></div>
+        <div class="tax-card-total blue">${fmt(shakaiCompany)}円</div>
+        <div class="tax-row" style="border-bottom:1px solid #f0f4f8"><span>社会保険料（会社負担）</span><b>${fmt(shakaiCompany)}円</b></div>
+        <div class="tax-ref-hd">▼ 天引き納付（参考・会社負担外）</div>
+        <div class="tax-row-ref"><span>源泉所得税（年間）</span><b>${fmt(withholdTotal)}円</b></div>
+        <div class="tax-row-ref"><span>住民税特別徴収</span><b>${fmt(resTaxTotal)}円</b></div>
+        <div class="tax-row-ref"><span>社会保険料（従業員負担）</span><b>${fmt(shakaiEmployee)}円</b></div>
+      </div>
+    </div>
+
+    <!-- タイムライン -->
+    <div class="tax-tl-card">
+      <div class="tax-tl-title">📅 年間納付スケジュール</div>
+      <div class="tax-tl">
+        ${withholdTotal>0?`<div class="tax-tl-ev">
+          <div class="tax-tl-dot" style="background:#1565c0"></div>
+          <span class="tax-tl-m">毎月</span>
+          <span class="tax-tl-n">源泉所得税 納付</span>
+          <span class="tax-tl-a" style="color:#1565c0">${fmt(withholdMon)}円/月</span>
+          <span></span><span class="tax-tl-note">給与・役員報酬の翌月10日まで</span>
+        </div>`:''}
+        ${resTaxTotal>0?`<div class="tax-tl-ev">
+          <div class="tax-tl-dot" style="background:#6a1b9a"></div>
+          <span class="tax-tl-m">毎月</span>
+          <span class="tax-tl-n">住民税特別徴収 納付</span>
+          <span class="tax-tl-a" style="color:#6a1b9a">${fmt(resTaxMon)}円/月</span>
+          <span></span><span class="tax-tl-note">翌月10日まで</span>
+        </div>`:''}
+        <div class="tax-tl-ev">
+          <div class="tax-tl-dot" style="background:#90a4ae"></div>
+          <span class="tax-tl-m">${midMonLabel}</span>
+          <span class="tax-tl-n">法人税等 中間申告</span>
+          <span class="tax-tl-a" style="color:#90a4ae">前期実績による</span>
+          <span></span><span class="tax-tl-note">前期法人税×50%（前期実績ある場合）</span>
+        </div>
+        ${consTaxEst>0?`<div class="tax-tl-ev">
+          <div class="tax-tl-dot" style="background:#f57c00"></div>
+          <span class="tax-tl-m">${midMonLabel}</span>
+          <span class="tax-tl-n">消費税 中間申告・納付</span>
+          <span class="tax-tl-a" style="color:#f57c00">${fmt(consMid)}円</span>
+          <span></span><span class="tax-tl-note">前年消費税の50%（概算）</span>
+        </div>`:''}
+        ${corpTaxTotal>0?`<div class="tax-tl-ev">
+          <div class="tax-tl-dot" style="background:#e53935"></div>
+          <span class="tax-tl-m">${settleMonLabel}</span>
+          <span class="tax-tl-n">法人税等 確定申告・納付</span>
+          <span class="tax-tl-a" style="color:#e53935">${fmt(corpTaxRemain)}円</span>
+          <span></span><span class="tax-tl-note">決算月の翌々月末（期末追加納付）</span>
+        </div>`:''}
+        ${consTaxEst>0?`<div class="tax-tl-ev">
+          <div class="tax-tl-dot" style="background:#f57c00"></div>
+          <span class="tax-tl-m">${settleMonLabel}</span>
+          <span class="tax-tl-n">消費税 確定申告・納付</span>
+          <span class="tax-tl-a" style="color:#f57c00">${fmt(consMid)}円</span>
+          <span></span><span class="tax-tl-note">決算月の翌々月末</span>
+        </div>`:''}
+      </div>
+    </div>
+    <div class="alert alert-warn" style="margin-top:12px;font-size:11px">
+      ⚠️ 中小企業（資本金1億円以下）の税率を適用。欠損金繰越控除・税額控除・均等割は考慮外。消費税は原則課税の概算。
+    </div>`;
+}
+
+function renderPcCashChart(labels, data){
+  const ctx=document.getElementById('pc-cash-chart');
+  if(!ctx) return;
+  if(pcCashChart) pcCashChart.destroy();
+  pcCashChart=new Chart(ctx,{
+    type:'bar',
+    data:{
+      labels,
+      datasets:[
+        {type:'line',label:'月末Cash残高',data:data,borderColor:'#1a3a5c',backgroundColor:'rgba(26,58,92,0.1)',borderWidth:2,pointRadius:4,fill:true,yAxisID:'y'},
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,
+      scales:{y:{title:{display:true,text:'万円'},ticks:{callback:v=>v.toLocaleString()+'万'}}},
+      plugins:{legend:{position:'top'}}}
+  });
+}
+
+function fmtM(v){ // 万円単位でフォーマット
+  if(v===null||v===undefined) return '-';
+  const r=Math.round(v);
+  return r===0?'-':r.toLocaleString('ja-JP');
+}
+
+function pcTab(t){
+  ['pl','cash','tax'].forEach(id=>{
+    document.getElementById(`pctab-${id}`)?.classList.toggle('active',id===t);
+    const panel=document.getElementById(`pcpanel-${id}`);
+    if(panel) panel.style.display=id===t?'block':'none';
+  });
+}
+
+function clearPlCash(){
+  pcData={};cashData={};
+  PL_INPUT_KEYS.forEach(k=>{
+    for(let i=0;i<12;i++){
+      const el=document.getElementById(`pli_${k}_${i}`);
+      if(el) el.value='';
+    }
+  });
+  calcPlCash();
+}
+
+function fillForecastByAvg(){
+  const actualN = +document.getElementById('pc-actual-months').value;
+  if(actualN < 1){ alert('実績月数が0です。freeeデータを取込んでから実行してください。'); return; }
+
+  const n = Math.min(3, actualN); // 直近3ヶ月（実績が3未満なら全実績）
+  let filled = 0;
+
+  PL_INPUT_KEYS.forEach(key=>{
+    if(!pcData[key]) return;
+    // 直近n ヶ月の平均を計算
+    const recentVals = pcData[key].slice(actualN - n, actualN);
+    const avg = recentVals.reduce((a,b)=>a+b,0) / n;
+    const rounded = Math.round(avg * 10) / 10; // 小数1桁
+
+    // 予測月（actualN以降）に埋める（手動入力済みはスキップ）
+    for(let i = actualN; i < 12; i++){
+      const el = document.getElementById(`pli_${key}_${i}`);
+      if(!el) continue;
+      // 既に手動入力されている場合はスキップ
+      if(el.value !== '' && el.dataset.manual === '1') continue;
+      el.value = rounded || '';
+      el.dataset.manual = '0'; // 自動入力フラグ
+      pcData[key][i] = rounded;
+      filled++;
+    }
+  });
+
+  // 手動上書きを検知するイベント追加（初回のみ）
+  if(!document._avgOverrideSet){
+    document._avgOverrideSet = true;
+    document.addEventListener('input', e=>{
+      if(e.target?.id?.startsWith('pli_')) e.target.dataset.manual = '1';
+    });
+  }
+
+  calcPlCash();
+  // フラッシュ表示
+  const btn = event.target;
+  const orig = btn.textContent;
+  btn.textContent = `✅ ${12 - actualN}ヶ月分を入力しました`;
+  btn.style.background = '#2e7d32';
+  btn.style.color = '#fff';
+  setTimeout(()=>{ btn.textContent = orig; btn.style.background=''; btn.style.color=''; }, 2500);
+}
+
+// ===== アラート判定 =====
+const ALERT_RULES = {
+  // 売上比しきい値（%）: 超えたら赤アラート
+  entertainment: {pct: 5,  label:'交際費'},
+  outsource:     {pct: 80, label:'外注費'},
+  // 他は他月比2倍でオレンジアラート（全科目共通）
+};
+
+function checkAnomalies(d){
+  const alerts = [];
+  const months = getMonths();
+  const actualN = +document.getElementById('pc-actual-months').value;
+
+  // まず全セルのハイライトをリセット
+  document.querySelectorAll('[data-alert]').forEach(el=>{
+    el.classList.remove('cell-warn','cell-alert');
+    el.removeAttribute('data-tip');
+    el.removeAttribute('data-alert');
+    const icon = el.querySelector('.alert-icon');
+    if(icon) icon.remove();
+  });
+
+  PL_INPUT_KEYS.forEach(key=>{
+    const row = PL_ROWS.find(r=>r.key===key);
+    if(!row || row.cat==='head') return;
+    const vals = d[key];
+    if(!vals) return;
+
+    // 全月の非ゼロ値
+    const nonZero = vals.filter(v=>v>0);
+    if(!nonZero.length) return;
+    const avg = nonZero.reduce((a,b)=>a+b,0) / nonZero.length;
+
+    for(let i=0; i<12; i++){
+      const v = vals[i];
+      if(!v || v <= 0) continue;
+
+      const cell = document.getElementById(`pli_${key}_${i}`) ||
+                   document.getElementById(`pl_${key}_${i}`);
+      if(!cell) continue;
+
+      const td = cell.closest('td') || cell.parentElement;
+      const rev = d.revenue?.[i] || 0;
+      const monthLabel2 = months[i]+'月';
+      let isAlert = false, isWarn = false, tip = '';
+
+      // ①売上比ルール（赤）
+      const rule = ALERT_RULES[key];
+      if(rule && rev > 0){
+        const pct = v / rev * 100;
+        if(pct >= rule.pct){
+          isAlert = true;
+          tip = `売上比 ${pct.toFixed(1)}%（${rule.pct}%超）`;
+        }
+      }
+
+      // ②他月比ルール（オレンジ）- 平均の2倍以上
+      if(!isAlert && nonZero.length >= 2){
+        // この月を除いた平均
+        const othersAvg = nonZero.filter((_,j)=>d[key][j]!==v || j!==i);
+        const otherMean = othersAvg.length
+          ? othersAvg.reduce((a,b)=>a+b,0)/othersAvg.length : avg;
+        if(otherMean > 0 && v >= otherMean * 2){
+          isWarn = true;
+          tip = `他月平均比 ${(v/otherMean).toFixed(1)}倍（平均 ${Math.round(otherMean*10)/10}万円）`;
+        }
+      }
+
+      if(isAlert || isWarn){
+        td.classList.add(isAlert ? 'cell-alert' : 'cell-warn');
+        td.setAttribute('data-tip', tip);
+        td.setAttribute('data-alert','1');
+        // アイコン挿入（重複防止）
+        if(!td.querySelector('.alert-icon')){
+          const icon = document.createElement('span');
+          icon.className='alert-icon';
+          icon.textContent = isAlert ? '🔴' : '🟠';
+          td.prepend(icon);
+        }
+        const label = row.label.replace(/^　/,'');
+        alerts.push({
+          type: isAlert ? 'alert' : 'warn',
+          msg: `${label} ${monthLabel2}：${tip}`,
+        });
+      }
+    }
+  });
+
+}
+
+function showCsvImport(){ document.getElementById('csv-import-area').style.display='block'; }
+function hideCsvImport(){ document.getElementById('csv-import-area').style.display='none'; }
+
+function showSyncInfo(){
+  const company = getCurrentCompany();
+  const currentId = getCurrentId();
+  const hasData = !!FREEE_ACTUAL_DATA[currentId];
+  const updatedAt = FREEE_ACTUAL_DATA[currentId]?.updated_at || 'なし';
+  const name = company?.name || '（事業者未選択）';
+  const msg = `${name} のfreeeデータを同期して`;
+
+  const html = `<div style="position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;display:flex;align-items:center;justify-content:center" onclick="this.remove()">
+    <div style="background:#fff;border-radius:16px;padding:28px;max-width:460px;width:95%;box-shadow:0 20px 60px rgba(0,0,0,.2)" onclick="event.stopPropagation()">
+      <h3 style="font-size:16px;color:#1a3a5c;margin-bottom:6px">🔄 freee同期について</h3>
+      <p style="font-size:12px;color:#6b7a8d;margin-bottom:18px">現在の事業者: <strong>${name}</strong>${hasData?` (最終同期: ${updatedAt})`:'（未同期）'}</p>
+      <div style="background:#f4f6f9;border-radius:10px;padding:16px;margin-bottom:18px">
+        <p style="font-size:12px;color:#1e2d3d;margin-bottom:10px">以下のメッセージをClaudeに送ると、freeeから最新の月次データを取り込んでファイルを更新します：</p>
+        <div style="background:#1a3a5c;color:#fff;border-radius:8px;padding:12px;font-size:13px;font-weight:600;cursor:pointer" id="sync-msg-box" onclick="copySyncMsg('${msg}')">
+          ${msg}
+          <span style="font-size:10px;opacity:.6;display:block;margin-top:4px">クリックでコピー</span>
+        </div>
+      </div>
+      <p style="font-size:11px;color:#6b7a8d;">同期後はGitHubに index.html を再アップロードしてください。</p>
+      <button onclick="this.closest('[style*=fixed]').remove()" style="margin-top:16px;padding:8px 20px;background:#1a3a5c;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:13px">閉じる</button>
+    </div>
+  </div>`;
+  document.body.insertAdjacentHTML('beforeend', html);
+}
+
+function copySyncMsg(msg){
+  navigator.clipboard.writeText(msg).then(()=>{
+    const el = document.getElementById('sync-msg-box');
+    if(el){ el.style.background='#2e7d32'; el.querySelector('span').textContent='コピーしました！'; }
+  });
+}
+
+function importFreeCsv(){
+  const raw = document.getElementById('csv-paste').value;
+  const lines = raw.split('\n').map(l=>l.split(',').map(s=>s.replace(/"/g,'').trim()));
+
+  // freee月次推移CSVのパース（勘定科目名→PL行キーのマッピング）
+  const MAP = {
+    '売上高':['revenue'],'売上原価':['cogs'],
+    '役員報酬':['exec_sal'],'給料手当':['salary'],'法定福利費':['hoken'],
+    '外注費':['outsource'],'旅費交通費':['travel'],'通信費':['comm'],
+    '消耗品費':['supplies'],'支払手数料':['fee'],'地代家賃':['rent'],
+    '減価償却費':['deprec'],'受取利息':['int_inc'],'雑収入':['misc_inc'],
+    '支払利息':['int_exp'],'法人税等':['corp_tax'],
+  };
+
+  let imported=0;
+  lines.forEach(cols=>{
+    if(cols.length<3) return;
+    const acctName = cols[0]||cols[1]||'';
+    const keys = MAP[acctName];
+    if(!keys) return;
+    keys.forEach(key=>{
+      if(!pcData[key]) pcData[key]=Array(12).fill(0);
+      // freeeCSV: 先頭2列が科目名系、以降が月次データ
+      let monthIdx=0;
+      for(let c=2;c<cols.length&&monthIdx<12;c++){
+        const v=parseFloat(cols[c].replace(/,/g,''))||0;
+        pcData[key][monthIdx]=Math.abs(v)/10000; // 万円に変換
+        monthIdx++;
+      }
+      imported++;
+    });
+  });
+
+  if(imported>0){
+    initPlCash();
+    hideCsvImport();
+    alert(`${imported}項目を取込みました`);
+  } else {
+    alert('取込できませんでした。freeeの月次推移CSVをご確認ください。');
+  }
+}
+
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded',()=>{
+  // freee事業者を自動インポート（初回のみ）
+  const imported = syncFreeeCompanies();
+  if(imported > 0 && !getCurrentId()){
+    // 最初の事業者を選択状態にする
+    const list = loadCompanies();
+    if(list.length) setCurrentId(list[0].id);
+  }
   updateSidebarCompany();
   nav('dashboard');
   initGuide();
