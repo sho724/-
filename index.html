@@ -95,6 +95,10 @@ body{font-family:'Hiragino Kaku Gothic ProN','Meiryo','Yu Gothic',sans-serif;bac
 /* RESULT */
 .result-box{background:linear-gradient(135deg,var(--primary),var(--primary-light));border-radius:12px;padding:22px 26px;color:#fff;margin-top:18px}
 
+/* Column tooltip badge */
+.col-tip{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,.25);color:#fff;font-size:9px;font-weight:700;cursor:help;margin-left:3px;vertical-align:middle;flex-shrink:0}
+#col-tooltip{position:fixed;display:none;background:#1a3a5c;color:#fff;font-size:10px;font-weight:400;line-height:1.7;white-space:pre;padding:8px 11px;border-radius:7px;box-shadow:0 4px 14px rgba(0,0,0,.28);z-index:9999;pointer-events:none;font-family:'Hiragino Kaku Gothic ProN','Meiryo',sans-serif}
+
 /* 納税額予測 */
 .tax-banner{background:linear-gradient(135deg,#1a3a5c,#2a5298);border-radius:14px;padding:22px 26px;color:#fff;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;box-shadow:0 6px 20px rgba(26,58,92,.2)}
 .tax-banner .tb-lbl{font-size:11px;opacity:.65;letter-spacing:.05em;margin-bottom:6px}
@@ -118,6 +122,19 @@ body{font-family:'Hiragino Kaku Gothic ProN','Meiryo','Yu Gothic',sans-serif;bac
 .tax-row-ref:last-of-type{border:none}
 .tax-row-ref b{color:#bbb;font-weight:500}
 .tax-ref-hd{font-size:9.5px;color:#ccc;letter-spacing:.05em;margin:6px 0 2px;padding-top:4px;border-top:1px solid #f0f4f8}
+.cash-tip{position:relative;display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:#c8a84b;color:#fff;font-size:9px;font-weight:700;margin-left:5px;cursor:default;vertical-align:middle}
+.cash-tip .cash-tip-box{display:none;position:absolute;left:18px;top:-4px;background:#1a3a5c;color:#fff;font-size:10px;font-weight:400;padding:5px 9px;border-radius:6px;white-space:nowrap;z-index:99;box-shadow:0 2px 8px rgba(0,0,0,.2);line-height:1.6}
+.cash-tip:hover .cash-tip-box{display:block}
+.tax-sched-tbl{width:100%;border-collapse:collapse;font-size:11px}
+.tax-sched-tbl th{background:#f5f7fa;color:#555;font-weight:600;padding:6px 8px;text-align:center;border-bottom:2px solid #dde3ec;white-space:nowrap}
+.tax-sched-tbl td{padding:5px 8px;text-align:center;border-bottom:1px solid #f0f4f8;vertical-align:middle}
+.tax-sched-tbl td.ts-m{font-weight:600;color:#1a3a5c;text-align:left;white-space:nowrap}
+.ts-hot{display:inline-block;background:#fff0f0;color:#e53935;font-weight:700;padding:2px 7px;border-radius:6px;font-size:11px}
+.ts-inp{width:72px;border:1px solid #dde3ec;border-radius:4px;padding:2px 5px;font-size:11px;text-align:right;font-family:inherit;background:#fff}
+.ts-inp-ref{color:#999}
+.ts-mid{display:inline-block;background:#fff8e8;color:#f57c00;font-weight:600;padding:2px 7px;border-radius:6px;font-size:10px;line-height:1.5;text-align:center}
+.ts-reg{display:inline-block;color:#1565c0;font-size:11px}
+.ts-ref{display:inline-block;color:#bbb;font-size:11px}
 .tax-tag{display:inline-block;background:#fff3e0;color:#e65100;font-size:10px;font-weight:700;padding:2px 9px;border-radius:16px;margin-top:7px}
 .tax-tl-card{background:#fff;border-radius:12px;padding:16px 18px;box-shadow:0 2px 8px rgba(0,0,0,.07)}
 .tax-tl-title{font-size:11px;font-weight:700;color:#888;letter-spacing:.06em;margin-bottom:12px}
@@ -193,9 +210,9 @@ body{font-family:'Hiragino Kaku Gothic ProN','Meiryo','Yu Gothic',sans-serif;bac
 .cell-warn-text{color:#e65100!important;font-weight:700}
 .cell-alert-text{color:#c62828!important;font-weight:700}
 .alert-icon{font-size:9px;cursor:help;position:absolute;left:4px;top:50%;transform:translateY(-50%);line-height:1}
-[data-tip]{position:relative}
-[data-tip]:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1a3a5c;color:#fff;font-size:11px;padding:6px 10px;border-radius:6px;white-space:nowrap;z-index:999;pointer-events:none;line-height:1.4}
-[data-tip]:hover::before{content:'';position:absolute;bottom:calc(100% + 1px);left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#1a3a5c;z-index:999}
+[data-tip]:not(.col-tip){position:relative}
+[data-tip]:not(.col-tip):hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1a3a5c;color:#fff;font-size:11px;padding:6px 10px;border-radius:6px;white-space:nowrap;z-index:999;pointer-events:none;line-height:1.4}
+[data-tip]:not(.col-tip):hover::before{content:'';position:absolute;bottom:calc(100% + 1px);left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#1a3a5c;z-index:999}
 .anomaly-box{border-radius:10px;padding:12px 16px;margin-bottom:14px;font-size:12px;line-height:1.8;border-left:4px solid #e65100;background:#fff8f0}
 .anomaly-box.no-alert{border-left-color:#2e7d32;background:#f0fff4}
 .anomaly-item{display:flex;align-items:baseline;gap:6px}
@@ -233,10 +250,8 @@ body{font-family:'Hiragino Kaku Gothic ProN','Meiryo','Yu Gothic',sans-serif;bac
   <div class="sb-label">予測・スケジュール</div>
   <div class="nav-item" data-page="plcash"    onclick="nav('plcash')"><span class="ic">📋</span>損益・Cash予測</div>
   <div class="sb-label">シミュレーション</div>
-  <div class="nav-item" data-page="tax"       onclick="nav('tax')"><span class="ic">🧮</span>税金シミュレーション</div>
   <div class="nav-item" data-page="executive" onclick="nav('executive')"><span class="ic">👔</span>役員報酬</div>
   <div class="nav-item" data-page="furusato"  onclick="nav('furusato')"><span class="ic">🎁</span>ふるさと納税</div>
-  <div class="nav-item" data-page="cashflow"  onclick="nav('cashflow')"><span class="ic">💰</span>キャッシュフロー（簡易）</div>
   <div class="sb-label">分析・ガイド</div>
   <div class="nav-item" data-page="financial" onclick="nav('financial')"><span class="ic">📊</span>財務分析</div>
   <div class="nav-item" data-page="guide"     onclick="nav('guide')"><span class="ic">🏢</span>法人設立ガイド</div>
@@ -258,66 +273,180 @@ body{font-family:'Hiragino Kaku Gothic ProN','Meiryo','Yu Gothic',sans-serif;bac
     <div class="alert alert-info">📌 このツールは<strong>税理士専用</strong>です。結果は印刷してクライアントへご提供ください。</div>
     <div class="dash-grid">
       <div class="dc" onclick="nav('plcash')" style="grid-column:span 3;border-color:var(--accent)"><span class="badge b-in">メイン機能</span><div class="ic">📋</div><h3>損益・Cash予測スケジュール</h3><p>Excelと同じロジックで損益予測・納税額予測・月次Cashフローを一括管理。freee CSV取込対応。</p></div>
-      <div class="dc" onclick="nav('tax')"><span class="badge b-in">内部専用</span><div class="ic">🧮</div><h3>税金シミュレーション</h3><p>個人所得税・法人税の試算。</p></div>
       <div class="dc" onclick="nav('executive')"><span class="badge b-in">内部専用</span><div class="ic">👔</div><h3>役員報酬シミュレーション</h3><p>個人税・社保・法人税の合計負担を比較。</p></div>
       <div class="dc" onclick="nav('furusato')"><span class="badge b-pub">共有可</span><div class="ic">🎁</div><h3>ふるさと納税</h3><p>控除上限額をPDFでクライアントへ。</p></div>
-      <div class="dc" onclick="nav('cashflow')"><span class="badge b-in">内部専用</span><div class="ic">💰</div><h3>キャッシュフロー</h3><p>月次CF表を作成・グラフ化。</p></div>
       <div class="dc" onclick="nav('financial')"><span class="badge b-in">内部専用</span><div class="ic">📊</div><h3>財務分析</h3><p>BS/PLから財務指標を自動算出。</p></div>
       <div class="dc" onclick="nav('guide')"><span class="badge b-pub">共有可</span><div class="ic">🏢</div><h3>法人設立ガイド</h3><p>設立から開業までのステップ解説。</p></div>
     </div>
   </div>
 
-  <!-- 税金シミュレーション -->
-  <div class="page" id="page-tax">
-    <div class="tabs no-print">
-      <div class="tab active" id="tab-personal" onclick="switchTab('personal')">個人（給与所得）</div>
-      <div class="tab" id="tab-corporate" onclick="switchTab('corporate')">法人</div>
-    </div>
-    <div class="tp active" id="tp-personal">
-      <div class="card">
-        <div class="card-title">個人所得税・住民税シミュレーション</div>
-        <div class="fg2">
-          <div class="fg"><label>給与収入（万円）</label><input type="number" id="pt-income" placeholder="例: 800" step="10"></div>
-          <div class="fg"><label>配偶者</label><select id="pt-haifusha"><option value="0">なし</option><option value="1">あり（控除対象）</option></select></div>
-          <div class="fg"><label>扶養親族数（16歳以上）</label><input type="number" id="pt-dependents" placeholder="0" min="0"></div>
-          <div class="fg"><label>社会保険料（万円）</label><input type="number" id="pt-insurance" placeholder="例: 120"><span class="hint">給与の約14〜15%が目安</span></div>
-          <div class="fg"><label>ふるさと納税額（万円）</label><input type="number" id="pt-furusato" placeholder="0"></div>
-        </div>
-        <div class="no-print" style="margin-top:8px"><button class="btn btn-primary" onclick="calcPersonalTax()">計算する</button></div>
-        <div id="pt-result"></div>
-      </div>
-    </div>
-    <div class="tp" id="tp-corporate">
-      <div class="card">
-        <div class="card-title">法人税等シミュレーション（中小企業）</div>
-        <div class="fg2">
-          <div class="fg"><label>課税所得（万円）</label><input type="number" id="ct-profit" placeholder="例: 1000" step="10"></div>
-          <div class="fg"><label>資本金（万円）</label><input type="number" id="ct-capital" placeholder="例: 300"><span class="hint">1億円超は大法人税率</span></div>
-        </div>
-        <div class="no-print" style="margin-top:8px"><button class="btn btn-primary" onclick="calcCorporateTax()">計算する</button></div>
-        <div id="ct-result"></div>
-      </div>
-    </div>
-  </div>
-
   <!-- 役員報酬 -->
   <div class="page" id="page-executive">
-    <div class="card">
-      <div class="card-title">役員報酬最適化シミュレーション</div>
-      <div class="alert alert-info">会社利益から役員報酬を支払う際の、個人・法人あわせた総負担を試算します。</div>
-      <div class="fg2">
-        <div class="fg"><label>役員報酬支払前の会社利益（万円）</label><input type="number" id="ex-profit" placeholder="例: 3000" step="100"></div>
-        <div class="fg"><label>役員報酬（年額・万円）</label><input type="number" id="ex-salary" placeholder="例: 1200" step="50"></div>
-        <div class="fg"><label>健康保険</label><select id="ex-kenpo"><option value="1">協会けんぽ加入</option><option value="0">国民健康保険</option></select></div>
+
+    <!-- 役員報酬ページ タブ -->
+    <div class="tabs no-print">
+      <div class="tab active" id="extab-monthly" onclick="exTab('monthly')">📊 月次報酬シミュレーション</div>
+      <div class="tab" id="extab-bonus" onclick="exTab('bonus')">🎁 賞与シミュレーション</div>
+    </div>
+
+    <!-- タブ1: 月次報酬シミュレーション -->
+    <div id="extp-monthly" class="tp active">
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;padding-bottom:10px;border-bottom:2px solid var(--accent)">
+          <span class="card-title" style="margin:0;padding:0;border:none">役員報酬シミュレーション</span>
+        </div>
+        <!-- 入力フォーム -->
+        <input type="hidden" id="ex-kenpo" value="1">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;margin-bottom:14px">
+          <!-- 会社利益 -->
+          <div class="fg" style="margin:0">
+            <label>会社利益（万円・役員報酬支払前）</label>
+            <div style="display:flex;gap:6px;align-items:center">
+              <input type="number" id="ex-profit" placeholder="例: 3000" step="100" oninput="calcExecutive()" style="font-size:15px;font-weight:600;padding:10px 13px">
+              <button class="btn btn-outline" style="font-size:11px;padding:6px 10px;white-space:nowrap;flex-shrink:0" onclick="exImportFromPl()">📋 PLから引用</button>
+            </div>
+          </div>
+          <!-- 役員報酬 -->
+          <div class="fg" style="margin:0">
+            <label>役員報酬（年額・万円）<span style="font-size:10px;color:var(--text-muted);font-weight:400;margin-left:4px">↕ 下のグラフをクリックしても変更可</span></label>
+            <input type="number" id="ex-salary" placeholder="例: 1200" step="50" oninput="calcExecutive()" style="font-size:15px;font-weight:600;padding:10px 13px;border-color:#f9a825;background:#fffde7">
+          </div>
+          <!-- 年齢区分 -->
+          <div class="fg" style="margin:0">
+            <label>年齢区分</label>
+            <select id="ex-age" onchange="calcExecutive()">
+              <option value="under40">40歳未満（介護保険なし）</option>
+              <option value="40to64">40〜64歳（介護保険あり）</option>
+              <option value="over65">65歳以上</option>
+            </select>
+          </div>
+          <!-- 配偶者控除 -->
+          <div class="fg" style="margin:0">
+            <label>配偶者控除</label>
+            <select id="ex-spouse" onchange="calcExecutive()">
+              <option value="0">なし</option>
+              <option value="380000">配偶者控除（103万円以下）</option>
+              <option value="260000">配偶者特別控除（103〜150万円）</option>
+            </select>
+          </div>
+          <!-- 扶養 -->
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 10px">
+            <div class="fg" style="margin:0">
+              <label style="white-space:nowrap">扶養・一般</label>
+              <input type="number" id="ex-dep-general" placeholder="0" min="0" step="1" oninput="calcExecutive()">
+              <span class="hint">16〜18 / 23〜69歳</span>
+            </div>
+            <div class="fg" style="margin:0">
+              <label style="white-space:nowrap">扶養・特定</label>
+              <input type="number" id="ex-dep-specific" placeholder="0" min="0" step="1" oninput="calcExecutive()">
+              <span class="hint">19〜22歳</span>
+            </div>
+            <div class="fg" style="margin:0">
+              <label style="white-space:nowrap">扶養・老人</label>
+              <input type="number" id="ex-dep-elderly" placeholder="0" min="0" step="1" oninput="calcExecutive()">
+              <span class="hint">70歳以上</span>
+            </div>
+          </div>
+          <!-- 他所得 -->
+          <div class="fg" style="margin:0">
+            <label>役員報酬以外の課税所得（万円・控除後）<span style="font-size:10px;color:var(--text-muted);font-weight:400;margin-left:4px">事業・不動産・雑所得など</span></label>
+            <input type="number" id="ex-other-income" placeholder="0" min="0" step="10" oninput="calcExecutive()">
+            <span class="hint">青色申告特別控除・必要経費控除後の金額</span>
+          </div>
+        </div>
+        <div id="ex-result"></div>
       </div>
-      <div class="no-print" style="margin-top:8px"><button class="btn btn-primary" onclick="calcExecutive()">計算する</button></div>
-      <div id="ex-result"></div>
-    </div>
-    <div class="card">
-      <div class="card-title">負担内訳グラフ</div>
-      <div class="chart-box"><canvas id="ex-chart"></canvas></div>
-    </div>
-  </div>
+
+      <!-- 最適化グラフ -->
+      <div class="card">
+        <div class="card-title">役員報酬最適化グラフ</div>
+        <p style="font-size:11px;color:var(--text-muted);margin-bottom:12px">役員報酬（年額）を0〜利益の範囲で変化させたとき、実効税率・手取り・法人留保がどう動くかを可視化します。グラフをクリックするとその月次報酬額をシミュレーションに反映します。</p>
+        <div style="position:relative;height:300px"><canvas id="ex-opt-chart"></canvas></div>
+        <!-- 最適値サマリー -->
+        <div id="ex-opt-summary" style="margin-top:16px"></div>
+      </div>
+
+      <!-- 報酬別税金内訳表 -->
+      <details style="margin-bottom:18px" id="ex-breakdown-details">
+        <summary style="cursor:pointer;background:#f4f6f9;border:1px solid var(--border);border-radius:8px;padding:10px 16px;font-size:13px;font-weight:700;color:var(--primary);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:8px">
+          <span>📋 報酬額別 税金内訳パターン表（クリックで展開）</span>
+        </summary>
+        <div style="margin-top:8px;overflow-x:auto">
+          <div id="ex-breakdown-table"></div>
+        </div>
+      </details>
+
+      <!-- 注意事項 -->
+      <div class="card" style="border-color:#ff9800">
+        <div class="card-title" style="color:#e65100">⚠️ 免責事項・注意事項</div>
+        <div style="font-size:12px;color:#555;line-height:2">
+          <ul style="padding-left:20px">
+            <li>本シミュレーションは概算であり、実際の税額・社会保険料とは異なる場合があります。</li>
+            <li>社会保険料率は以下を使用しています（協会けんぽ・東京都・令和8年度）。組合健保・他都道府県は別途ご確認ください。
+              <ul style="margin-top:4px;line-height:2.2">
+                <li>健康保険：<b>9.85%（労使折半・各4.925%）</b></li>
+                <li>介護保険（40〜64歳）：<b>0.81%（労使折半・各0.405%）</b></li>
+                <li>厚生年金：<b>18.3%（労使折半・各9.15%）</b>（固定）</li>
+                <li>子ども・子育て支援金：<b>0.23%（労使折半・各0.115%）</b></li>
+                <li>子ども・子育て拠出金：<b>0.36%（法人負担のみ）</b></li>
+              </ul>
+            </li>
+            <li>法人税等は<b>中小企業（資本金1億円以下）</b>の税率を適用しています。なお、<b>法人事業税の翌期損金算入効果は考慮していません</b>。</li>
+            <li>個人住民税は均等割・調整控除等を簡略化しており、<b>所得割10%</b>のみで計算しています。</li>
+          </ul>
+        </div>
+      </div>
+    </div><!-- /extp-monthly -->
+
+    <!-- タブ2: 賞与シミュレーション -->
+    <div id="extp-bonus" class="tp">
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;padding-bottom:10px;border-bottom:2px solid var(--accent)">
+          <span class="card-title" style="margin:0;padding:0;border:none">🎁 事前確定届出給与（役員賞与）活用シミュレーション</span>
+        </div>
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:4px">同じ年間総額でも、月額報酬を抑えて賞与に配分することで社会保険料を節約できます。</p>
+        <p style="font-size:11px;color:var(--text-muted);margin-bottom:16px">社保上限: 健康保険 年度累計573万円 ／ 厚生年金 1回150万円（月額は65万円）</p>
+
+        <!-- 入力エリア -->
+        <div style="background:#f4f6f9;border:1.5px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:16px">
+          <div style="display:grid;grid-template-columns:1fr auto;gap:16px;align-items:end;margin-bottom:14px">
+            <div class="fg" style="margin-bottom:0">
+              <label>年間総報酬額（万円）<span style="font-size:10px;font-weight:400;color:var(--text-muted);margin-left:6px">タブ1の役員報酬年額: <span id="exb-ref-annual" style="color:#e65100;font-weight:700">－</span></span></label>
+              <input type="number" id="exb-total" placeholder="例: 1200" step="10" min="0" oninput="exbOnTotal()" style="font-size:15px;font-weight:600;padding:11px 14px">
+            </div>
+            <div class="fg" style="margin-bottom:0;min-width:130px">
+              <label>賞与回数</label>
+              <select id="exb-times" onchange="exbOnTotal()" style="padding:11px 13px">
+                <option value="1" selected>年1回</option>
+                <option value="2">年2回</option>
+                <option value="3">年3回</option>
+              </select>
+            </div>
+          </div>
+          <!-- スライダー -->
+          <div style="margin-bottom:6px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+              <span style="font-size:11px;font-weight:700;color:var(--primary)" id="exb-disp-monthly">月額報酬: －</span>
+              <span style="font-size:11px;font-weight:700;color:#c62828" id="exb-disp-bonus">賞与: －</span>
+            </div>
+            <div style="position:relative;height:12px;border-radius:6px;background:linear-gradient(to right,#1b5e20,#66bb6a,#ffee58,#ef5350,#b71c1c);margin-bottom:4px">
+              <input type="range" id="exb-slider" min="0" max="100" value="20" step="1" oninput="exbOnSlider()"
+                style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;margin:0">
+              <div id="exb-slider-thumb" style="position:absolute;top:50%;width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid var(--primary);box-shadow:0 2px 6px rgba(0,0,0,.25);transform:translate(-50%,-50%);pointer-events:none;left:20%"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-muted)">
+              <span>← 月額を低く（社保節約）</span>
+              <span>月額を高く →</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="exb-result"></div>
+      </div>
+    </div><!-- /extp-bonus -->
+
+  </div><!-- /page-executive -->
+
 
   <!-- ふるさと納税 -->
   <div class="page" id="page-furusato">
@@ -333,25 +462,6 @@ body{font-family:'Hiragino Kaku Gothic ProN','Meiryo','Yu Gothic',sans-serif;bac
       </div>
       <div class="no-print" style="margin-top:8px"><button class="btn btn-primary" onclick="calcFurusato()">計算する</button></div>
       <div id="fs-result"></div>
-    </div>
-  </div>
-
-  <!-- キャッシュフロー -->
-  <div class="page" id="page-cashflow">
-    <div class="card no-print">
-      <div style="display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap">
-        <div class="fg" style="flex:1;min-width:180px;margin:0"><label>期首現金残高（万円）</label><input type="number" id="cf-opening" placeholder="例: 500" step="10" oninput="recalcCf()"></div>
-        <button class="btn btn-outline" onclick="clearCf()">クリア</button>
-        <button class="btn btn-outline" onclick="exportCsv()">📥 CSV</button>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title">月次キャッシュフロー（万円単位）</div>
-      <div id="cf-container" style="overflow-x:auto"></div>
-    </div>
-    <div class="card">
-      <div class="card-title">月末残高推移</div>
-      <div class="chart-box"><canvas id="cf-chart"></canvas></div>
     </div>
   </div>
 
@@ -421,25 +531,46 @@ body{font-family:'Hiragino Kaku Gothic ProN','Meiryo','Yu Gothic',sans-serif;bac
 
   <!-- ========== 損益・Cash予測スケジュール ========== -->
   <div class="page" id="page-plcash">
-    <!-- 設定バー -->
-    <div class="card no-print" style="padding:16px 22px">
-      <div style="display:flex;gap:20px;align-items:flex-end;flex-wrap:wrap">
-        <div class="fg" style="margin:0;min-width:140px">
-          <label>期首月</label>
-          <select id="pc-start-month" onchange="initPlCash()">
-            <option value="8">8月（7月期）</option>
-            <option value="4">4月（3月期）</option>
-            <option value="1">1月（12月期）</option>
-            <option value="7">7月（6月期）</option>
-            <option value="10">10月（9月期）</option>
-          </select>
+    <!-- CSV取込モーダル -->
+    <div id="csv-import-area" style="display:none" class="no-print">
+      <div class="card" style="border:2px dashed var(--accent)">
+        <div class="card-title">📥 freee 月次推移レポート CSV取込</div>
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:10px">freee会計 → レポート → 月次推移（損益計算書）→ CSVエクスポート</p>
+        <!-- ファイル選択（Shift-JIS対応・推奨） -->
+        <div style="background:#f0f7ff;border:1px solid #b3d1f0;border-radius:8px;padding:12px;margin-bottom:12px">
+          <div style="font-size:12px;font-weight:600;color:#1a3a5c;margin-bottom:8px">① CSVファイルを直接選択（推奨・Shift-JIS自動変換）</div>
+          <input type="file" id="csv-file-input" accept=".csv" style="display:none" onchange="handleCsvFile(this)">
+          <button class="btn btn-primary" style="font-size:12px" onclick="document.getElementById('csv-file-input').click()">📂 CSVファイルを選択</button>
+          <span style="font-size:11px;color:var(--text-muted);margin-left:8px">※ freeeからダウンロードしたCSVをそのまま選択できます</span>
         </div>
-        <div class="fg" style="margin:0;min-width:140px">
-          <label>期首現金残高（万円）</label>
-          <input type="number" id="pc-opening-cash" placeholder="例: 294" step="1" oninput="calcPlCash()">
+        <!-- テキスト貼り付け -->
+        <div style="font-size:12px;font-weight:600;color:#1a3a5c;margin-bottom:6px">② またはCSVテキストを貼り付け</div>
+        <p style="font-size:11px;color:var(--text-muted);margin-bottom:6px">※ Excelで開いた後コピー、またはUTF-8変換済みのテキストを貼り付けてください</p>
+        <textarea id="csv-paste" rows="6" style="width:100%;border:1px solid var(--border);border-radius:8px;padding:10px;font-size:11px;font-family:monospace" placeholder="CSVデータをここに貼り付け..."></textarea>
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <button class="btn btn-primary" onclick="importFreeCsv()">② 貼付テキストを取込</button>
+          <button class="btn btn-outline" onclick="hideCsvImport()">キャンセル</button>
         </div>
-        <div class="fg" style="margin:0;min-width:100px">
-          <label>実績月数</label>
+      </div>
+    </div>
+
+    <!-- タブ -->
+    <div class="tabs no-print">
+      <div class="tab active" id="pctab-pl"   onclick="pcTab('pl')">📊 損益スケジュール</div>
+      <div class="tab"        id="pctab-cash" onclick="pcTab('cash')">💰 Cashスケジュール</div>
+      <div class="tab"        id="pctab-tax"  onclick="pcTab('tax')">🧾 納税額予測</div>
+    </div>
+
+    <!-- 損益スケジュール -->
+    <div id="pcpanel-pl" class="card" style="overflow-x:auto">
+      <div class="card-title">■ 損益スケジュール（万円）</div>
+      <div class="no-print" style="display:flex;gap:14px;align-items:flex-end;flex-wrap:wrap;margin-bottom:12px">
+        <div class="fg" style="margin:0;min-width:150px">
+          <label style="font-size:11px">事業年度</label>
+          <select id="pc-start-month" onchange="initPlCash()"></select>
+        </div>
+        <div class="fg" style="margin:0;min-width:90px">
+          <label style="font-size:11px">実績月数</label>
           <select id="pc-actual-months" onchange="calcPlCash()">
             <option value="0">0（全予測）</option>
             <option value="1">1ヶ月</option>
@@ -462,31 +593,6 @@ body{font-family:'Hiragino Kaku Gothic ProN','Meiryo','Yu Gothic',sans-serif;bac
         <button class="btn btn-outline" onclick="showCsvImport()">📥 CSV手動取込</button>
         <button class="btn btn-primary" onclick="calcPlCash()">再計算</button>
       </div>
-    </div>
-
-    <!-- CSV取込モーダル -->
-    <div id="csv-import-area" style="display:none" class="no-print">
-      <div class="card" style="border:2px dashed var(--accent)">
-        <div class="card-title">freee 月次推移レポート CSV取込</div>
-        <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px">freee会計 → レポート → 月次推移 → CSVエクスポート したデータをここに貼り付けてください。</p>
-        <textarea id="csv-paste" rows="8" style="width:100%;border:1px solid var(--border);border-radius:8px;padding:10px;font-size:12px;font-family:monospace" placeholder="CSVデータをここに貼り付け..."></textarea>
-        <div style="margin-top:10px;display:flex;gap:8px">
-          <button class="btn btn-primary" onclick="importFreeCsv()">取込実行</button>
-          <button class="btn btn-outline" onclick="hideCsvImport()">キャンセル</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- タブ -->
-    <div class="tabs no-print">
-      <div class="tab active" id="pctab-pl"   onclick="pcTab('pl')">📊 損益スケジュール</div>
-      <div class="tab"        id="pctab-cash" onclick="pcTab('cash')">💰 Cashスケジュール</div>
-      <div class="tab"        id="pctab-tax"  onclick="pcTab('tax')">🧾 納税額予測</div>
-    </div>
-
-    <!-- 損益スケジュール -->
-    <div id="pcpanel-pl" class="card" style="overflow-x:auto">
-      <div class="card-title">■ 損益スケジュール（万円）</div>
       <table class="tbl" id="pl-table" style="font-size:12px;min-width:900px">
         <thead id="pl-head"></thead>
         <tbody id="pl-body"></tbody>
@@ -496,8 +602,23 @@ body{font-family:'Hiragino Kaku Gothic ProN','Meiryo','Yu Gothic',sans-serif;bac
     <!-- Cashスケジュール -->
     <div id="pcpanel-cash" class="card" style="display:none;overflow-x:auto">
       <div class="card-title">■ Cashスケジュール（万円）</div>
-      <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px">
-        ※ 青字は自動計算（売掛回収=前月売上、社会保険=法定福利費×2）。手動上書き可。
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px;flex-wrap:wrap" class="no-print">
+        <div style="display:flex;align-items:center;gap:8px;background:#f0f7ff;border:1px solid #b3d1f0;border-radius:8px;padding:8px 14px">
+          <span style="font-size:11px;font-weight:700;color:#1a3a5c;white-space:nowrap">💰 期首Cash残高</span>
+          <input type="number" id="pc-opening-cash" placeholder="0" step="1000"
+            style="width:120px;border:1px solid #b3d1f0;border-radius:6px;padding:4px 8px;font-size:13px;font-weight:600;text-align:right;font-family:inherit;color:#1a3a5c"
+            onchange="calcPlCash()">
+          <span style="font-size:11px;color:#888">円</span>
+          <button class="btn btn-outline" style="font-size:11px;padding:4px 12px;white-space:nowrap" onclick="showCashSyncInfo()">🔄 freeeから取得</button>
+        </div>
+        <span style="font-size:11px;color:var(--text-muted)">※ 青字は自動計算（売掛回収=前月売上、社会保険=法定福利費×2）。手動上書き可。</span>
+        <label style="font-size:11px;display:flex;align-items:center;gap:6px;white-space:nowrap">
+          源泉・住民税 納期の特例
+          <select id="tax-withhold-special" onchange="calcPlCash()" style="font-size:11px">
+            <option value="0">なし（毎月納付）</option>
+            <option value="1">あり（1月・7月）</option>
+          </select>
+        </label>
       </div>
       <table class="tbl" id="cash-table" style="font-size:12px;min-width:900px">
         <thead id="cash-head"></thead>
@@ -509,6 +630,61 @@ body{font-family:'Hiragino Kaku Gothic ProN','Meiryo','Yu Gothic',sans-serif;bac
     <!-- 納税額予測 -->
     <div id="pcpanel-tax" class="card" style="display:none">
       <div class="card-title">■ 納税額予測</div>
+      <!-- 税計算設定 -->
+      <div class="no-print" style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;padding:10px 0 14px;border-bottom:1px solid #f0f4f8;margin-bottom:14px">
+        <div class="fg" style="margin:0;min-width:155px">
+          <label style="font-size:11px">資本金等の額</label>
+          <select id="tax-capital-tier" onchange="calcPlCash()">
+            <option value="1" selected>1千万円以下</option>
+            <option value="2">1千万超〜1億円以下</option>
+            <option value="3">1億超〜10億円以下</option>
+            <option value="4">10億超〜50億円以下</option>
+            <option value="5">50億円超</option>
+          </select>
+        </div>
+        <div class="fg" style="margin:0;min-width:120px">
+          <label style="font-size:11px">従業員数（均等割）</label>
+          <select id="tax-emp-tier" onchange="calcPlCash()">
+            <option value="small">50人以下</option>
+            <option value="large">50人超</option>
+          </select>
+        </div>
+        <div class="fg" style="margin:0;min-width:165px">
+          <label style="font-size:11px">所在地区分（均等割）</label>
+          <select id="tax-location" onchange="calcPlCash()">
+            <option value="tokyo23" selected>東京都23区</option>
+            <option value="standard">標準税率（一般市区町村）</option>
+          </select>
+        </div>
+        <div class="fg" style="margin:0;min-width:145px">
+          <label style="font-size:11px">消費税の計算方式</label>
+          <select id="tax-cons-method" onchange="toggleBizType();calcPlCash()">
+            <option value="general">原則課税</option>
+            <option value="simplified">簡易課税</option>
+            <option value="exempt">免税</option>
+          </select>
+        </div>
+        <div class="fg" id="tax-biz-type-wrap" style="margin:0;min-width:200px;display:none">
+          <label style="font-size:11px">事業区分（みなし仕入率）</label>
+          <select id="tax-biz-type" onchange="calcPlCash()">
+            <option value="0.9">第1種 卸売業（90%）</option>
+            <option value="0.8">第2種 小売業（80%）</option>
+            <option value="0.7">第3種 製造業・農業等（70%）</option>
+            <option value="0.6">第4種 飲食業・その他（60%）</option>
+            <option value="0.5" selected>第5種 サービス業（50%）</option>
+            <option value="0.4">第6種 不動産業（40%）</option>
+          </select>
+        </div>
+        <div class="fg" style="margin:0;min-width:115px">
+          <label style="font-size:11px">前期法人税確定額（万円）</label>
+          <input type="number" id="tax-prev-corp" placeholder="例: 50" step="1" min="0" oninput="calcPlCash()" style="font-size:12px">
+        </div>
+        <div class="fg" style="margin:0;min-width:115px">
+          <label style="font-size:11px">前期消費税確定額（万円）</label>
+          <input type="number" id="tax-prev-cons" placeholder="例: 30" step="1" min="0" oninput="calcPlCash()" style="font-size:12px">
+        </div>
+
+      </div>
       <div id="pc-tax-result"></div>
     </div>
   </div>
@@ -585,9 +761,6 @@ function switchCompany(id){
   closeCompanyModal();
   // 損益・Cash予測データをリセット（事業者切替時）
   pcData={};cashData={};
-  const cfContainer=document.getElementById('cf-container');
-  if(cfContainer){cfContainer.dataset.init='';cfContainer.innerHTML='';}
-  if(document.getElementById('page-cashflow')?.classList.contains('active')){initCf();loadCfData();}
   nav(document.querySelector('.nav-item.active')?.dataset.page||'dashboard');
 }
 
@@ -654,7 +827,7 @@ function loadClientData(key){
 }
 
 // ===== CORE =====
-const PAGES={dashboard:'ダッシュボード',plcash:'損益・Cash予測スケジュール',tax:'税金シミュレーション',executive:'役員報酬シミュレーション',furusato:'ふるさと納税シミュレーション',cashflow:'キャッシュフロー（簡易）',financial:'財務分析',guide:'法人設立ガイド'};
+const PAGES={dashboard:'ダッシュボード',plcash:'損益・Cash予測スケジュール',executive:'役員報酬シミュレーション',furusato:'ふるさと納税シミュレーション',financial:'財務分析',guide:'法人設立ガイド'};
 
 function nav(id){
   document.querySelectorAll('.page').forEach(e=>e.classList.remove('active'));
@@ -662,7 +835,6 @@ function nav(id){
   document.getElementById('page-'+id)?.classList.add('active');
   document.querySelector(`[data-page="${id}"]`)?.classList.add('active');
   document.getElementById('topbar-title').textContent=PAGES[id]||id;
-  if(id==='cashflow')initCf();
   if(id==='plcash')initPlCash();
   if(id==='financial')initFinancialBsSelector();
   window.scrollTo(0,0);
@@ -673,6 +845,44 @@ function switchTab(t){
   document.querySelectorAll('.tp').forEach(e=>e.classList.remove('active'));
   document.getElementById('tab-'+t)?.classList.add('active');
   document.getElementById('tp-'+t)?.classList.add('active');
+}
+
+function exTab(t){
+  document.querySelectorAll('#page-executive .tab').forEach(e=>e.classList.remove('active'));
+  document.querySelectorAll('#page-executive .tp').forEach(e=>e.classList.remove('active'));
+  document.getElementById('extab-'+t)?.classList.add('active');
+  document.getElementById('extp-'+t)?.classList.add('active');
+  if(t==='bonus'){
+    // タブ1の年額を引用
+    const annualMan = +(document.getElementById('ex-salary')?.value||0);
+    const refEl = document.getElementById('exb-ref-annual');
+    if(refEl) refEl.textContent = annualMan > 0 ? annualMan+'万円' : '未入力（タブ1で設定）';
+    // 年間総額を自動セット
+    const totalEl = document.getElementById('exb-total');
+    if(totalEl && !totalEl.value && annualMan > 0) totalEl.value = annualMan;
+    calcBonusSim();
+  }
+}
+
+// スライダー → 月額・賞与を計算して表示更新
+function exbOnSlider(){
+  const pct = +(document.getElementById('exb-slider')?.value||20);
+  const thumb = document.getElementById('exb-slider-thumb');
+  if(thumb) thumb.style.left = pct + '%';
+  calcBonusSim();
+}
+
+// 年間総額入力 → スライダー位置を維持したまま再計算
+function exbOnTotal(){
+  calcBonusSim();
+}
+
+// 月額・賞与表示を更新するヘルパー
+function exbUpdateDisp(monthlyMan, bonusMan, times){
+  const dm = document.getElementById('exb-disp-monthly');
+  const db = document.getElementById('exb-disp-bonus');
+  if(dm) dm.textContent = `月額報酬: ${fmt(monthlyMan*10000)}円/月`;
+  if(db) db.textContent = `賞与: ${fmt(bonusMan*10000)}円（${fmt(bonusMan*10000/times)}円 × ${times}回）`;
 }
 
 function fmt(v){return Math.round(v||0).toLocaleString('ja-JP')}
@@ -731,9 +941,9 @@ function calcCorporateTax(){
   const small=cap<=100000000;
   let ct=small?Math.floor(Math.min(p,8000000)*.15+Math.max(0,p-8000000)*.232):Math.floor(p*.232);
   const lct=Math.floor(ct*.103);
-  const rct=Math.floor(ct*.207);
+  const rct=Math.floor(ct*.07);
   const bt=small?Math.floor(Math.min(p,4000000)*.035+Math.min(Math.max(0,p-4000000),4000000)*.053+Math.max(0,p-8000000)*.07):Math.floor(p*.096);
-  const sbt=Math.floor(bt*.372);
+  const sbt=Math.floor(bt*.37);
   const total=ct+lct+rct+bt+sbt;
   const rate=p>0?(total/p*100).toFixed(1):0;
 
@@ -749,71 +959,660 @@ function calcCorporateTax(){
 }
 
 // ===== 役員報酬 =====
-let exChart=null;
-function calcExecutive(){
-  const profit=+(document.getElementById('ex-profit').value||0)*10000;
-  const salary=+(document.getElementById('ex-salary').value||0)*10000;
-  const kenpo=document.getElementById('ex-kenpo').value==='1';
+let exOptChart=null;
 
+// 損益スケジュールから利益を引用
+function exImportFromPl(){
+  const d = window._plCalcData;
+  if(!d || !d.ord_profit){
+    alert('先に損益スケジュールで再計算してください。');
+    return;
+  }
+  // 経常利益（役員報酬支払後）→ 役員報酬を足し戻して「支払前利益」にする
+  const annualOrdProfit = d.ord_profit.reduce((a,b)=>a+b,0); // 万円
+  const annualExecSal   = d.exec_sal.reduce((a,b)=>a+b,0);   // 万円
+  const profitBeforeExec = Math.round(annualOrdProfit + annualExecSal);
+  document.getElementById('ex-profit').value = profitBeforeExec;
+  document.getElementById('ex-salary').value = Math.round(annualExecSal);
+  calcExecutive();
+}
+
+// 役員1人分の個人・法人合計負担を計算（円単位）
+// bonusYen: 年間賞与額（厚生年金は1回上限150万、健保は年間上限573万）
+// age: 'under40' | '40to64' | 'over65'
+// spouseDeduction: 配偶者控除額（円）
+// depGeneral, depSpecific, depElderly: 扶養人数
+// otherIncome: 役員報酬以外の課税所得（控除後・円）
+function calcExecBurden(profitYen, salaryYen, kenpo, bonusYen=0, age='under40', spouseDeduction=0, depGeneral=0, depSpecific=0, depElderly=0, otherIncome=0){
+  const totalPay = salaryYen + bonusYen;
+
+  // ── 給与所得控除（月給＋賞与の合計額で算出）──
   let kd;
-  if(salary<=1625000)kd=550000;else if(salary<=1800000)kd=salary*.4-100000;
-  else if(salary<=3600000)kd=salary*.3+80000;else if(salary<=6600000)kd=salary*.2+440000;
-  else if(salary<=8500000)kd=salary*.1+1100000;else kd=1950000;
-  const ks=Math.max(0,salary-kd);
+  const s = totalPay;
+  if(s<=1625000)kd=550000;else if(s<=1800000)kd=s*.4-100000;
+  else if(s<=3600000)kd=s*.3+80000;else if(s<=6600000)kd=s*.2+440000;
+  else if(s<=8500000)kd=s*.1+1100000;else kd=1950000;
+  const ks=Math.max(0,s-kd);
 
-  const ms=salary/12;
-  const kr=kenpo?.1182/2:0;
-  const yr=.183/2;
-  const yb=Math.min(ms,650000);
-  const shaM=ms*kr+yb*yr;
-  const shaA=Math.floor(shaM*12);
+  // ── 社会保険（月給分）──
+  const ms=salaryYen/12;
+  // 健保率（令和8年度・東京都）: 9.85% → 個人4.925%
+  // 介護保険料率（令和8年度）: 0.81% → 個人0.405%
+  const KENPO_R8 = 0.0985 / 2;        // 健保個人 4.925%
+  const KAIGO_R8 = 0.0081 / 2;        // 介護個人 0.405%
+  const KOSODATE = 0.0023 / 2;        // 子ども・子育て支援金 個人0.115%（折半）
+  const kr = kenpo ? (age==='40to64' ? KENPO_R8 + KAIGO_R8 + KOSODATE : KENPO_R8 + KOSODATE) : 0;
+  const yr=.183/2;              // 厚年個人率 9.15%
+  const yb=Math.min(ms,650000); // 厚年月額上限65万
+  const shaSalary=Math.floor((ms*kr+yb*yr)*12);
 
-  const kiso=salary<=24000000?480000:320000;
-  const taxable=Math.max(0,ks-shaA-kiso);
+  // ── 社会保険（賞与分）── 協会けんぽのみ
+  // 厚生年金: 1回上限150万円 × 9.15%（個人）
+  // 健康保険: 年間上限573万円 × 健保率（個人、支援金含む）
+  let shaBonusInd=0;
+  if(bonusYen>0 && kenpo){
+    const bonPension=Math.min(bonusYen,1500000)*yr;  // 厚年 個人
+    const bonKenpo  =Math.min(bonusYen,5730000)*(age==='40to64' ? KENPO_R8 + KAIGO_R8 + KOSODATE : KENPO_R8 + KOSODATE);  // 健保＋支援金 個人
+    shaBonusInd=Math.floor(bonPension+bonKenpo);
+  }
+  const shaA=shaSalary+shaBonusInd; // 個人社保合計
+
+  // ── 所得税・住民税 ──
+  const kiso=totalPay<=24000000?480000:320000;
+  // 扶養控除：一般38万、特定63万、老人48万
+  const depDeductions=spouseDeduction+depGeneral*380000+depSpecific*630000+depElderly*480000;
+  const taxable=Math.max(0,ks+otherIncome-shaA-kiso-depDeductions);
   const it=calcIT(taxable);
   const fukko=Math.floor(it*.021);
   const rt=Math.floor(taxable*.10);
   const pTax=it+fukko+rt;
-  const pBurden=pTax+shaA;
-  const takeHome=salary-pBurden;
+  const takeHome=totalPay-pTax-shaA;
 
-  const corpP=Math.max(0,profit-salary);
+  // ── 法人（月給＋賞与＋会社社保を損金算入）──
+  // 会社社保 = 個人社保と同額（支援金の法人折半分も含む）
+  //           ＋子ども・子育て拠出金 0.36%（法人のみ）
+  const kyoshutsu = kenpo ? Math.floor(ms*0.0036*12 + (bonusYen>0?Math.min(bonusYen,5730000)*0.0036:0)) : 0;
+  const cShakai=kenpo?shaA+kyoshutsu:0;
+  const corpP=Math.max(0,profitYen-totalPay-cShakai);
   let cTax=0;
   if(corpP>0){
     const ct=Math.floor(Math.min(corpP,8000000)*.15+Math.max(0,corpP-8000000)*.232);
     const lct=Math.floor(ct*.103);
-    const rct=Math.floor(ct*.207);
+    const rct=Math.floor(ct*.07);
     const bt=Math.floor(Math.min(corpP,4000000)*.035+Math.min(Math.max(0,corpP-4000000),4000000)*.053+Math.max(0,corpP-8000000)*.07);
-    cTax=ct+lct+rct+bt+Math.floor(bt*.372);
+    cTax=ct+lct+rct+bt+Math.floor(bt*.37);
   }
-  const cShakai=kenpo?shaA:0;
-  const total=pBurden+cTax+cShakai;
-  const eff=profit>0?(total/profit*100).toFixed(1):0;
+  const total=pTax+shaA+cTax+cShakai;
   const retained=Math.max(0,corpP-cTax);
+  const effRate=profitYen>0?total/profitYen*100:0;
 
-  document.getElementById('ex-result').innerHTML=resultBox('合計負担（個人税金＋社保＋法人税等）',total,[
-    ['役員報酬',fmt(salary)+'円'],
-    ['個人所得税等',fmt(pTax)+'円','danger'],
-    ['社保（個人）',fmt(shaA)+'円','danger'],
-    ['法人税等',fmt(cTax)+'円','danger'],
-    ['社保（会社）',fmt(cShakai)+'円','danger'],
-    ['実質総負担率',eff+'%'],
-    ['手取り',fmt(takeHome)+'円','success'],
-    ['法人内留保',fmt(retained)+'円','success'],
-  ]);
+  return {pTax,incomeTax:it+fukko,residentTax:rt,shaA,shaSalary,shaBonusInd,cTax,cShakai,total,takeHome,retained,effRate,corpP};
+}
 
-  const ctx=document.getElementById('ex-chart');
-  if(exChart)exChart.destroy();
-  exChart=new Chart(ctx,{
-    type:'doughnut',
-    data:{
-      labels:['個人所得税等','社保(個人)','法人税等','社保(会社)','手取り','法人内留保'],
-      datasets:[{data:[pTax,shaA,cTax,cShakai,Math.max(0,takeHome),retained],
-        backgroundColor:['#ef5350','#ef9a9a','#1a237e','#5c6bc0','#4caf50','#81c784'],
-        borderWidth:2,borderColor:'#fff'}]
-    },
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right'}}}
+function calcExecutive(){
+  const profit=+(document.getElementById('ex-profit').value||0)*10000;
+  const salary=+(document.getElementById('ex-salary').value||0)*10000;
+  const kenpo=document.getElementById('ex-kenpo').value==='1';
+  const age=document.getElementById('ex-age')?.value||'under40';
+  const spouseDeduction=+(document.getElementById('ex-spouse')?.value||0);
+  const depGeneral=+(document.getElementById('ex-dep-general')?.value||0);
+  const depSpecific=+(document.getElementById('ex-dep-specific')?.value||0);
+  const depElderly=+(document.getElementById('ex-dep-elderly')?.value||0);
+  const otherIncome=+(document.getElementById('ex-other-income')?.value||0)*10000;
+  if(!profit){ renderExOptChart(0,kenpo,0,0,age,spouseDeduction,depGeneral,depSpecific,depElderly,otherIncome); return; }
+
+  const r = calcExecBurden(profit, salary, kenpo, 0, age, spouseDeduction, depGeneral, depSpecific, depElderly, otherIncome);
+
+  // ── メインバナー：手取り・留保を主役に ──
+  const exBanner = `
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px">
+    <div style="background:linear-gradient(135deg,#1b5e20,#2e7d32);border-radius:14px;padding:20px 22px;color:#fff">
+      <div style="font-size:11px;opacity:.7;letter-spacing:.06em;margin-bottom:6px">💰 個人手取り（社保・税金控除後）</div>
+      <div style="font-size:26px;font-weight:800;line-height:1.1">${fmt(r.takeHome)}<span style="font-size:13px;font-weight:400;margin-left:4px">円</span></div>
+      <div style="margin-top:12px;font-size:11px;opacity:.75;line-height:2">
+        <div style="display:flex;justify-content:space-between"><span>役員報酬（年額）</span><span>${fmt(salary)}円</span></div>
+        <div style="display:flex;justify-content:space-between"><span>社保（個人）</span><span style="color:#ef9a9a">▲${fmt(r.shaSalary)}円</span></div>
+        <div style="display:flex;justify-content:space-between"><span>所得税・住民税</span><span style="color:#ef9a9a">▲${fmt(r.pTax)}円</span></div>
+      </div>
+    </div>
+    <div style="background:linear-gradient(135deg,#0d47a1,#1565c0);border-radius:14px;padding:20px 22px;color:#fff">
+      <div style="font-size:11px;opacity:.7;letter-spacing:.06em;margin-bottom:6px">🏢 法人留保（社保・税金控除後）</div>
+      <div style="font-size:26px;font-weight:800;line-height:1.1">${fmt(r.retained)}<span style="font-size:13px;font-weight:400;margin-left:4px">円</span></div>
+      <div style="margin-top:12px;font-size:11px;opacity:.75;line-height:2">
+        <div style="display:flex;justify-content:space-between"><span>法人利益（役員報酬控除前）</span><span>${fmt(profit)}円</span></div>
+        <div style="display:flex;justify-content:space-between"><span>役員報酬（損金）</span><span style="color:#90caf9">▲${fmt(salary)}円</span></div>
+        <div style="display:flex;justify-content:space-between"><span>社保（法人）</span><span style="color:#90caf9">▲${fmt(r.cShakai)}円</span></div>
+        <div style="display:flex;justify-content:space-between"><span>法人税等</span><span style="color:#90caf9">▲${fmt(r.cTax)}円</span></div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:10px;background:linear-gradient(135deg,#fffde7,#fff8e1);border:2px solid #f9a825;border-radius:14px;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px">
+    <div>
+      <div style="font-size:11px;color:#795548;font-weight:600;letter-spacing:.06em;margin-bottom:4px">手取り ＋ 法人留保　合計</div>
+      <div style="font-size:30px;font-weight:800;color:#1a3a5c;line-height:1">${fmt(r.takeHome+r.retained)}<span style="font-size:14px;font-weight:500;color:#555;margin-left:5px">円</span></div>
+    </div>
+    <div style="text-align:right">
+      <div style="font-size:11px;color:#795548;margin-bottom:4px">利益（報酬前）に対して手元に残る割合</div>
+      <div style="font-size:28px;font-weight:800;color:#f57f17;line-height:1">${profit>0?(((r.takeHome+r.retained)/profit)*100).toFixed(1):'-'}<span style="font-size:13px;font-weight:500;color:#795548;margin-left:2px">%</span></div>
+    </div>
+  </div>`;
+
+  document.getElementById('ex-result').innerHTML = exBanner;
+
+  // 最適化グラフ
+  renderExOptChart(profit, kenpo, salary, 0, age, spouseDeduction, depGeneral, depSpecific, depElderly, otherIncome);
+}
+
+
+// ===== 賞与シミュレーション =====
+function calcBonusSim(){
+  // タブ1の値を参照
+  const profit=+(document.getElementById('ex-profit')?.value||0)*10000;
+  const kenpo=document.getElementById('ex-kenpo')?.value==='1';
+  const spouseDeduction=+(document.getElementById('ex-spouse')?.value||0);
+  const depGeneral=+(document.getElementById('ex-dep-general')?.value||0);
+  const depSpecific=+(document.getElementById('ex-dep-specific')?.value||0);
+  const depElderly=+(document.getElementById('ex-dep-elderly')?.value||0);
+  const otherIncome=+(document.getElementById('ex-other-income')?.value||0)*10000;
+  const age=document.getElementById('ex-age')?.value||'under40';
+
+  // 年間総額・スライダーから月額・賞与を計算
+  const totalMan = +(document.getElementById('exb-total')?.value||0);
+  const times = +(document.getElementById('exb-times')?.value||2);
+  const pct = +(document.getElementById('exb-slider')?.value||20); // 0=全額賞与寄り, 100=全額月次寄り
+  // thumb位置更新
+  const thumb = document.getElementById('exb-slider-thumb');
+  if(thumb) thumb.style.left = pct + '%';
+
+  const el=document.getElementById('exb-result');
+
+  // タブ1年額表示更新
+  const annualTotalManRef = +(document.getElementById('ex-salary')?.value||0);
+  const refEl = document.getElementById('exb-ref-annual');
+  if(refEl) refEl.textContent = annualTotalManRef > 0 ? annualTotalManRef+'万円' : '未入力（タブ1で設定）';
+
+  if(!profit || !totalMan){
+    if(el) el.innerHTML='<div class="alert alert-warn" style="margin-top:12px">タブ1で「役員報酬支払前の会社利益」を入力し、年間総報酬額を入力してください。</div>';
+    return;
+  }
+
+  // パターンB: スライダーで月額比率を決定
+  // pct=0: 月額を最小化（月1万×12=12万, 残り全部賞与）
+  // pct=100: 全額月次（賞与0）
+  const minMonthlyMan = 10; // 最低月1万
+  const maxMonthlyMan = totalMan / 12;
+  const monthlyManB = Math.max(minMonthlyMan, Math.round(maxMonthlyMan * pct / 100 / 5) * 5);
+  const bonusManB = Math.max(0, totalMan - monthlyManB * 12);
+  const salaryB = monthlyManB * 12 * 10000;
+  const bonusB = bonusManB * 10000;
+
+  // パターンA: 全額月次（賞与0）、同じ総額
+  const monthlyManA = Math.round(totalMan / 12);
+  const salaryA = monthlyManA * 12 * 10000;
+  const bonusA = 0;
+
+  // 表示更新
+  exbUpdateDisp(monthlyManB, bonusManB, times);
+
+  // 計算
+  const rA = calcExecBurden(profit, salaryA, kenpo, bonusA, age, spouseDeduction, depGeneral, depSpecific, depElderly, otherIncome);
+  const rB = calcExecBurden(profit, salaryB, kenpo, bonusB, age, spouseDeduction, depGeneral, depSpecific, depElderly, otherIncome);
+
+  // 差額ヘルパー
+  const dv = (b, a) => b - a;
+  const dFmt = (d, benefit=false) => {
+    const better = benefit ? d > 0 : d < 0;
+    const worse  = benefit ? d < 0 : d > 0;
+    const c = d===0 ? '#888' : better ? '#2e7d32' : '#c62828';
+    const sign = d > 0 ? '+' : '';
+    return `<span style="color:${c};font-weight:700">${sign}${fmt(d)}</span>`;
+  };
+
+  // カード1列のHTML生成
+  const subRow = (lbl, val, minus=false) =>
+    `<div style="display:flex;justify-content:space-between"><span>${lbl}</span><span>${minus?'▲':''}${fmt(val)}円</span></div>`;
+  const card = (label, subtitle, bg, border, r, monthly, bonusYen, timesN) => {
+    const annualSalary = monthly + bonusYen;
+    return `
+    <div style="background:${bg};border:2px solid ${border};border-radius:14px;padding:18px 20px;flex:1;min-width:220px">
+      <div style="font-size:13px;font-weight:800;color:${border};margin-bottom:2px">${label}</div>
+      <div style="font-size:11px;color:#555;margin-bottom:10px">${subtitle}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid rgba(0,0,0,.06)">
+        <span style="font-size:12px;color:#444">月額報酬</span>
+        <span style="font-size:12px;color:#222">${fmt(monthly/12)}円/月</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid rgba(0,0,0,.06)">
+        <span style="font-size:12px;color:#444">賞与</span>
+        <span style="font-size:12px;color:#222">${bonusYen>0?`${fmt(bonusYen)}円（${fmt(bonusYen/timesN)}円×${timesN}回）`:'なし'}</span>
+      </div>
+      <div style="margin-top:12px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline">
+          <span style="font-size:12px;font-weight:700;color:#2e7d32">💰 個人手取り</span>
+          <span style="font-size:18px;font-weight:800;color:#2e7d32">${fmt(r.takeHome)}円</span>
+        </div>
+        <div style="font-size:11px;color:#555;margin-top:5px;padding-left:8px;line-height:2.1">
+          ${subRow('役員報酬（年額）', annualSalary)}
+          ${subRow('社保（個人）', r.shaA, true)}
+          ${subRow('所得税・住民税', r.incomeTax+r.residentTax, true)}
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:10px">
+          <span style="font-size:12px;font-weight:700;color:#1565c0">🏢 法人留保</span>
+          <span style="font-size:18px;font-weight:800;color:#1565c0">${fmt(r.retained)}円</span>
+        </div>
+        <div style="font-size:11px;color:#555;margin-top:5px;padding-left:8px;line-height:2.1">
+          ${subRow('法人利益（役員報酬控除前）', profit)}
+          ${subRow('役員報酬（損金）', annualSalary, true)}
+          ${subRow('社保（法人）', r.cShakai, true)}
+          ${subRow('法人税等', r.cTax, true)}
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:10px;padding-top:8px;border-top:2px solid ${border}">
+          <span style="font-size:12px;font-weight:700;color:#7b1fa2">手取り＋留保</span>
+          <span style="font-size:18px;font-weight:800;color:#7b1fa2">${fmt(r.takeHome+r.retained)}円</span>
+        </div>
+      </div>
+    </div>`;
+  };
+
+  const totalDiff = dv(rA.pTax+rA.shaA+rA.cTax+rA.cShakai, rB.pTax+rB.shaA+rB.cTax+rB.cShakai);
+  const shakaiDiff = (rA.shaA+rA.cShakai) - (rB.shaA+rB.cShakai);
+  const yn150excess = bonusB>0 && kenpo ? Math.max(0, bonusB-1500000) : 0;
+  const yn573excess = bonusB>0 && kenpo ? Math.max(0, bonusB-5730000) : 0;
+  const msBmonthly  = salaryB / 12;
+  const yn65Mover   = kenpo && msBmonthly > 650000;
+  const diffMsg = totalDiff > 0
+    ? `<div style="margin-top:12px;background:#e8f5e9;border:2px solid #43a047;border-radius:12px;padding:14px 20px;text-align:center;font-size:14px;font-weight:700;color:#2e7d32">賞与活用で年間 <span style="font-size:18px">${fmt(totalDiff)}</span> 円 の負担軽減（うち社保節約 約${fmt(shakaiDiff)}円）</div>`
+    : totalDiff < 0
+    ? `<div style="margin-top:12px;background:#ffebee;border:2px solid #e53935;border-radius:12px;padding:14px 20px;text-align:center;font-size:14px;font-weight:700;color:#c62828">この配分では負担が <span style="font-size:18px">${fmt(Math.abs(totalDiff))}</span> 円 増加します</div>`
+    : `<div style="margin-top:12px;background:#f5f5f5;border:2px solid #9e9e9e;border-radius:12px;padding:14px 20px;text-align:center;font-size:14px;font-weight:700;color:#555">負担額に変化はありません</div>`;
+
+  if(el) el.innerHTML = `
+    ${diffMsg}
+    <div style="display:flex;gap:14px;margin-top:12px;flex-wrap:wrap">
+      ${card('パターンA：月額報酬のみ', `${fmt(monthlyManA)}万円/月 × 12ヶ月`, '#f3f8ff', '#1565c0', rA, salaryA, bonusA, times)}
+      ${card('パターンB：月額＋賞与', `${fmt(monthlyManB)}万円/月 + 賞与${fmt(bonusManB)}万円`, '#f3fff6', '#2e7d32', rB, salaryB, bonusB, times)}
+    </div>
+    ${(yn150excess>0||yn573excess>0||yn65Mover)?`<div style="margin-top:10px;padding:10px 16px;background:#fff8e1;border:1px solid #ffe082;border-radius:10px;font-size:12px;line-height:2">
+      ${yn150excess>0?`<div>⚠️ 賞与${fmt(bonusB/10000)}万円のうち <b>${fmt(yn150excess/10000)}万円</b>分は厚生年金の対象外（賞与1回150万円上限超過）</div>`:''}
+      ${yn573excess>0?`<div>⚠️ 賞与${fmt(bonusB/10000)}万円のうち <b>${fmt(yn573excess/10000)}万円</b>分は健康保険の対象外（年間573万円上限超過）</div>`:''}
+      ${yn65Mover?`<div>⚠️ 月額報酬${fmt(Math.round(msBmonthly/10000))}万円は厚生年金月額上限（65万円）を超えているため、65万円で頭打ち計算</div>`:''}
+    </div>`:''}
+    ${exbBreakdownTable(profit, kenpo, age, spouseDeduction, depGeneral, depSpecific, depElderly, otherIncome, totalMan, times, bonusB)}
+  `;
+}
+
+function exbBreakdownTable(profit, kenpo, age, spouseDeduction, depGeneral, depSpecific, depElderly, otherIncome, totalMan, times, curBonusYen){
+  const maxBonus = totalMan * 10000;
+  const step = 200000; // 20万円刻み
+  // 上限ライン（必ず行を挿入）
+  const T150  = 1500000;                              // 厚年賞与上限
+  const T573  = 5730000;                              // 健保賞与年間上限
+  const T65M  = Math.max(0, totalMan*10000 - 650000*12); // 月額65万（厚年月額上限）境界賞与額
+
+  const bonusPays = [];
+  for(let b = 0; b <= maxBonus; b += step) bonusPays.push(Math.round(b));
+  if(bonusPays[bonusPays.length-1] < maxBonus) bonusPays.push(maxBonus);
+  // 上限行を強制挿入
+  [T150, T573, T65M].forEach(t => {
+    if(t > 0 && t <= maxBonus && !bonusPays.includes(t)) bonusPays.push(t);
   });
+  bonusPays.sort((a, b) => a - b);
+
+  const curIdx = bonusPays.reduce((best, b, i) => Math.abs(b - curBonusYen) < Math.abs(bonusPays[best] - curBonusYen) ? i : best, 0);
+
+  // 社保内訳計算用の定数（calcExecBurdenと同じレート）
+  const _KR    = 0.0985/2;
+  const _KAIGO = 0.0081/2;
+  const _KOS   = 0.0023/2;  // 支援金（個人）
+  const _YR    = 0.183/2;
+  const _KYOS  = 0.0036;    // 拠出金（法人のみ）
+
+  const tip = (t) => `<span class="col-tip" data-tip="${t.replace(/\n/g,'&#10;')}" onmouseenter="showColTip(this)" onmouseleave="hideColTip()">?</span>`;
+  const thBase = `background:var(--primary);color:#fff;padding:7px 8px;text-align:right;white-space:pre-line;font-size:10px`;
+  const thSub  = `background:#2a5298;color:#c8d8f0;padding:6px 8px;text-align:right;font-size:9px;display:none`;
+  const headerHtml = `<tr>
+    <th style="${thBase}">賞与額${tip('年間賞与合計額\n（月額は総額固定で逆算）')}</th>
+    <th style="${thBase}">月額報酬${tip('総額固定で逆算した月額\n（賞与が増えるほど月額が減少）')}</th>
+    <th style="${thBase}">年間総報酬額${tip('月額×12＋賞与\n（全行で同額・固定）')}</th>
+    <th style="${thBase};cursor:pointer" onclick="exbToggleNenkin('kenpo-ind')">健保（個人）\n＋介護＋支援金<span id="exb-kenpo-ind-arrow"> ▶</span>${tip('健保4.925%＋支援金0.115%\n（40〜64歳は介護0.405%加算）\n賞与は年間573万円上限\nクリックで月額分・賞与分を展開')}</th>
+    <th class="exb-nenkin-kenpo-ind" style="${thSub}">└賞与分</th>
+    <th class="exb-nenkin-kenpo-ind" style="${thSub}">└月額分</th>
+    <th style="${thBase};cursor:pointer" onclick="exbToggleNenkin('ind')">厚年（個人）<span id="exb-ind-arrow"> ▶</span>${tip('厚生年金9.15%（個人）\n月額：標準報酬月額上限65万\n賞与：1回150万円上限\nクリックで月額分・賞与分を展開')}</th>
+    <th class="exb-nenkin-ind" style="${thSub}">└賞与分</th>
+    <th class="exb-nenkin-ind" style="${thSub}">└月額分</th>
+    <th style="${thBase}">個人所得税${tip('社保が下がると課税所得が増え\n所得税も連動して増加する\n（150万超で顕著）')}</th>
+    <th style="${thBase}">住民税${tip('課税所得×10%\n社保控除の変化に連動')}</th>
+    <th style="${thBase}">個人手取り${tip('月額＋賞与－社保（個人）\n－所得税－住民税')}</th>
+    <th style="${thBase}">役員報酬控除後の\n会社利益${tip('役員報酬（月額＋賞与）を\n差し引いた後の法人利益')}</th>
+    <th style="${thBase};cursor:pointer" onclick="exbToggleNenkin('kenpo-corp')">健保（法人）\n＋拠出金<span id="exb-kenpo-corp-arrow"> ▶</span>${tip('個人健保と同額\n＋子ども・子育て拠出金（0.36%）\n賞与は年間573万円上限\nクリックで月額分・賞与分を展開')}</th>
+    <th class="exb-nenkin-kenpo-corp" style="${thSub}">└賞与分</th>
+    <th class="exb-nenkin-kenpo-corp" style="${thSub}">└月額分</th>
+    <th style="${thBase};cursor:pointer" onclick="exbToggleNenkin('corp')">厚年（法人）<span id="exb-corp-arrow"> ▶</span>${tip('個人厚年と同額\n賞与は1回150万円上限\nクリックで月額分・賞与分を展開')}</th>
+    <th class="exb-nenkin-corp" style="${thSub}">└賞与分</th>
+    <th class="exb-nenkin-corp" style="${thSub}">└月額分</th>
+    <th style="${thBase}">法人税等${tip('損金算入後の課税所得に\n法人税率を適用')}</th>
+    <th style="${thBase}">法人留保${tip('会社利益－社保（法人）\n－法人税等')}</th>
+    <th style="${thBase}">個人手取り\n＋法人留保${tip('個人手取りと法人留保の合計\n手元に残る総額の指標')}</th>
+  </tr>`;
+
+  let rows = '';
+  bonusPays.forEach((bonusYen, i) => {
+    const salYen = Math.max(0, (totalMan * 10000 - bonusYen) / 12) * 12;
+    const ms = salYen / 12;
+    const r = calcExecBurden(profit, salYen, kenpo, bonusYen, age, spouseDeduction, depGeneral, depSpecific, depElderly, otherIncome);
+
+    // 健保（個人）: 月給分＋賞与分
+    const krInd = kenpo ? (age==='40to64' ? _KR+_KAIGO+_KOS : _KR+_KOS) : 0;
+    const kenpoIndSal  = Math.floor(ms * krInd * 12);
+    const kenpoIndBon  = (bonusYen>0 && kenpo) ? Math.floor(Math.min(bonusYen,5730000) * krInd) : 0;
+    const kenpoInd     = kenpoIndSal + kenpoIndBon;
+    // 厚年（個人）: 月給分＋賞与分
+    const yb = Math.min(ms, 650000);
+    const nenkinIndSal = Math.floor(yb * _YR * 12);
+    const nenkinIndBon = (bonusYen>0 && kenpo) ? Math.floor(Math.min(bonusYen,1500000) * _YR) : 0;
+    const nenkinInd    = nenkinIndSal + nenkinIndBon;
+    // 健保（法人）= 個人健保と同額 ＋ 拠出金（月額分・賞与分に分割）
+    const kyoshutsuSal = kenpo ? Math.floor(ms * _KYOS * 12) : 0;
+    const kyoshutsuBon = (bonusYen>0 && kenpo) ? Math.floor(Math.min(bonusYen,5730000) * _KYOS) : 0;
+    const kenpoCorpSal = kenpoIndSal + kyoshutsuSal;
+    const kenpoCorpBon = kenpoIndBon + kyoshutsuBon;
+    const kenpoCorp    = kenpoInd + kyoshutsuSal + kyoshutsuBon;
+    // 厚年（法人）= 個人厚年と同額
+    const nenkinCorp   = nenkinInd;
+
+    const isCur = i === curIdx;
+    const prev  = bonusPays[i-1];
+    // 各上限ラインの境界検出
+    const hit150 = prev !== undefined && prev < T150  && bonusYen >= T150;
+    const hit573 = prev !== undefined && prev < T573  && bonusYen >= T573;
+    const hit65M = T65M > 0 && prev !== undefined && prev < T65M && bonusYen >= T65M;
+    const isBoundary = hit150 || hit573 || hit65M;
+    // 65万ラインは当該行の下（border-bottom）、他は上（border-top）
+    const borderStyle = hit65M ? ';border-bottom:2px dashed #f57f17' : (hit150||hit573) ? ';border-top:2px dashed #f57f17' : '';
+    // 境界ラベル
+    const boundaryLabel = hit150 ? '厚年賞与上限' : hit573 ? '健保賞与上限' : hit65M ? '月額65万上限' : '';
+
+    const td  = (val, color='', bold=false) =>
+      `<td style="padding:5px 8px;text-align:right${color?';color:'+color:''}${bold?';font-weight:700':''}">${fmt(val)}</td>`;
+    const tds = (val, cls, color='') =>
+      `<td class="${cls}" style="padding:5px 8px;text-align:right;display:none${color?';color:'+color:''}">${fmt(val)}</td>`;
+    rows += `<tr style="${isCur?'background:#fff3e0':''}${borderStyle}">
+      <td style="padding:5px 8px;text-align:right;font-weight:${isCur?700:400}">
+        ${isCur?'▶ ':''}${fmt(bonusYen/10000)}万
+        ${isBoundary?`<div style="font-size:9px;color:#f57f17;font-weight:600;line-height:1.2">↑ ${boundaryLabel}</div>`:''}
+      </td>
+      <td style="padding:5px 8px;text-align:right;color:#999;font-size:10px">${fmt(Math.round(ms/10000))}万/月</td>
+      ${td(totalMan*10000)}
+      ${td(kenpoInd)}
+      ${tds(kenpoIndBon,'exb-nenkin-kenpo-ind', kenpoIndBon>0?'#e65100':'')}
+      ${tds(kenpoIndSal,'exb-nenkin-kenpo-ind')}
+      ${td(nenkinInd)}
+      ${tds(nenkinIndBon,'exb-nenkin-ind', nenkinIndBon>0?'#e65100':'')}
+      ${tds(nenkinIndSal,'exb-nenkin-ind')}
+      ${td(r.incomeTax)}
+      ${td(r.residentTax)}
+      ${td(r.takeHome,'#2e7d32',true)}
+      ${td(Math.max(0,profit-salYen-bonusYen))}
+      ${td(kenpoCorp)}
+      ${tds(kenpoCorpBon,'exb-nenkin-kenpo-corp', kenpoCorpBon>0?'#e65100':'')}
+      ${tds(kenpoCorpSal,'exb-nenkin-kenpo-corp')}
+      ${td(nenkinCorp)}
+      ${tds(nenkinIndBon,'exb-nenkin-corp', nenkinIndBon>0?'#e65100':'')}
+      ${tds(nenkinIndSal,'exb-nenkin-corp')}
+      ${td(r.cTax,'#c62828')}
+      ${td(r.retained,'#1565c0',true)}
+      ${td(r.takeHome+r.retained,'#7b1fa2',true)}
+    </tr>`;
+  });
+
+  return `
+  <details style="margin-top:14px">
+    <summary style="cursor:pointer;background:#f4f6f9;border:1px solid var(--border);border-radius:8px;padding:10px 16px;font-size:13px;font-weight:700;color:var(--primary);list-style:none;display:flex;align-items:center;gap:8px">
+      <span>📋 賞与額別 税金内訳パターン表（クリックで展開）</span>
+      <span style="font-size:10px;font-weight:400;color:var(--text-muted);margin-left:4px">月額は総額固定で逆算 ／ 点線=社保上限ライン（厚年150万・健保573万・月額65万） ／ ▶=現在の設定</span>
+    </summary>
+    <div style="margin-top:8px;overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font-size:11px;min-width:700px">
+        <thead>${headerHtml}</thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  </details>`;
+}
+
+function renderExOptChart(profit, kenpo, currentSalary=0, currentBonus=0, age='under40', spouseDeduction=0, depGeneral=0, depSpecific=0, depElderly=0, otherIncome=0){
+  const canvas = document.getElementById('ex-opt-chart');
+  if(!canvas) return;
+  if(!profit){
+    if(exOptChart){ exOptChart.destroy(); exOptChart=null; }
+    document.getElementById('ex-opt-summary').innerHTML='';
+    const tbl=document.getElementById('ex-breakdown-table');
+    if(tbl) tbl.innerHTML='';
+    return;
+  }
+
+  // 役員報酬（年額）を0〜利益の範囲で40ステップに走査
+  const STEPS = 40;
+  const step = Math.max(100000, Math.floor(profit / STEPS / 100000) * 100000);
+  const salaryPays=[]; // 円（月次報酬年額）
+  for(let t=0; t<=profit; t+=step) salaryPays.push(t);
+  if(salaryPays[salaryPays.length-1] < profit) salaryPays.push(profit);
+
+  const labels=[], effRates=[], takeHomes=[], retaineds=[], netTotals=[];
+
+  salaryPays.forEach(sal=>{
+    const r = calcExecBurden(profit, sal, kenpo, 0, age, spouseDeduction, depGeneral, depSpecific, depElderly, otherIncome);
+    labels.push(Math.round(sal/10000)+'万');
+    effRates.push(+r.effRate.toFixed(1));
+    takeHomes.push(Math.round(r.takeHome/10000));
+    retaineds.push(Math.round(r.retained/10000));
+    netTotals.push(Math.round((r.takeHome + r.retained)/10000));
+  });
+
+  const maxNetIdx = netTotals.indexOf(Math.max(...netTotals)); // 手取り＋留保の合計最大
+
+  // 現在の月次報酬に最も近いインデックス
+  const curIdx = salaryPays.reduce((best,t,i)=>
+    Math.abs(t-currentSalary)<Math.abs(salaryPays[best]-currentSalary)?i:best, 0);
+
+  if(exOptChart){ exOptChart.destroy(); exOptChart=null; }
+
+  // ⭐ 絵文字をcanvasに描いてpointStyleの画像として使用
+  const starImg = (() => {
+    const size = 40;
+    const c = document.createElement('canvas');
+    c.width = size; c.height = size;
+    const cx = c.getContext('2d');
+    cx.font = `${size - 4}px serif`;
+    cx.textAlign = 'center';
+    cx.textBaseline = 'middle';
+    cx.fillText('⭐', size / 2, size / 2);
+    return c;
+  })();
+
+  // 現在位置ドット：全データセット共通の橙色
+  const ptR   = (i, isNet) => isNet ? (i===maxNetIdx?20: i===curIdx?7:2) : (i===curIdx?7:2);
+  const ptCol = (i, lineColor, isNet) =>
+    i===curIdx ? '#fff' : lineColor;
+  const ptBrd = (i) => i===curIdx ? '#1a3a5c' : '#fff';
+  const ptBW  = (i) => i===curIdx ? 2.5 : 2;
+
+  const datasets = [
+    {
+      label:'手取り(万円)',
+      data: takeHomes,
+      borderColor:'#2e7d32',
+      backgroundColor:'rgba(46,125,50,.07)',
+      yAxisID:'y2', tension:.35, borderWidth:2.5, fill:false,
+      pointRadius: labels.map((_,i)=> ptR(i,false)),
+      pointStyle: 'circle',
+      pointBackgroundColor: labels.map((_,i)=> ptCol(i,'#2e7d32',false)),
+      pointBorderColor: labels.map((_,i)=> ptBrd(i)),
+      pointBorderWidth: labels.map((_,i)=> ptBW(i)),
+      pointHoverRadius:8,
+    },
+    {
+      label:'法人留保(万円)',
+      data: retaineds,
+      borderColor:'#1565c0',
+      backgroundColor:'rgba(21,101,192,.04)',
+      yAxisID:'y2', tension:.35, borderWidth:2, fill:false,
+      borderDash:[5,4],
+      pointStyle: 'circle',
+      pointRadius: labels.map((_,i)=> ptR(i,false)),
+      pointBackgroundColor: labels.map((_,i)=> ptCol(i,'#1565c0',false)),
+      pointBorderColor: labels.map((_,i)=> ptBrd(i)),
+      pointBorderWidth: labels.map((_,i)=> ptBW(i)),
+      pointHoverRadius:6,
+    },
+    {
+      label:'手取り＋留保合計(万円)',
+      data: netTotals,
+      borderColor:'#7b1fa2',
+      backgroundColor:'rgba(123,31,162,.05)',
+      yAxisID:'y2', tension:.35, borderWidth:2.5, fill:false,
+      borderDash:[2,2],
+      pointRadius: labels.map((_,i)=> ptR(i,true)),
+      pointBackgroundColor: labels.map((_,i)=> ptCol(i,'#7b1fa2',true)),
+      pointStyle: labels.map((_,i)=> i===maxNetIdx ? starImg : 'circle'),
+      pointBorderColor: labels.map((_,i)=> ptBrd(i)),
+      pointBorderWidth: labels.map((_,i)=> ptBW(i)),
+      pointHoverRadius:10,
+    },
+  ];
+
+  exOptChart = new Chart(canvas, {
+    type:'line',
+    data:{ labels, datasets },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      interaction:{mode:'index', intersect:false},
+      onClick:(evt, els)=>{
+        if(!els.length) return;
+        const idx = els[0].index;
+        document.getElementById('ex-salary').value = Math.round(salaryPays[idx]/10000);
+        calcExecutive();
+      },
+      plugins:{
+        legend:{position:'top', labels:{boxWidth:12, font:{size:11}}},
+        tooltip:{
+          callbacks:{
+            title: items=>`役員報酬（年額）${items[0].label}`,
+            afterBody: items=>{
+              const i = items[0].dataIndex;
+              const marks=[];
+              if(i===maxNetIdx) marks.push('⭐ 手取り＋留保の合計が最大');
+              if(i===curIdx)    marks.push('📌 現在の設定');
+              return marks.length ? marks : [];
+            }
+          }
+        }
+      },
+      scales:{
+        x:{ticks:{font:{size:10}}, grid:{color:'rgba(0,0,0,.04)'}},
+        y2:{
+          type:'linear', position:'left',
+          title:{display:true, text:'万円', font:{size:11}},
+          ticks:{font:{size:10}},
+          grid:{color:'rgba(0,0,0,.04)'}
+        },
+      }
+    }
+  });
+
+  // 最適値サマリー（手取り＋留保最大の1枚のみ）
+  const _calcAt = (idx) => calcExecBurden(profit, salaryPays[idx], kenpo, 0, age, spouseDeduction, depGeneral, depSpecific, depElderly, otherIncome);
+  const rNet = _calcAt(maxNetIdx);
+
+  const _setVal = (idx) =>
+    `document.getElementById('ex-salary').value=${Math.round(salaryPays[idx]/10000)};calcExecutive()`;
+
+  const remRate = profit > 0 ? ((rNet.takeHome + rNet.retained) / profit * 100).toFixed(1) : '-';
+  const netTotal = rNet.takeHome + rNet.retained;
+
+  document.getElementById('ex-opt-summary').innerHTML = `
+    <div style="background:#f3e5f5;border:1.5px solid #ce93d8;border-radius:12px;padding:12px 18px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:20px">⭐</span>
+        <span style="font-size:14px;font-weight:800;color:#4a148c;letter-spacing:.02em">手取り＋留保の合計が最大</span>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:10px;color:#7b1fa2;font-weight:600;margin-bottom:1px">役員報酬（年額）</div>
+        <div style="font-size:22px;font-weight:800;color:#4a148c;line-height:1">${Math.round(salaryPays[maxNetIdx]/10000)}<span style="font-size:13px;font-weight:600;margin-left:2px">万円</span></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;cursor:pointer" onclick="${_setVal(maxNetIdx)}" title="クリックでこの報酬額を設定">
+      <div style="background:linear-gradient(135deg,#1b5e20,#2e7d32);border-radius:14px;padding:20px 22px;color:#fff">
+        <div style="font-size:11px;opacity:.7;letter-spacing:.06em;margin-bottom:6px">💰 個人手取り（社保・税金控除後）</div>
+        <div style="font-size:26px;font-weight:800;line-height:1.1">${fmt(rNet.takeHome)}<span style="font-size:13px;font-weight:400;margin-left:4px">円</span></div>
+        <div style="margin-top:12px;font-size:11px;opacity:.75;line-height:2">
+          <div style="display:flex;justify-content:space-between"><span>役員報酬（年額）</span><span>${fmt(salaryPays[maxNetIdx])}円</span></div>
+          <div style="display:flex;justify-content:space-between"><span>社保（個人）</span><span style="color:#ef9a9a">▲${fmt(rNet.shaA)}円</span></div>
+          <div style="display:flex;justify-content:space-between"><span>所得税・住民税</span><span style="color:#ef9a9a">▲${fmt(rNet.pTax)}円</span></div>
+        </div>
+      </div>
+      <div style="background:linear-gradient(135deg,#0d47a1,#1565c0);border-radius:14px;padding:20px 22px;color:#fff">
+        <div style="font-size:11px;opacity:.7;letter-spacing:.06em;margin-bottom:6px">🏢 法人留保（社保・税金控除後）</div>
+        <div style="font-size:26px;font-weight:800;line-height:1.1">${fmt(rNet.retained)}<span style="font-size:13px;font-weight:400;margin-left:4px">円</span></div>
+        <div style="margin-top:12px;font-size:11px;opacity:.75;line-height:2">
+          <div style="display:flex;justify-content:space-between"><span>法人利益（役員報酬控除前）</span><span>${fmt(profit)}円</span></div>
+          <div style="display:flex;justify-content:space-between"><span>役員報酬（損金）</span><span style="color:#90caf9">▲${fmt(salaryPays[maxNetIdx])}円</span></div>
+          <div style="display:flex;justify-content:space-between"><span>社保（法人）</span><span style="color:#90caf9">▲${fmt(rNet.cShakai)}円</span></div>
+          <div style="display:flex;justify-content:space-between"><span>法人税等</span><span style="color:#90caf9">▲${fmt(rNet.cTax)}円</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:10px;background:linear-gradient(135deg,#fffde7,#fff8e1);border:2px solid #f9a825;border-radius:14px;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px">
+      <div>
+        <div style="font-size:11px;color:#795548;font-weight:600;letter-spacing:.06em;margin-bottom:4px">手取り ＋ 法人留保　合計</div>
+        <div style="font-size:30px;font-weight:800;color:#1a3a5c;line-height:1">${fmt(netTotal)}<span style="font-size:14px;font-weight:500;color:#555;margin-left:5px">円</span></div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:11px;color:#795548;margin-bottom:4px">利益（報酬前）に対して手元に残る割合</div>
+        <div style="font-size:28px;font-weight:800;color:#f57f17;line-height:1">${remRate}<span style="font-size:13px;font-weight:500;color:#795548;margin-left:2px">%</span></div>
+      </div>
+    </div>`;
+
+  // ── 報酬額別 税金内訳パターン表 ──
+  const tblEl = document.getElementById('ex-breakdown-table');
+  if(tblEl){
+    const colDefs = [
+      {label:'役員報酬', tip:'シミュレーション上の\n役員報酬年額（月額×12）'},
+      {label:'社保（個人）', tip:'健保（4.925%）＋支援金（0.115%）＋厚年（9.15%）\n※40〜64歳は介護（0.405%）加算\n協会けんぽ令和8年度・東京都'},
+      {label:'個人所得税', tip:'給与所得控除後の課税所得に\n累進税率を適用\n＋復興特別所得税（×2.1%）'},
+      {label:'住民税', tip:'課税所得×10%\n（均等割・調整控除は簡略化）'},
+      {label:'個人手取り', tip:'役員報酬\n－社保（個人）\n－所得税－住民税'},
+      {label:'役員報酬控除後の\n会社利益', tip:'役員報酬を差し引いた後の\n法人利益（利益－役員報酬）'},
+      {label:'社保（法人）', tip:'個人負担と同額を会社も負担\n（支援金0.115%の法人折半分を含む）\n＋子ども・子育て拠出金（0.36%・法人のみ）\n損金算入'},
+      {label:'法人税等', tip:'課税所得に中小企業税率を適用\n所得割：〜800万×15%＋超過×23.2%\n＋地方法人税・事業税等'},
+      {label:'法人留保', tip:'会社利益－社保（法人）\n－法人税等\n＝税引後の法人内留保額'},
+      {label:'個人手取り\n＋法人留保', tip:'個人手取りと法人留保の合計\n手元に残る総額の指標'},
+    ];
+    let tHtml = `<table style="width:100%;border-collapse:collapse;font-size:11px;min-width:760px">
+      <thead><tr>${colDefs.map(c=>`<th style="background:var(--primary);color:#fff;padding:7px 8px;text-align:right;white-space:pre-line;font-size:10px">${c.label}<span class="col-tip" data-tip="${c.tip.replace(/\n/g,'&#10;')}" onmouseenter="showColTip(this)" onmouseleave="hideColTip()">?</span></th>`).join('')}</tr></thead><tbody>`;
+    salaryPays.forEach((sal, i)=>{
+      const r2 = calcExecBurden(profit, sal, kenpo, 0, age, spouseDeduction, depGeneral, depSpecific, depElderly, otherIncome);
+      const corpPSimple = Math.max(0, profit - sal);
+      let bg = '';
+      let prefix = '';
+      if(i === curIdx){ bg='background:#fff3e0'; }
+      if(i === maxNetIdx){ bg='background:#f3e5f5'; prefix='⭐ '; }
+      tHtml += `<tr style="${bg}">
+        <td style="padding:5px 8px;text-align:right;font-weight:${i===curIdx||i===maxNetIdx?700:400}">${prefix}${Math.round(sal/10000)}万</td>
+        <td style="padding:5px 8px;text-align:right">${fmt(r2.shaA)}</td>
+        <td style="padding:5px 8px;text-align:right">${fmt(r2.incomeTax)}</td>
+        <td style="padding:5px 8px;text-align:right">${fmt(r2.residentTax)}</td>
+        <td style="padding:5px 8px;text-align:right;color:#2e7d32">${fmt(r2.takeHome)}</td>
+        <td style="padding:5px 8px;text-align:right">${fmt(corpPSimple)}</td>
+        <td style="padding:5px 8px;text-align:right">${fmt(r2.cShakai)}</td>
+        <td style="padding:5px 8px;text-align:right;color:#c62828">${fmt(r2.cTax)}</td>
+        <td style="padding:5px 8px;text-align:right;color:#1565c0;font-weight:600">${fmt(r2.retained)}</td>
+        <td style="padding:5px 8px;text-align:right;color:#7b1fa2;font-weight:700">${fmt(r2.takeHome+r2.retained)}</td>
+      </tr>`;
+    });
+    tHtml += '</tbody></table>';
+    tblEl.innerHTML = tHtml;
+  }
 }
 
 // ===== ふるさと納税 =====
@@ -1096,6 +1895,14 @@ function resultBox(title,main,rows,noMain=false){
 // ===== freee実績データ（Claudeが同期・更新） =====
 // ※ 「〇〇社のfreeeデータを同期して」とClaudeに頼むと最新データに更新されます
 // キー: 'f' + freeeのcompany_id、月次データは円単位
+//
+// 【opening_cash / cash_months 同期手順（Claude用）】
+//   opening_cash:
+//     trial_bs(fiscal_year=FY) の 現金・預金 opening_balance 合計（円）
+//   cash_months:
+//     各月末について trial_bs(fiscal_year=FY, end_month=M) を呼び出し
+//     現金・預金 (!total_line) の closing_balance 合計（円）を {month:M, cash:合計} で格納
+//   ※ 実績月（i < actualN）のみ使用。予測月はチェーン計算で補完。
 const FREEE_ACTUAL_DATA = {
   'f10848563': {
     company_name: '株式会社DonDot',
@@ -1103,6 +1910,17 @@ const FREEE_ACTUAL_DATA = {
     fiscal_year: 2024,
     start_month: 8,
     updated_at: '2026-04-08',
+    opening_cash: 586400, // 期首（2025年8月初）現金・預金残高（円）freee trial_bs opening_balance合計
+    cash_months: [
+      {month:8,  cash:416946},   // 2025年8月末
+      {month:9,  cash:168010},   // 2025年9月末
+      {month:10, cash:110952},   // 2025年10月末
+      {month:11, cash:349361},   // 2025年11月末
+      {month:12, cash:171832},   // 2025年12月末
+      {month:1,  cash:-859260},  // 2026年1月末
+      {month:2,  cash:-1536993}, // 2026年2月末
+      {month:3,  cash:-2319868}, // 2026年3月末
+    ],
     months: [
       {month:8, revenue:0,       cogs:0, exec_sal:280000, hoken:55100,  outsource:181556,  entertainment:13992, koukoku:4681,  kaigi:11581, travel:7713,  comm:65044,  supplies:3490,  fee:42240,  rent:164485, deprec:0, hoken_ryou:0, sozei:0,     other_sga:0, int_inc:54,  misc_inc:0,     int_exp:0,     corp_tax:0},
       {month:9, revenue:717200,  cogs:0, exec_sal:280000, hoken:55100,  outsource:25846,   entertainment:0,     koukoku:21030, kaigi:4965,  travel:0,     comm:19613,  supplies:0,     fee:38337,  rent:161889, deprec:0, hoken_ryou:0, sozei:0,     other_sga:0, int_inc:35,  misc_inc:40000, int_exp:0,     corp_tax:0},
@@ -1159,6 +1977,12 @@ function applyFreeeData(companyId){
       if(pcData[dst]) pcData[dst][i] = Math.round((m[src]||0)/10000*10)/10;
     });
   });
+
+  // 期首Cash残高を設定
+  if(data.opening_cash !== undefined){
+    const ocEl = document.getElementById('pc-opening-cash');
+    if(ocEl) ocEl.value = data.opening_cash;
+  }
 
   return true;
 }
@@ -1239,7 +2063,6 @@ const PL_ROWS = [
   {key:'deprec',     label:'　減価償却費',    cat:'sga',  calc:false},
   {key:'hoken_ryou', label:'　保険料',        cat:'sga',  calc:false},
   {key:'sozei',      label:'　租税公課',      cat:'sga',  calc:false},
-  {key:'other_sga',  label:'　その他販管費',  cat:'sga',  calc:false},
   {key:'sga_total',  label:'販管費合計',      cat:'calc', calc:true,  bold:true,
     fn:(d,i)=>['exec_sal','salary','hoken','outsource','entertainment','koukoku','kaigi','travel','comm','supplies','fee','rent','deprec','hoken_ryou','sozei','other_sga'].reduce((s,k)=>s+(d[k]?.[i]||0),0)},
   {key:'op_profit',  label:'営業利益',        cat:'calc', calc:true,  bold:true,
@@ -1270,18 +2093,30 @@ const CASH_ROWS = [
   {key:'sga_cash',  label:'　通常販管費',    auto:true,  note:'販管費-法定福利費-減価償却'},
   {key:'corp_pay',  label:'　法人税等支払',  auto:false},
   {key:'cons_tax',  label:'　消費税支払',    auto:false},
-  {key:'withhold',  label:'　源泉所得税',    auto:false},
-  {key:'res_tax',   label:'　住民税特別徴収',auto:false},
+  {key:'withhold',  label:'　源泉所得税',    auto:true, note:'自動計算', tip:'自動計算値: (役員報酬＋給与手当) × 10.21%　手入力で上書き可'},
+  {key:'res_tax',   label:'　住民税特別徴収',auto:true, note:'自動計算', tip:'自動計算値: (役員報酬＋給与手当) × 10%　手入力で上書き可'},
   {key:'shakai',    label:'　社会保険料',    auto:true,  note:'法定福利費×2'},
   {key:'loan_rep',  label:'　借入返済',      auto:false},
   {key:'other_out', label:'　その他支出',    auto:false},
   {key:'out_total', label:'支出合計',        bold:true,  sum:['ap_pay','sga_cash','corp_pay','cons_tax','withhold','res_tax','shakai','loan_rep','other_out']},
-  {key:'net_chg',   label:'増　減',          bold:true,  diff:['in_total','out_total']},
+  {key:'other_chg', label:'　その他増減',    auto:false, otherChg:true,
+    tip:'実績月：月初Cash＋収入合計－支出合計 と freee実残高との差額を自動計算。予測月：手入力で調整可（借入・返済以外の突発的なCash変動など）'},
+  {key:'net_chg',   label:'増減合計',        bold:true,  netChgRow:true},
   {key:'close',     label:'月末Cash',        bold:true,  closeRow:true},
 ];
 
 let pcData = {}; // PL input data: {key: [m0..m11]}
 let cashData = {}; // Cash override data
+let taxSchedFY2 = {}; // 納付スケジュール翌期 手動上書き {col_rowIdx: value}
+let taxSchedMid = {}; // 中間納付 手動上書き {corp_FY1, cons_FY1_M, corp_FY2, cons_FY2_M}
+let extraConsInp10 = 0;   // 課対仕入10% 追加手入力（円）
+let extraConsInpK80 = 0;  // 課対仕入（控80）10% 追加手入力（円）
+let extraConsInp8 = 0;    // 課対仕入8%（軽） 追加手入力（円）
+let extraConsInpK80_8 = 0;// 課対仕入（控80）8%（軽） 追加手入力（円）
+let extraRevInp10 = 0;    // 課税売上10% 追加手入力（円）
+let extraRevInp8 = 0;     // 課税売上8%（軽） 追加手入力（円）
+let consInpBdOpen = false; // 課税仕入内訳の開閉状態
+let consRevBdOpen = false; // 課税売上内訳の開閉状態
 let pcCashChart = null;
 
 function getMonths(){
@@ -1293,7 +2128,24 @@ function getMonths(){
 
 function monthLabel(m){ return m+'月'; }
 
+function buildFiscalYearSelect(){
+  const sel = document.getElementById('pc-start-month');
+  if(!sel) return;
+  const saved = sel.value;
+  const curM = new Date().getMonth()+1;
+  const curY = new Date().getFullYear();
+  const startMonths = [8,4,1,7,10];
+  sel.innerHTML = startMonths.map(start=>{
+    const decMon = ((start-2+12)%12)+1; // 決算月
+    const yr = decMon >= curM ? curY : curY+1;
+    return `<option value="${start}">${yr}年${decMon}月期</option>`;
+  }).join('');
+  if(saved) sel.value = saved;
+  if(!sel.value) sel.value = '8'; // デフォルト
+}
+
 function initPlCash(){
+  buildFiscalYearSelect();
   // 現在の事業者にfreeeデータがあれば自動ロード
   const currentId = getCurrentId();
   const company = getCurrentCompany();
@@ -1383,12 +2235,19 @@ function buildCashTable(months, actualN){
       return;
     }
     const bold=row.bold?'font-weight:700;':'';
-    const isCalc=row.sum||row.closeRow||row.diff;
-    html+=`<tr><td style="${bold}font-size:12px">${row.label}${row.note?`<span style="font-size:10px;color:#c8a84b;margin-left:4px">${row.note}</span>`:''}`;
+    const isCalc=row.sum||row.closeRow||row.diff||row.netChgRow;
+    html+=`<tr><td style="${bold}font-size:12px">${row.label}${row.note?`<span style="font-size:10px;color:#c8a84b;margin-left:4px">${row.note}</span>`:''}${row.tip?`<span class="cash-tip">?<span class="cash-tip-box">${row.tip}</span></span>`:''}`;
     html+=`</td>`;
     for(let i=0;i<12;i++){
       if(isCalc||row.key==='open'){
         html+=`<td class="r" id="cash_${row.key}_${i}" style="font-size:12px;${bold}"></td>`;
+      } else if(row.otherChg){
+        // 実績月は自動計算セル、予測月は手入力可
+        if(i < actualN){
+          html+=`<td class="r" id="cash_${row.key}_${i}" style="font-size:12px;color:#888"></td>`;
+        } else {
+          html+=`<td style="padding:2px"><input type="number" id="cashi_${row.key}_${i}" placeholder="0" style="width:100%;border:none;border-radius:4px;padding:4px 6px;font-size:12px;text-align:right;font-family:inherit;color:#666" onchange="onCashInput('${row.key}',${i},this.value)"></td>`;
+        }
       } else {
         html+=`<td style="padding:2px"><input type="number" id="cashi_${row.key}_${i}" placeholder="自動" style="width:100%;border:none;border-radius:4px;padding:4px 6px;font-size:12px;text-align:right;font-family:inherit;color:#666" oninput="onCashInput('${row.key}',${i},this.value)"></td>`;
       }
@@ -1412,8 +2271,31 @@ function onCashInput(key,idx,val){
   calcPlCash();
 }
 
+function toggleConsInpBd(){
+  consInpBdOpen = !consInpBdOpen;
+  const el  = document.getElementById('cons-inp-bd');
+  const arr = document.getElementById('cons-inp-arr');
+  if(el)  el.style.display = consInpBdOpen ? '' : 'none';
+  if(arr) arr.textContent  = consInpBdOpen ? '▲' : '▼';
+}
+function toggleConsRevBd(){
+  consRevBdOpen = !consRevBdOpen;
+  const el  = document.getElementById('cons-rev-bd');
+  const arr = document.getElementById('cons-rev-arr');
+  if(el)  el.style.display = consRevBdOpen ? '' : 'none';
+  if(arr) arr.textContent  = consRevBdOpen ? '▲' : '▼';
+}
+
 function calcPlCash(){
   const actualN = +document.getElementById('pc-actual-months').value;
+  const months  = getMonths();
+
+  // ヘッダー再生成（実績月数変更に追従）
+  const hCols = months.map((m,i)=>`<th style="min-width:72px;text-align:right;background:${i<actualN?'#1a3a5c':'#2d5f8a'}">${monthLabel(m)}<br><span style="font-size:9px;opacity:.7">${i<actualN?'実績':'予測'}</span></th>`).join('');
+  const plHead   = document.getElementById('pl-head');
+  const cashHead = document.getElementById('cash-head');
+  if(plHead)   plHead.innerHTML   = `<tr><th style="min-width:160px;text-align:left">項目</th>${hCols}<th style="min-width:80px;text-align:right;background:#0d2640">合計</th><th style="min-width:56px;text-align:right;background:#0d2640">対売上</th></tr>`;
+  if(cashHead) cashHead.innerHTML = `<tr><th style="min-width:160px;text-align:left">項目</th>${hCols}<th style="min-width:80px;text-align:right;background:#0d2640">合計</th></tr>`;
 
   // --- PL計算 ---
   // 入力値を読み取り
@@ -1430,6 +2312,7 @@ function calcPlCash(){
   PL_ROWS.filter(r=>r.calc).forEach(row=>{
     d[row.key] = Array.from({length:12},(_,i)=>row.fn(d,i));
   });
+  window._plCalcData = d; // 役員報酬シミュレーターへ引用用
 
   // PL表示
   PL_ROWS.forEach(row=>{
@@ -1450,19 +2333,31 @@ function calcPlCash(){
   });
 
   // --- Cash計算 ---
-  const openingCash = (parseFloat(document.getElementById('pc-opening-cash')?.value)||0);
+  // 期首Cash残高：入力欄の円値を万円に変換（小数1桁）
+  const openingCash = Math.round((+(document.getElementById('pc-opening-cash')?.value||0)) / 10000 * 10) / 10;
   const cashCalc = {};
+
+  // freee実績 月次Cash残高マップ（カレンダー月 → 万円）
+  const freeeActualData = FREEE_ACTUAL_DATA[getCurrentId()];
+  const actualCashMap = {}; // { calendarMonth: closingCash万円 }
+  (freeeActualData?.cash_months || []).forEach(cm => {
+    actualCashMap[cm.month] = Math.round(cm.cash / 10000 * 10) / 10;
+  });
 
   // 自動計算値（オーバーライドがなければ自動）
   const auto = {
-    ar_coll: [openingCash,...d.revenue.slice(0,11)], // 前月売上（期首はBS売掛金≒前月売上として期首現金で代用、実際はar入力）
-    ap_pay:  [0,...d.cogs.slice(0,11)],
+    ar_coll:  [0,...d.revenue.slice(0,11)], // 前月売上を翌月回収（月0は前期末売掛＝不明のため0）
+    ap_pay:   [0,...d.cogs.slice(0,11)],
     sga_cash: Array.from({length:12},(_,i)=>(d.sga_total[i]||0)-(d.hoken?.[i]||0)-(d.deprec?.[i]||0)),
     shakai:   Array.from({length:12},(_,i)=>(d.hoken?.[i]||0)*2),
+    // 源泉所得税：(役員報酬+給与) × 10.21% 概算
+    withhold: Array.from({length:12},(_,i)=>Math.round(((d.exec_sal?.[i]||0)+(d.salary?.[i]||0))*0.1021*10)/10),
+    // 住民税特別徴収：(役員報酬+給与) × 10% 概算
+    res_tax:  Array.from({length:12},(_,i)=>Math.round(((d.exec_sal?.[i]||0)+(d.salary?.[i]||0))*0.10*10)/10),
   };
 
   // マージ（手動入力 > 自動）
-  CASH_ROWS.filter(r=>!r.head&&!r.sum&&!r.diff&&!r.closeRow&&r.key!=='open').forEach(row=>{
+  CASH_ROWS.filter(r=>!r.head&&!r.sum&&!r.diff&&!r.closeRow&&!r.netChgRow&&!r.otherChg&&r.key!=='open').forEach(row=>{
     cashCalc[row.key]=Array.from({length:12},(_,i)=>{
       const manual=cashData[row.key]?.[i];
       if(manual!==null&&manual!==undefined) return manual;
@@ -1483,18 +2378,44 @@ function calcPlCash(){
     cashCalc[row.key]=Array.from({length:12},(_,i)=>row.sum.reduce((s,k)=>s+(cashCalc[k]?.[i]||0),0));
   });
 
-  // 月末残高チェーン
+  // ── freee deals 連携 (将来実装) ──
+  // FREEE_ACTUAL_DATA[id].deals_months があれば、
+  // 各月の入金・支出を deals の payments[].date ベースで
+  // CASH_ROWS の各行（売掛回収・仕入支払等）に自動マッピング可能。
+  // Claude同期コマンド: 「DonDotのdealsデータを同期して」
+  // API: GET /api/1/deals?company_id={id}&start_date=YYYY-MM-DD&end_date=YYYY-MM-DD
+  //      &offset=0&limit=100 (ページネーション)
+  // payments[].date = 決済日, amount = 金額, account_item_id で科目判定
+
+  // 月末残高チェーン（実績月はfreee実残高でアンカー、予測月はチェーン計算）
   const closingArr=[];
+  const cashActualMonths = new Set(); // 実績アンカーが使われた月インデックス
   let runningCash=openingCash;
   cashCalc['open']=[];
+  cashCalc['other_chg']=[];
   cashCalc['net_chg']=[];
   cashCalc['close']=[];
   for(let i=0;i<12;i++){
+    const calMonth = months[i]; // カレンダー月（1-12）
     cashCalc['open'][i]=runningCash;
-    const netChg=(cashCalc['in_total']?.[i]||0)-(cashCalc['out_total']?.[i]||0);
-    cashCalc['net_chg'][i]=netChg;
-    runningCash+=netChg;
-    cashCalc['close'][i]=runningCash;
+    const inOut = (cashCalc['in_total']?.[i]||0) - (cashCalc['out_total']?.[i]||0);
+    // 実績月 かつ freeeに実残高あり → 実残高でアンカー
+    if(i < actualN && actualCashMap[calMonth] !== undefined){
+      const actualClose = actualCashMap[calMonth];
+      // other_chg = freee実残高 - (月初 + 収入合計 - 支出合計)
+      cashCalc['other_chg'][i] = actualClose - (runningCash + inOut);
+      cashCalc['net_chg'][i]   = inOut + cashCalc['other_chg'][i]; // = actualClose - runningCash
+      cashCalc['close'][i]     = actualClose;
+      runningCash = actualClose;
+      cashActualMonths.add(i);
+    } else {
+      // 予測月：other_chgは手入力 or 0
+      const manualOtherChg = cashData['other_chg']?.[i] ?? 0;
+      cashCalc['other_chg'][i] = manualOtherChg;
+      cashCalc['net_chg'][i]   = inOut + manualOtherChg;
+      runningCash += cashCalc['net_chg'][i];
+      cashCalc['close'][i]     = runningCash;
+    }
     closingArr.push(runningCash);
   }
 
@@ -1506,8 +2427,26 @@ function calcPlCash(){
     for(let i=0;i<12;i++){
       const el=document.getElementById(`cash_${row.key}_${i}`);
       if(el){
-        el.textContent=fmtM(vals[i]);
-        el.style.color=vals[i]<0?'#c62828':'';
+        const isAnchor = cashActualMonths.has(i);
+        // 月初/月末Cash行で実績アンカー月はfreeeバッジを表示
+        if((row.key==='open'||row.key==='close') && isAnchor){
+          const color = vals[i]<0 ? '#c62828' : '#1a3a5c';
+          el.innerHTML = `<span style="color:${color};font-weight:700">${fmtM(vals[i])}</span><br><span style="font-size:9px;color:#2e7d32;font-weight:600;white-space:nowrap">●freee実績</span>`;
+          el.style.color='';
+        } else if(row.key==='other_chg'){
+          // その他増減：実績月は自動（灰）、予測月は入力値
+          const v = vals[i];
+          if(i < actualN){
+            // 自動計算セル（実績月）
+            const color = Math.abs(v) < 0.05 ? '#aaa' : v < 0 ? '#e53935' : '#1565c0';
+            el.textContent = fmtM(v);
+            el.style.color = color;
+          }
+          // 予測月は <input> なので el=null の場合あり（inputセルは別途表示済み）
+        } else {
+          el.textContent=fmtM(vals[i]);
+          el.style.color=vals[i]<0?'#c62828':'';
+        }
       }
     }
     const te=document.getElementById(`cash_${row.key}_tot`);
@@ -1527,57 +2466,405 @@ function calcPlCash(){
   checkAnomalies(d);
 }
 
+function toggleBizType(){
+  const m = document.getElementById('tax-cons-method');
+  const w = document.getElementById('tax-biz-type-wrap');
+  if(m && w) w.style.display = m.value==='simplified' ? '' : 'none';
+}
+
 function calcTaxForecast(d, cashCalc){
   const el=document.getElementById('pc-tax-result');
   if(!el) return;
 
+  // ── PL集計 ──
   const annualRev  = d.revenue.reduce((a,b)=>a+b,0);
   const annualCogs = d.cogs.reduce((a,b)=>a+b,0);
   const annualSga  = d.sga_total.reduce((a,b)=>a+b,0);
-  const annualNet  = d.net.reduce((a,b)=>a+b,0); // 万円
+  const annualNet      = d.net.reduce((a,b)=>a+b,0);       // 万円（当期純利益）
+  const annualOrdProfit= d.ord_profit.reduce((a,b)=>a+b,0); // 万円（経常利益＝税引前利益）
 
-  // ── 法人税等（中小企業・資本金1億円以下の税率を適用） ──
-  const p = annualNet * 10000; // 円
-  let ct=0,lct=0,rct=0,bt=0,sbt=0,corpTaxTotal=0;
+  // ── 法人税等（中小企業 標準税率） ──
+  const p = annualNet * 10000;           // 課税所得の近似（円）
+  const pBefore = annualOrdProfit * 10000; // 税引前利益＝経常利益（円）
+  let ct=0,lct=0,rct_hozei=0,bt=0,sbt=0;
   if(p > 0){
-    ct  = Math.floor(Math.min(p,8000000)*.15 + Math.max(0,p-8000000)*.232);
-    lct = Math.floor(ct*.103);
-    rct = Math.floor(ct*.207);
-    bt  = Math.floor(Math.min(p,4000000)*.035 + Math.min(Math.max(0,p-4000000),4000000)*.053 + Math.max(0,p-8000000)*.07);
-    sbt = Math.floor(bt*.372);
-    corpTaxTotal = ct+lct+rct+bt+sbt;
+    ct        = Math.floor(Math.min(p,8000000)*.15 + Math.max(0,p-8000000)*.232);
+    lct       = Math.floor(ct*.103);
+    rct_hozei = Math.floor(ct*.07); // 法人住民税 法人税割
+    bt        = Math.floor(Math.min(p,4000000)*.035 + Math.min(Math.max(0,p-4000000),4000000)*.053 + Math.max(0,p-8000000)*.07);
+    sbt       = Math.floor(bt*.37);
   }
-  const effRate = p>0 ? (corpTaxTotal/p*100).toFixed(1) : '—';
 
-  // すでにスケジュール上で計上済みの法人税（corp_taxフィールド）を差し引いて追加納付額を算出
-  const corpTaxScheduled = d.corp_tax ? d.corp_tax.reduce((a,b)=>a+b,0)*10000 : 0;
-  const corpTaxRemain = Math.max(corpTaxTotal - corpTaxScheduled, 0);
+  // ① ② 均等割（東京23区 or 標準税率）
+  const capitalTier = +(document.getElementById('tax-capital-tier')?.value||1);
+  const empTier     = document.getElementById('tax-emp-tier')?.value||'small';
+  const location    = document.getElementById('tax-location')?.value||'standard';
+  const idx = Math.min(capitalTier-1, 4);
+  let prefKinto, muniKinto, kintoTotal, kintoLabel;
+  if(location==='tokyo23'){
+    // I表：特別区のみに事務所（都民税均等割＋特別区民税均等割 合算額）
+    const T23_S = [ 70000, 180000,  290000,  950000, 1210000]; // 50人以下
+    const T23_L = [140000, 200000,  530000, 2290000, 3800000]; // 50人超
+    kintoTotal = (empTier==='large' ? T23_L : T23_S)[idx];
+    prefKinto = muniKinto = null; // 内訳非表示
+    kintoLabel = '東京都23区（都民税＋特別区民税 合算）';
+  } else {
+    // 標準税率
+    const PREF_KINTO  = [  20000,  50000, 130000,  540000,  800000];
+    const MUNI_KINTO_S= [  50000, 130000, 160000,  410000,  410000]; // 50人以下
+    const MUNI_KINTO_L= [ 120000, 150000, 400000, 4000000, 4100000]; // 50人超
+    prefKinto  = PREF_KINTO[idx];
+    muniKinto  = (empTier==='large' ? MUNI_KINTO_L : MUNI_KINTO_S)[idx];
+    kintoTotal = prefKinto + muniKinto;
+    kintoLabel = `道府県 ${fmt(prefKinto)}＋市区町村 ${fmt(muniKinto)}`;
+  }
+  const rct = rct_hozei + kintoTotal; // 法人住民税合計
+  const corpTaxTotal = ct+lct+rct+bt+sbt;
+  // 実効税率：totalBurden（法人税等＋消費税＋社保）÷ 税引前利益（経常利益）
+  // ※ totalBurdenはこの後で確定するため、ここでは法人税等のみで仮計算し後で上書き
 
-  // ── 消費税（原則課税・概算） ──
-  const taxableExp = (annualCogs+annualSga)*10000;
-  const consTaxPaid = (cashCalc.cons_tax||[]).reduce((a,b)=>a+b,0)*10000;
-  const consTaxEst = Math.max((annualRev*10000/1.1*0.1)-(taxableExp/1.1*0.1)-consTaxPaid, 0);
+  // ③ 消費税 仕入税額控除: 不課税費目（給与・社保・減価償却・保険料・租税公課）を除外
+  const annualExecSal  = (d.exec_sal   ||[]).reduce((a,b)=>a+b,0);
+  const annualSalary   = (d.salary     ||[]).reduce((a,b)=>a+b,0);
+  const annualHoken    = (d.hoken      ||[]).reduce((a,b)=>a+b,0);
+  const annualDeprecFull=(d.deprec     ||[]).reduce((a,b)=>a+b,0);
+  const annualHokenRyou= (d.hoken_ryou ||[]).reduce((a,b)=>a+b,0);
+  const annualSozei    = (d.sozei      ||[]).reduce((a,b)=>a+b,0);
+  const taxableExpManYen = annualCogs + annualSga
+    - annualExecSal - annualSalary - annualHoken
+    - annualDeprecFull - annualHokenRyou - annualSozei;
+  const taxableRevYen = annualRev * 10000 / 1.1 + extraRevInp10 + extraRevInp8; // 課税売上（税抜）
 
-  // ── 源泉・住民税・社保（スケジュール入力値の合計） ──
-  const withholdTotal = (cashCalc.withhold||[]).reduce((a,b)=>a+b,0)*10000;
-  const resTaxTotal   = (cashCalc.res_tax  ||[]).reduce((a,b)=>a+b,0)*10000;
-  const shakaiTotal   = (cashCalc.shakai   ||[]).reduce((a,b)=>a+b,0)*10000;
+  // ④ 消費税計算方式（原則 / 簡易 / 免税）
+  const consMethod = document.getElementById('tax-cons-method')?.value||'general';
+  let consTaxGross=0, consTaxLabel='', consDetailHtml='';
+  if(consMethod==='exempt'){
+    consTaxGross   = 0;
+    consTaxLabel   = '免税';
+    consDetailHtml = `<div style="text-align:center;padding:10px 0;color:#2e7d32;font-weight:600;font-size:13px">✅ 免税事業者</div>
+      <div style="text-align:center;font-size:11px;color:#666;padding-bottom:6px">消費税の申告・納付は不要です</div>`;
+  } else if(consMethod==='simplified'){
+    const mitsuRate = +(document.getElementById('tax-biz-type')?.value||0.5);
+    const mitsuPct  = Math.round(mitsuRate*100);
+    consTaxGross    = Math.max(Math.round(taxableRevYen*0.1*(1-mitsuRate)),0);
+    consTaxLabel    = `簡易課税（みなし${mitsuPct}%）`;
+    consDetailHtml  = `
+      <div class="tax-row"><span>課税売上（税抜）</span><b>${fmt(taxableRevYen)}円</b></div>
+      <div class="tax-row"><span>みなし仕入率</span><b>${mitsuPct}%</b></div>`;
+  } else {
+    const plRevYen      = annualRev * 10000 / 1.1;
+    const outputTax     = Math.round(plRevYen * 0.1) + Math.round(extraRevInp10 * 0.1) + Math.round(extraRevInp8 * 0.08);
 
-  const shakaiCompany  = Math.round(shakaiTotal/2); // 会社負担分（労使折半）
-  const shakaiEmployee = Math.round(shakaiTotal/2); // 従業員負担分（天引き）
-  const totalBurden = corpTaxTotal+consTaxEst+shakaiCompany; // 会社実負担（源泉・住民税・従業員社保は除く）
-  const totalRemit  = withholdTotal+resTaxTotal+shakaiEmployee; // 天引き納付分合計（参考）
-  const netAfterTax = p - corpTaxTotal;
+    // ② PL課税仕入（給与・社保・減価償却・保険料・租税公課除く）
+    const plTaxableYen  = Math.max(taxableExpManYen, 0) * 10000 / 1.1;
+    const plCredit      = Math.round(plTaxableYen * 0.1);
 
-  // 納付月（決算月の翌々月）
-  const settleMon = document.getElementById('pc-start-month') ? (((+document.getElementById('pc-start-month').value||8)+11)%12+1) : 9;
-  const settleMonLabel = settleMon + '月';
-  const midMonLabel = (((settleMon-2+12-6)%12)+1) + '月';
-  const withholdMon = Math.round(withholdTotal/12);
-  const resTaxMon   = Math.round(resTaxTotal/12);
-  const consMid     = Math.round(consTaxEst/2);
+    const extraCredit   = Math.round(extraConsInp10 * 0.1)
+                        + Math.round(extraConsInpK80 * 0.1 * 0.8)
+                        + Math.round(extraConsInp8 * 0.08)
+                        + Math.round(extraConsInpK80_8 * 0.08 * 0.8);
+    const inputCredit   = plCredit + extraCredit;
+    const totalTaxableExp = plTaxableYen + extraConsInp10 + extraConsInpK80 + extraConsInp8 + extraConsInpK80_8;
+
+    consTaxGross  = outputTax - inputCredit; // 負なら還付
+    consTaxLabel  = consTaxGross < 0 ? '原則課税（還付）' : '原則課税';
+    consDetailHtml = `
+      <div class="tax-row" style="cursor:pointer" onclick="toggleConsRevBd()">
+        <span>課税売上（税抜）<span id="cons-rev-arr" style="color:#aaa;font-size:10px;margin-left:4px">${consRevBdOpen?'▲':'▼'}</span></span>
+        <b>${fmt(taxableRevYen)}円</b>
+      </div>
+      <div id="cons-rev-bd" style="display:${consRevBdOpen?'':'none'}">
+        ${plRevYen>0?`<div class="tax-row" style="padding-left:12px;font-size:11px"><span style="color:#888">課税売上10%<span class="cash-tip">?<span class="cash-tip-box">PL売上高（税込）÷ 1.1</span></span></span><b style="color:#888">${fmt(Math.round(plRevYen))}円</b></div>`:''}
+        ${[
+          ['（追加）課税売上10%',   'extraRevInp10', extraRevInp10],
+          ['（追加）課税売上8%（軽）','extraRevInp8',  extraRevInp8],
+        ].map(([label,varName,val])=>`
+          <div class="tax-row" style="padding-left:12px;font-size:11px;gap:6px">
+            <span style="color:#1565c0">${label}</span>
+            <span style="display:flex;align-items:center;gap:3px">
+              <input type="number" placeholder="0" step="1" value="${val||''}"
+                style="width:80px;border:1px solid #c5d0e0;border-radius:4px;padding:2px 5px;font-size:11px;text-align:right;font-family:inherit"
+                onchange="${varName}=+this.value||0;calcPlCash()">
+              <span style="color:#888">円（税抜）</span>
+            </span>
+          </div>`).join('')}
+      </div>
+      <div class="tax-row" style="padding-left:10px"><span style="color:#aaa">消費税</span><b style="color:#aaa">${fmt(outputTax)}円</b></div>
+      <div class="tax-row" style="margin-top:4px;cursor:pointer" onclick="toggleConsInpBd()">
+        <span>課税仕入（税抜）<span id="cons-inp-arr" style="color:#aaa;font-size:10px;margin-left:4px">${consInpBdOpen?'▲':'▼'}</span></span>
+        <b>${fmt(totalTaxableExp)}円</b>
+      </div>
+      <div id="cons-inp-bd" style="display:${consInpBdOpen?'':'none'}">
+        ${plTaxableYen>0?`<div class="tax-row" style="padding-left:12px;font-size:11px"><span style="color:#888">課対仕入10%<span class="cash-tip">?<span class="cash-tip-box">（原価＋販管費 − 役員報酬 − 給与 − 社保 − 減価償却 − 保険料 − 租税公課）÷ 1.1</span></span></span><b style="color:#888">${fmt(Math.round(plTaxableYen))}円</b></div>`:''}
+        ${[
+          ['（追加）課対仕入10%',             'extraConsInp10',    extraConsInp10],
+          ['（追加）課対仕入（控80）10%',     'extraConsInpK80',   extraConsInpK80],
+          ['（追加）課対仕入8%（軽）',        'extraConsInp8',     extraConsInp8],
+          ['（追加）課対仕入（控80）8%（軽）','extraConsInpK80_8', extraConsInpK80_8],
+        ].map(([label,varName,val])=>`
+          <div class="tax-row" style="padding-left:12px;font-size:11px;gap:6px">
+            <span style="color:#1565c0">${label}</span>
+            <span style="display:flex;align-items:center;gap:3px">
+              <input type="number" placeholder="0" step="1" value="${val||''}"
+                style="width:80px;border:1px solid #c5d0e0;border-radius:4px;padding:2px 5px;font-size:11px;text-align:right;font-family:inherit"
+                onchange="${varName}=+this.value||0;calcPlCash()">
+              <span style="color:#888">円（税抜）</span>
+            </span>
+          </div>`).join('')}
+      </div>
+      <div class="tax-row" style="padding-left:10px"><span style="color:#aaa">仕入税額控除</span><b style="color:#aaa">▲ ${fmt(inputCredit)}円</b></div>`;
+  }
+
+  // ── 源泉・住民税・社保（Cashスケジュールの値をそのまま使用） ──
+  const shakaiTotal    = (cashCalc.shakai  ||[]).reduce((a,b)=>a+b,0)*10000;
+  const shakaiCompany  = Math.round(shakaiTotal/2);
+  const shakaiEmployee = Math.round(shakaiTotal/2);
+  const withholdTotal  = (cashCalc.withhold||[]).reduce((a,b)=>a+b,0)*10000;
+  const resTaxTotal    = (cashCalc.res_tax ||[]).reduce((a,b)=>a+b,0)*10000;
+
+  const totalBurden = corpTaxTotal + (consTaxGross > 0 ? consTaxGross : 0) + shakaiCompany;
+  // 実効税率：（法人税等＋消費税＋社保）÷ 税引前利益（経常利益）× 100
+  const effRate = pBefore > 0 ? (totalBurden / pBefore * 100).toFixed(1) : '—';
+
+  // ── 月計算 ──
+  const startMon  = +(document.getElementById('pc-start-month')?.value||8);
+  const filingMon = startMon % 12 + 1;         // 確定申告月（決算月の翌々月）
+  const midMon    = ((startMon + 6) % 12) + 1; // 中間申告月（期首+8ヶ月）
+  const shakaiPM  = Math.round(shakaiTotal/12);
+  // 月別の実値（Cashスケジュール連動）
+  const withholdByMonth = (cashCalc.withhold||[]).map(v=>Math.round(v*10000));
+  const resTaxByMonth   = (cashCalc.res_tax ||[]).map(v=>Math.round(v*10000));
+  const withholdPM = Math.round(withholdTotal/12); // 翌期推計用の平均
+  const resTaxPM   = Math.round(resTaxTotal/12);   // 翌期推計用の平均
+
+  // ④ 納期の特例：あり=1月・7月にまとめて納付（7月=1〜6月分、1月=7〜12月分）
+  const withholdSpecial = document.getElementById('tax-withhold-special')?.value === '1';
+
+  // ④ 法人税 中間納付：前期20万円超の場合のみ
+  const prevCorpYen = +(document.getElementById('tax-prev-corp')?.value||0)*10000;
+  let autoCorpMidPaid = 0, corpMidNote = '中間申告なし（前期法人税が入力されていません）';
+  if(prevCorpYen > 0 && prevCorpYen <= 200000){
+    autoCorpMidPaid = 0;
+    corpMidNote = '中間申告不要（前期法人税20万円以下）';
+  } else if(prevCorpYen > 200000){
+    autoCorpMidPaid = Math.round(prevCorpYen/2);
+    corpMidNote = `前期×50%`;
+  }
+  const corpMidPaid = taxSchedMid['corp_FY1'] ?? autoCorpMidPaid;
+  const corpTaxRemain = Math.max(corpTaxTotal - corpMidPaid, 0);
+
+  // ① 消費税 中間納付：前期納付額に応じて回数と金額を判定
+  const prevConsYen = +(document.getElementById('tax-prev-cons')?.value||0)*10000;
+  let autoConsMidTotal = 0, consMidNote = '中間申告なし（前期消費税が入力されていません）';
+  let consMidCount = 0;
+  if(prevConsYen > 0 && prevConsYen <= 480000){
+    autoConsMidTotal = 0; consMidCount = 0;
+    consMidNote = '中間申告不要（前期消費税48万円以下）';
+  } else if(prevConsYen > 480000 && prevConsYen <= 4000000){
+    autoConsMidTotal = Math.round(prevConsYen/2); consMidCount = 1;
+    consMidNote = `年1回（前期×50%）`;
+  } else if(prevConsYen > 4000000 && prevConsYen <= 48000000){
+    autoConsMidTotal = Math.round(prevConsYen*3/4); consMidCount = 3;
+    consMidNote = `年3回（前期×3/4）`;
+  } else if(prevConsYen > 48000000){
+    autoConsMidTotal = Math.round(prevConsYen*11/12); consMidCount = 11;
+    consMidNote = `年11回（前期×11/12）`;
+  }
+  // 免税事業者は中間納付なし
+  const consIsExempt = consMethod === 'exempt';
+  if(consIsExempt){ autoConsMidTotal = 0; consMidCount = 0; }
+  const autoConsMidPer = consMidCount > 1 ? Math.round(autoConsMidTotal/consMidCount) : autoConsMidTotal;
+
+  // 24ヶ月テーブル（当期12ヶ月 ＋ 翌期12ヶ月、2027年7月まで）
+  const months  = getMonths(); // 12ヶ月
+  const allMons = [...months, ...months]; // 24ヶ月（2期分）
+
+  // 年ラベルの付与
+  const now = new Date();
+  const curM = now.getMonth()+1, curY = now.getFullYear();
+  let yr = (startMon > curM) ? curY-1 : curY;
+  const yearLabels = allMons.map((m,i)=>{
+    if(i>0 && allMons[i] < allMons[i-1]) yr++;
+    return `${yr}/${String(m).padStart(2,'0')}`;
+  });
+
+  // 翌期中間納付額（当期実績を前期として計算）
+  let autoFy2CorpMid = 0;
+  if(corpTaxTotal > 200000) autoFy2CorpMid = Math.round(corpTaxTotal/2);
+  const fy2CorpMid = taxSchedMid['corp_FY2'] ?? autoFy2CorpMid;
+  let autoFy2ConsMid = 0, fy2ConsMidCount = 0;
+  if(consTaxGross > 480000 && consTaxGross <= 4000000)      { autoFy2ConsMid = Math.round(consTaxGross/2);       fy2ConsMidCount=1; }
+  else if(consTaxGross > 4000000 && consTaxGross <= 48000000){ autoFy2ConsMid = Math.round(consTaxGross*3/4);    fy2ConsMidCount=3; }
+  else if(consTaxGross > 48000000)                           { autoFy2ConsMid = Math.round(consTaxGross*11/12);  fy2ConsMidCount=11;}
+  const autoFy2ConsMidPer = fy2ConsMidCount > 1 ? Math.round(autoFy2ConsMid/fy2ConsMidCount) : autoFy2ConsMid;
+
+  // ① 消費税中間：複数回の場合の納付月セットを生成（期首月基準）
+  // 年1回: midMon / 年3回: midMon, midMon±4 / 年11回: midMon以外の毎月
+  function getConsMidMonths(count, start){
+    if(count===0) return [];
+    const m12 = Array.from({length:12},(_,i)=>((start-1+i)%12)+1);
+    if(count===1) return [m12[7]]; // 期首+8ヶ月目
+    if(count===3) return [m12[4], m12[7], m12[10]]; // Q1末+2ヶ月, Q2末+2ヶ月, Q3末+2ヶ月
+    if(count===11) return m12.filter((_,i)=>i!==11); // 決算月以外
+    return [];
+  }
+  const fy1ConsMidMonths = getConsMidMonths(consMidCount, startMon);
+  const fy2ConsMidMonths = getConsMidMonths(fy2ConsMidCount, startMon);
+
+  // FY1消費税中間：セル表示対象月（免税は非表示、count=0でもmidMonは表示）
+  const fy1ConsMidMonthsAll = consIsExempt ? [] : (consMidCount === 0 ? [midMon] : fy1ConsMidMonths);
+  // 各セルの金額（手動上書き or 自動）
+  const getFY1ConsMidVal = (mon) => taxSchedMid[`cons_FY1_${mon}`] ?? autoConsMidPer;
+  const getFY2ConsMidVal = (mon) => taxSchedMid[`cons_FY2_${mon}`] ?? autoFy2ConsMidPer;
+  // 合計中間納付額（確定申告時の差引に使用）
+  const consMidPaid = fy1ConsMidMonthsAll.reduce((s, mon) => s + getFY1ConsMidVal(mon), 0);
+  const consSettle = Math.max(consTaxGross - consMidPaid, 0);
+
+  // ④ 納期の特例：7月（1〜6月分）・1月（7〜12月分）に半年分まとめて納付
+  // 期首月基準で実際のカレンダー月に対応付け
+  const months12 = getMonths();
+  function isWithholdPayMonth(m, isFY2){
+    if(!withholdSpecial) return true; // 毎月
+    // 期首から数えて7月目（半年分）と1月目（残り半年分）
+    const idx = months12.indexOf(m);
+    return idx===5 || idx===11; // 期首+6ヶ月目と期首+12ヶ月目（=期首月）
+  }
+
+  const tableRows = allMons.map((m,i)=>{
+    const isFY2      = i >= 12;
+    const monthIdx   = i % 12; // 期内インデックス0-11
+    const isFY1Final  = isFY2 && m===filingMon;
+    const isPrevFinal = !isFY2 && m===filingMon; // 前期確定申告月（当期スケジュール内）
+    const isFY1CorpMid = !isFY2 && m===midMon;
+    const isFY1ConsMid = !consIsExempt && !isFY2 && (fy1ConsMidMonths.includes(m) || m===midMon);
+    const isFY2CorpMid = isFY2 && m===midMon && m!==filingMon;
+    const isFY2ConsMid = !consIsExempt && isFY2 && (fy2ConsMidMonths.includes(m) || m===midMon) && m!==filingMon;
+
+    // 前期確定・当期確定 納付セル（手動上書き可）
+    const prevInp = (key, defaultVal) =>
+      `<div style="background:#f3f0ff;border-radius:6px;padding:2px 5px;display:inline-block;text-align:center">
+        <div style="font-size:9px;color:#6c3fc5;font-weight:600">前期確定</div>
+        <input type="number" style="width:58px;border:none;background:transparent;color:#6c3fc5;font-weight:600;font-size:10px;text-align:center;font-family:inherit;padding:0"
+          value="${taxSchedMid[key]??defaultVal}"
+          onchange="taxSchedMid['${key}']=this.value===''?null:+this.value;calcPlCash()">円</div>`;
+    const curFinalInp = (content) =>
+      `<div style="background:#fff0f0;border-radius:6px;padding:2px 5px;display:inline-block;text-align:center">
+        <div style="font-size:9px;color:#e53935;font-weight:600">当期確定</div>
+        ${content}
+      </div>`;
+
+    // 法人税
+    const corpMidInp = (key, autoVal) =>
+      `<div class="ts-mid"><span style="font-size:9px">中間</span><br><input type="number" style="width:58px;border:none;background:transparent;color:#f57c00;font-weight:600;font-size:10px;text-align:center;font-family:inherit;padding:0" value="${taxSchedMid[key]??autoVal}" onchange="taxSchedMid['${key}']=this.value===''?null:+this.value;calcPlCash()">円</div>`;
+    const corp = isFY1CorpMid ? corpMidInp('corp_FY1', autoCorpMidPaid)
+               : isPrevFinal  ? prevInp('corp_prev', prevCorpYen)
+               : isFY1Final   ? curFinalInp(`<span style="color:#e53935;font-weight:700;font-size:10px">${fmt(corpTaxRemain)}円</span>`)
+               : isFY2CorpMid ? corpMidInp('corp_FY2', autoFy2CorpMid) : '';
+
+    // 消費税（複数回対応）
+    const consMidInp = (key, autoVal) =>
+      `<div class="ts-mid"><span style="font-size:9px">中間</span><br><input type="number" style="width:58px;border:none;background:transparent;color:#f57c00;font-weight:600;font-size:10px;text-align:center;font-family:inherit;padding:0" value="${taxSchedMid[key]??autoVal}" onchange="taxSchedMid['${key}']=this.value===''?null:+this.value;calcPlCash()">円</div>`;
+    const cons = consIsExempt ? ''
+               : isFY1ConsMid ? consMidInp(`cons_FY1_${m}`, autoConsMidPer)
+               : isPrevFinal  ? prevInp('cons_prev', prevConsYen)
+               : isFY1Final   ? curFinalInp(consTaxGross>=0
+                   ? `<span style="color:#e53935;font-weight:700;font-size:10px">${fmt(consSettle)}円</span>`
+                   : `<span style="color:#2e7d32;font-weight:700;font-size:10px;line-height:1.5">還付<br>▲${fmt(-consTaxGross)}円</span>`)
+               : isFY2ConsMid ? consMidInp(`cons_FY2_${m}`, autoFy2ConsMidPer) : '';
+
+    // 社保（毎月）
+    const shakaiVal = isFY2 ? (taxSchedFY2[`shakai_${monthIdx}`] ?? shakaiPM) : shakaiPM;
+    const shakai = isFY2
+      ? `<input type="number" class="ts-inp" value="${shakaiVal}" placeholder="${shakaiPM}" oninput="taxSchedFY2['shakai_${monthIdx}']=this.value===''?null:+this.value" style="color:#1565c0">`
+      : `<span class="ts-reg">${fmt(shakaiPM)}円</span>`;
+
+    // ④ 源泉・住民税（納期の特例対応）
+    const whPay  = isWithholdPayMonth(m, isFY2);
+    // 当期は月別実値、翌期は手入力 or 平均
+    const whMonthVal  = isFY2 ? (taxSchedFY2[`wh_${monthIdx}`]  ?? withholdPM) : (withholdByMonth[monthIdx] ?? withholdPM);
+    const resMonthVal = isFY2 ? (taxSchedFY2[`res_${monthIdx}`] ?? resTaxPM)   : (resTaxByMonth[monthIdx]   ?? resTaxPM);
+    // 納期の特例の場合は半年分まとめ
+    const whSpecialVal  = isFY2 ? withholdPM*6 : Math.round(withholdByMonth.slice(monthIdx<6?0:6, monthIdx<6?6:12).reduce((a,b)=>a+b,0));
+    const resSpecialVal = isFY2 ? resTaxPM*6   : Math.round(resTaxByMonth.slice(monthIdx<6?0:6, monthIdx<6?6:12).reduce((a,b)=>a+b,0));
+
+    let wh, res;
+    if(withholdTotal > 0 && whPay){
+      if(isFY2 && !withholdSpecial){
+        wh = `<input type="number" class="ts-inp ts-inp-ref" value="${whMonthVal}" placeholder="${withholdPM}" oninput="taxSchedFY2['wh_${monthIdx}']=this.value===''?null:+this.value">`;
+      } else {
+        wh = `<span class="ts-ref">${fmt(withholdSpecial ? whSpecialVal : whMonthVal)}円${withholdSpecial?'<br><span style="font-size:9px">半年分</span>':''}</span>`;
+      }
+    } else { wh = '<span style="color:#e0e0e0">—</span>'; }
+
+    if(resTaxTotal > 0 && whPay){
+      if(isFY2 && !withholdSpecial){
+        res = `<input type="number" class="ts-inp ts-inp-ref" value="${resMonthVal}" placeholder="${resTaxPM}" oninput="taxSchedFY2['res_${monthIdx}']=this.value===''?null:+this.value">`;
+      } else {
+        res = `<span class="ts-ref">${fmt(withholdSpecial ? resSpecialVal : resMonthVal)}円${withholdSpecial?'<br><span style="font-size:9px">半年分</span>':''}</span>`;
+      }
+    } else { res = '<span style="color:#e0e0e0">—</span>'; }
+
+    const hasEvent = corp||cons;
+    const rowBg = isFY1Final  ?'style="background:#fff5f5"'
+                : isPrevFinal ?'style="background:#f8f4ff"'
+                : hasEvent    ?'style="background:#fffcf5"'
+                : isFY2       ?'style="background:#f9fafc"':'';
+    const sep = i===12?`<tr><td colspan="6" style="background:#eef2fa;color:#1a3a5c;font-size:10px;font-weight:700;padding:5px 10px;border-top:2px solid #c5d0e6">▼ 翌期（${yearLabels[12]}〜${yearLabels[23]}）</td></tr>`:'';
+    const html = sep+`<tr ${rowBg}><td class="ts-m"><span style="font-size:10px;color:#aaa">${yearLabels[i]}</span></td><td>${corp}</td><td>${cons}</td><td>${shakai}</td><td>${wh}</td><td>${res}</td></tr>`;
+
+    // 合計計算用の数値
+    const corpNum = isFY1CorpMid ? corpMidPaid
+                  : isPrevFinal  ? (taxSchedMid['corp_prev'] ?? prevCorpYen)
+                  : isFY1Final   ? corpTaxRemain
+                  : isFY2CorpMid ? (taxSchedMid['corp_FY2'] ?? autoFy2CorpMid) : 0;
+    const consNum = consIsExempt ? 0
+                  : isFY1ConsMid ? getFY1ConsMidVal(m)
+                  : isPrevFinal  ? (taxSchedMid['cons_prev'] ?? prevConsYen)
+                  : isFY1Final   ? (consTaxGross >= 0 ? consSettle : -consTaxGross)
+                  : isFY2ConsMid ? getFY2ConsMidVal(m) : 0;
+    const shakaiNum = shakaiVal;
+    const whNum  = (withholdTotal > 0 && whPay) ? (withholdSpecial ? whSpecialVal : whMonthVal) : 0;
+    const resNum = (resTaxTotal  > 0 && whPay)  ? (withholdSpecial ? resSpecialVal : resMonthVal) : 0;
+
+    return { html, corpNum, consNum, shakaiNum, whNum, resNum };
+  });
+
+  // 事業年度別合計行
+  const sumCol = (rows, key) => rows.reduce((s, r) => s + (r[key] || 0), 0);
+  const makeTotalRow = (label, rows) => {
+    const corp   = sumCol(rows, 'corpNum');
+    const cons   = sumCol(rows, 'consNum');
+    const shakai = sumCol(rows, 'shakaiNum');
+    const wh     = sumCol(rows, 'whNum');
+    const res    = sumCol(rows, 'resNum');
+    const consCell = cons < 0
+      ? `<span style="color:#2e7d32;font-weight:700">▲${fmt(-cons)}円</span>`
+      : `<span>${fmt(cons)}円</span>`;
+    return `<tr style="background:#e8edf8;font-weight:700;border-top:2px solid #c5d0e6">
+      <td class="ts-m" style="color:#1a3a5c;font-size:10px;font-weight:700">${label}</td>
+      <td><span>${fmt(corp)}円</span></td>
+      <td>${consCell}</td>
+      <td><span>${fmt(shakai)}円</span></td>
+      <td><span>${wh > 0 ? fmt(wh)+'円' : '—'}</span></td>
+      <td><span>${res > 0 ? fmt(res)+'円' : '—'}</span></td>
+    </tr>`;
+  };
+
+  const fy1Rows = tableRows.slice(0, 12);
+  const fy2Rows = tableRows.slice(12, 24);
+  const tableHtml = fy1Rows.map(r=>r.html).join('')
+    + makeTotalRow('当期 合計', fy1Rows)
+    + fy2Rows.map(r=>r.html).join('')
+    + makeTotalRow('翌期 合計', fy2Rows);
 
   el.innerHTML=`
+    <!-- A案：発生ベースヘッダー -->
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <div style="height:2px;flex:1;background:linear-gradient(90deg,#e53935,#f57c00,transparent)"></div>
+      <span style="font-size:11px;font-weight:700;color:#e53935;letter-spacing:.08em;white-space:nowrap">📊 発生ベース</span>
+      <div style="height:2px;flex:1;background:linear-gradient(90deg,transparent,#f0f0f0)"></div>
+    </div>
+
     <!-- バナー -->
     <div class="tax-banner">
       <div>
@@ -1586,9 +2873,9 @@ function calcTaxForecast(d, cashCalc){
         <div class="tb-net" style="margin-top:6px;opacity:.6;font-size:11px">＋天引き納付（参考）源泉 ${fmt(withholdTotal)}円 ／ 住民税 ${fmt(resTaxTotal)}円 ／ 社保(従業員) ${fmt(shakaiEmployee)}円</div>
       </div>
       <div>
-        <div class="tb-eff-lbl">実効税率</div>
-        <div class="tb-eff-val">${p>0?effRate:'—'}%</div>
-        <div class="tb-net">税引後利益 ${fmt(netAfterTax)}円</div>
+        <div class="tb-eff-lbl">実効税率（法人税等＋消費税＋社保）</div>
+        <div class="tb-eff-val">${pBefore>0?effRate:'—'}%</div>
+        <div class="tb-net">税引前利益（経常利益） ${fmt(pBefore)}円</div>
       </div>
     </div>
 
@@ -1597,24 +2884,42 @@ function calcTaxForecast(d, cashCalc){
       <div class="tax-card">
         <div class="tax-card-hd"><div class="tax-ic corp">🏛️</div><div class="tax-card-name">法人税等</div></div>
         <div class="tax-card-total red">${fmt(corpTaxTotal)}円</div>
-        <div class="tax-row"><span>法人税（軽減15%/23.2%）</span><b>${fmt(ct)}円</b></div>
-        <div class="tax-row"><span>地方法人税</span><b>${fmt(lct)}円</b></div>
-        <div class="tax-row"><span>法人住民税</span><b>${fmt(rct)}円</b></div>
-        <div class="tax-row"><span>事業税</span><b>${fmt(bt)}円</b></div>
-        <div class="tax-row"><span>特別法人事業税</span><b>${fmt(sbt)}円</b></div>
-        ${corpTaxRemain>0?`<div class="tax-tag">⚡ 期末追加納付 ${fmt(corpTaxRemain)}円</div>`:''}
+        <div class="tax-row"><span>法人税<span class="cash-tip">?<span class="cash-tip-box">課税所得 × 15%（800万円以下）＋ 超過分 × 23.2%</span></span></span><b>${fmt(ct)}円</b></div>
+        <div class="tax-row"><span>地方法人税<span class="cash-tip">?<span class="cash-tip-box">法人税額 × 10.3%</span></span></span><b>${fmt(lct)}円</b></div>
+        <div class="tax-row"><span>法人住民税 法人税割<span class="cash-tip">?<span class="cash-tip-box">法人税額 × 7%（都道府県1% ＋ 市区町村6% / 東京都は都として7%）</span></span></span><b>${fmt(rct_hozei)}円</b></div>
+        <div class="tax-row"><span>均等割<span class="cash-tip">?<span class="cash-tip-box">${location==='tokyo23' ? `東京都23区（都民税＋特別区民税 合算）${fmt(kintoTotal)}円` : `道府県 ${fmt(prefKinto)}円 ＋ 市区町村 ${fmt(muniKinto)}円`}</span></span></span><b>${fmt(kintoTotal)}円</b></div>
+        <div class="tax-row"><span>事業税<span class="cash-tip">?<span class="cash-tip-box">課税所得 × 3.5%（400万円以下）＋ × 5.3%（〜800万円）＋ × 7.0%（超過分）</span></span></span><b>${fmt(bt)}円</b></div>
+        <div class="tax-row"><span>特別法人事業税<span class="cash-tip">?<span class="cash-tip-box">事業税額 × 37%</span></span></span><b>${fmt(sbt)}円</b></div>
+        <div class="tax-row" style="border-top:2px solid #f0f4f8;margin-top:5px;padding-top:5px">
+          <span>中間納付額 <span style="font-size:10px;color:#bbb">（${corpMidNote}）</span></span><b style="color:#aaa">▲ ${fmt(corpMidPaid)}円</b>
+        </div>
+        <div class="tax-row"><span><b>期末納付額</b></span><b style="color:#e53935">${fmt(corpTaxRemain)}円</b></div>
       </div>
       <div class="tax-card">
-        <div class="tax-card-hd"><div class="tax-ic cons">🧾</div><div class="tax-card-name">消費税（原則課税）</div></div>
-        <div class="tax-card-total org">${fmt(consTaxEst)}円</div>
-        <div class="tax-row"><span>課税売上（税抜）</span><b>${fmt(annualRev*10000/1.1)}円</b></div>
-        <div class="tax-row"><span>仕入税額控除</span><b>▲ ${fmt((annualCogs+annualSga)*10000/1.1*0.1)}円</b></div>
-        <div class="tax-row"><span>納付消費税（概算）</span><b>${fmt(consTaxEst)}円</b></div>
+        <div class="tax-card-hd"><div class="tax-ic cons">🧾</div><div class="tax-card-name">消費税（${consTaxLabel}）</div></div>
+        ${consIsExempt
+          ? `<div class="tax-card-total" style="color:#2e7d32;font-size:18px">—</div>`
+          : consTaxGross < 0
+            ? `<div class="tax-card-total" style="color:#2e7d32">還付 ▲${fmt(-consTaxGross)}円</div>`
+            : `<div class="tax-card-total org">${fmt(consTaxGross)}円</div>`}
+        ${consDetailHtml}
+        ${consIsExempt ? '' : `
+        <div class="tax-row" style="border-top:1px solid #f0f4f8;margin-top:4px;padding-top:4px">
+          <span><b>${consTaxGross < 0 ? '消費税還付（年間）' : '納付消費税（年間）'}</b></span>
+          <b style="color:${consTaxGross < 0 ? '#2e7d32' : '#f57c00'}">${consTaxGross < 0 ? '▲'+fmt(-consTaxGross) : fmt(consTaxGross)}円</b>
+        </div>
+        ${consTaxGross >= 0 ? `
+        <div class="tax-row" style="border-top:2px solid #f0f4f8;margin-top:5px;padding-top:5px">
+          <span>中間納付額 <span style="font-size:10px;color:#bbb">（${consMidNote}）</span></span><b style="color:#aaa">▲ ${fmt(consMidPaid)}円</b>
+        </div>
+        <div class="tax-row"><span><b>期末納付額</b></span><b style="color:#f57c00">${fmt(consSettle)}円</b></div>
+        ` : `<div class="tax-row" style="font-size:10px;color:#2e7d32;margin-top:4px">✓ 確定申告で還付申請</div>`}
+        `}
       </div>
       <div class="tax-card">
         <div class="tax-card-hd"><div class="tax-ic sal">👥</div><div class="tax-card-name">給与関連税・社保</div></div>
         <div class="tax-card-total blue">${fmt(shakaiCompany)}円</div>
-        <div class="tax-row" style="border-bottom:1px solid #f0f4f8"><span>社会保険料（会社負担）</span><b>${fmt(shakaiCompany)}円</b></div>
+        <div class="tax-row"><span>社会保険料（会社負担）</span><b>${fmt(shakaiCompany)}円</b></div>
         <div class="tax-ref-hd">▼ 天引き納付（参考・会社負担外）</div>
         <div class="tax-row-ref"><span>源泉所得税（年間）</span><b>${fmt(withholdTotal)}円</b></div>
         <div class="tax-row-ref"><span>住民税特別徴収</span><b>${fmt(resTaxTotal)}円</b></div>
@@ -1622,56 +2927,40 @@ function calcTaxForecast(d, cashCalc){
       </div>
     </div>
 
-    <!-- タイムライン -->
+    <!-- A案：Cashベースヘッダー -->
+    <div style="display:flex;align-items:center;gap:10px;margin:20px 0 12px">
+      <div style="height:2px;flex:1;background:linear-gradient(90deg,#1565c0,#42a5f5,transparent)"></div>
+      <span style="font-size:11px;font-weight:700;color:#1565c0;letter-spacing:.08em;white-space:nowrap">💰 Cashベース</span>
+      <div style="height:2px;flex:1;background:linear-gradient(90deg,transparent,#f0f0f0)"></div>
+    </div>
+
+    <!-- ⑦ 月次納付スケジュール テーブル -->
     <div class="tax-tl-card">
       <div class="tax-tl-title">📅 年間納付スケジュール</div>
-      <div class="tax-tl">
-        ${withholdTotal>0?`<div class="tax-tl-ev">
-          <div class="tax-tl-dot" style="background:#1565c0"></div>
-          <span class="tax-tl-m">毎月</span>
-          <span class="tax-tl-n">源泉所得税 納付</span>
-          <span class="tax-tl-a" style="color:#1565c0">${fmt(withholdMon)}円/月</span>
-          <span></span><span class="tax-tl-note">給与・役員報酬の翌月10日まで</span>
-        </div>`:''}
-        ${resTaxTotal>0?`<div class="tax-tl-ev">
-          <div class="tax-tl-dot" style="background:#6a1b9a"></div>
-          <span class="tax-tl-m">毎月</span>
-          <span class="tax-tl-n">住民税特別徴収 納付</span>
-          <span class="tax-tl-a" style="color:#6a1b9a">${fmt(resTaxMon)}円/月</span>
-          <span></span><span class="tax-tl-note">翌月10日まで</span>
-        </div>`:''}
-        <div class="tax-tl-ev">
-          <div class="tax-tl-dot" style="background:#90a4ae"></div>
-          <span class="tax-tl-m">${midMonLabel}</span>
-          <span class="tax-tl-n">法人税等 中間申告</span>
-          <span class="tax-tl-a" style="color:#90a4ae">前期実績による</span>
-          <span></span><span class="tax-tl-note">前期法人税×50%（前期実績ある場合）</span>
-        </div>
-        ${consTaxEst>0?`<div class="tax-tl-ev">
-          <div class="tax-tl-dot" style="background:#f57c00"></div>
-          <span class="tax-tl-m">${midMonLabel}</span>
-          <span class="tax-tl-n">消費税 中間申告・納付</span>
-          <span class="tax-tl-a" style="color:#f57c00">${fmt(consMid)}円</span>
-          <span></span><span class="tax-tl-note">前年消費税の50%（概算）</span>
-        </div>`:''}
-        ${corpTaxTotal>0?`<div class="tax-tl-ev">
-          <div class="tax-tl-dot" style="background:#e53935"></div>
-          <span class="tax-tl-m">${settleMonLabel}</span>
-          <span class="tax-tl-n">法人税等 確定申告・納付</span>
-          <span class="tax-tl-a" style="color:#e53935">${fmt(corpTaxRemain)}円</span>
-          <span></span><span class="tax-tl-note">決算月の翌々月末（期末追加納付）</span>
-        </div>`:''}
-        ${consTaxEst>0?`<div class="tax-tl-ev">
-          <div class="tax-tl-dot" style="background:#f57c00"></div>
-          <span class="tax-tl-m">${settleMonLabel}</span>
-          <span class="tax-tl-n">消費税 確定申告・納付</span>
-          <span class="tax-tl-a" style="color:#f57c00">${fmt(consMid)}円</span>
-          <span></span><span class="tax-tl-note">決算月の翌々月末</span>
-        </div>`:''}
+      <div style="overflow-x:auto;margin-top:10px">
+        <table class="tax-sched-tbl">
+          <thead>
+            <tr>
+              <th>月</th>
+              <th>🏛️ 法人税等</th>
+              <th>🧾 消費税</th>
+              <th>🏥 社会保険料<br><span style="font-weight:400;font-size:9px">実払額/月（労使計）</span></th>
+              <th>💴 源泉所得税<br><span style="font-weight:400;font-size:9px">天引き/参考</span></th>
+              <th>🏙️ 住民税特別徴収<br><span style="font-weight:400;font-size:9px">天引き/参考</span></th>
+            </tr>
+          </thead>
+          <tbody>${tableHtml}</tbody>
+        </table>
+      </div>
+      <div style="margin-top:8px;font-size:10px;color:#aaa;display:flex;gap:16px;flex-wrap:wrap">
+        <span><span class="ts-hot" style="padding:1px 6px">確定</span> 期末確定納付額</span>
+        <span><span class="ts-mid" style="padding:1px 6px;font-size:9px">中間</span> 中間申告・納付額</span>
+        <span><span class="ts-reg" style="padding:1px 0">青</span> 会社負担（月次）</span>
+        <span><span class="ts-ref" style="padding:1px 0">灰</span> 天引き納付・参考</span>
       </div>
     </div>
     <div class="alert alert-warn" style="margin-top:12px;font-size:11px">
-      ⚠️ 中小企業（資本金1億円以下）の税率を適用。欠損金繰越控除・税額控除・均等割は考慮外。消費税は原則課税の概算。
+      ⚠️ 均等割は標準税率（超過税率自治体は異なる場合あり）。欠損金繰越控除・税額控除は考慮外。消費税は概算。
     </div>`;
 }
 
@@ -1856,6 +3145,40 @@ function checkAnomalies(d){
 function showCsvImport(){ document.getElementById('csv-import-area').style.display='block'; }
 function hideCsvImport(){ document.getElementById('csv-import-area').style.display='none'; }
 
+function showCashSyncInfo(){
+  const company = getCurrentCompany();
+  const currentId = getCurrentId();
+  const data = FREEE_ACTUAL_DATA[currentId];
+  const name = company?.name || '（事業者未選択）';
+  const updatedAt = data?.updated_at || 'なし';
+  const currentVal = data?.opening_cash !== undefined ? `${(data.opening_cash).toLocaleString()}円` : '未取得';
+  const msg = `${name} の期首Cash残高（現金・預金）をfreeeから取得して`;
+
+  const html = `<div style="position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;display:flex;align-items:center;justify-content:center" onclick="this.remove()">
+    <div style="background:#fff;border-radius:16px;padding:28px;max-width:480px;width:95%;box-shadow:0 20px 60px rgba(0,0,0,.2)" onclick="event.stopPropagation()">
+      <h3 style="font-size:16px;color:#1a3a5c;margin-bottom:6px">💰 期首Cash残高 freee自動取得</h3>
+      <p style="font-size:12px;color:#6b7a8d;margin-bottom:4px">事業者: <strong>${name}</strong></p>
+      <p style="font-size:12px;color:#6b7a8d;margin-bottom:16px">現在の値: <strong style="color:#1a3a5c">${currentVal}</strong>　最終更新: ${updatedAt}</p>
+      <div style="background:#f0f7ff;border:1px solid #b3d1f0;border-radius:10px;padding:14px;margin-bottom:16px">
+        <p style="font-size:12px;color:#1e2d3d;margin-bottom:8px">以下のメッセージをClaudeに送ると、freeeの貸借対照表（現金・預金カテゴリ）から期首残高を自動取得します：</p>
+        <div style="background:#1a3a5c;color:#fff;border-radius:8px;padding:12px;font-size:13px;font-weight:600;cursor:pointer" id="cash-sync-msg-box" onclick="
+          navigator.clipboard.writeText('${msg}').then(()=>{
+            const el=document.getElementById('cash-sync-msg-box');
+            if(el){el.style.background='#2e7d32';el.textContent='✅ コピーしました！';}
+          })">
+          ${msg}
+        </div>
+        <p style="font-size:10px;color:#888;margin-top:6px;text-align:center">クリックでコピー</p>
+      </div>
+      <div style="background:#fff8e1;border-radius:8px;padding:10px 14px;font-size:11px;color:#5d4037">
+        <b>取得内容：</b>freeeの試算表（B/S）から各月末の「現金・預金」残高合計を取得します。実績月のCash残高はfreeeの実際の値で確定し、予測月はその続きから計算します。
+      </div>
+      <button class="btn btn-outline" style="margin-top:16px;width:100%" onclick="this.closest('[style*=fixed]').remove()">閉じる</button>
+    </div>
+  </div>`;
+  document.body.insertAdjacentHTML('beforeend', html);
+}
+
 function showSyncInfo(){
   const company = getCurrentCompany();
   const currentId = getCurrentId();
@@ -1889,45 +3212,92 @@ function copySyncMsg(msg){
   });
 }
 
+// freee CSVファイル選択（Shift-JIS自動デコード）
+function handleCsvFile(input){
+  const file = input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e){
+    try {
+      const decoder = new TextDecoder('shift-jis');
+      const text = decoder.decode(e.target.result);
+      document.getElementById('csv-paste').value = text;
+      _parseFreeeCsv(text);
+    } catch(err) {
+      alert('ファイルの読み込みに失敗しました: ' + err.message);
+    }
+  };
+  reader.readAsArrayBuffer(file);
+  // inputをリセット（同じファイルを再選択できるよう）
+  input.value = '';
+}
+
 function importFreeCsv(){
-  const raw = document.getElementById('csv-paste').value;
+  const raw = document.getElementById('csv-paste').value.trim();
+  if(!raw){ alert('CSVデータを貼り付けてください。'); return; }
+  _parseFreeeCsv(raw);
+}
+
+function _parseFreeeCsv(raw){
   const lines = raw.split('\n').map(l=>l.split(',').map(s=>s.replace(/"/g,'').trim()));
 
   // freee月次推移CSVのパース（勘定科目名→PL行キーのマッピング）
   const MAP = {
     '売上高':['revenue'],'売上原価':['cogs'],
     '役員報酬':['exec_sal'],'給料手当':['salary'],'法定福利費':['hoken'],
-    '外注費':['outsource'],'旅費交通費':['travel'],'通信費':['comm'],
+    '外注費':['outsource'],'交際費':['entertainment'],'広告宣伝費':['koukoku'],
+    '会議費':['kaigi'],'旅費交通費':['travel'],'通信費':['comm'],
     '消耗品費':['supplies'],'支払手数料':['fee'],'地代家賃':['rent'],
-    '減価償却費':['deprec'],'受取利息':['int_inc'],'雑収入':['misc_inc'],
+    '減価償却費':['deprec'],'保険料':['hoken_ryou'],'租税公課':['sozei'],
+    'リース料':['other_sga'],'雑費':['other_sga'],
+    '受取利息':['int_inc'],'雑収入':['misc_inc'],
     '支払利息':['int_exp'],'法人税等':['corp_tax'],
   };
 
-  let imported=0;
-  lines.forEach(cols=>{
-    if(cols.length<3) return;
-    const acctName = cols[0]||cols[1]||'';
+  // ヘッダー行から月データ開始列と月数を自動検出
+  let monthOffset = 6; // freeeデフォルト（大分類/中分類/小分類/…×6列）
+  let monthCount = 12;
+  for(const cols of lines){
+    const dateIdx = cols.findIndex(c => /^\d{4}-\d{2}$/.test(c));
+    if(dateIdx >= 0){
+      monthOffset = dateIdx;
+      monthCount = 0;
+      for(let i = dateIdx; i < cols.length; i++){
+        if(/^\d{4}-\d{2}$/.test(cols[i])) monthCount++;
+        else break;
+      }
+      break;
+    }
+  }
+
+  let imported = 0;
+  lines.forEach(cols => {
+    if(cols.length < monthOffset + 1) return;
+    // 勘定科目名 = 月データ列より前の最後の非空セル
+    let acctName = '';
+    for(let i = 0; i < monthOffset; i++){
+      if(cols[i]) acctName = cols[i];
+    }
     const keys = MAP[acctName];
     if(!keys) return;
-    keys.forEach(key=>{
-      if(!pcData[key]) pcData[key]=Array(12).fill(0);
-      // freeeCSV: 先頭2列が科目名系、以降が月次データ
-      let monthIdx=0;
-      for(let c=2;c<cols.length&&monthIdx<12;c++){
-        const v=parseFloat(cols[c].replace(/,/g,''))||0;
-        pcData[key][monthIdx]=Math.abs(v)/10000; // 万円に変換
-        monthIdx++;
+    keys.forEach(key => {
+      if(!pcData[key]) pcData[key] = Array(12).fill(0);
+      for(let mi = 0; mi < Math.min(12, monthCount); mi++){
+        const raw = (cols[monthOffset + mi] || '').replace(/,/g, '');
+        const v = parseFloat(raw) || 0;
+        // 万円に変換（小数1桁）
+        pcData[key][mi] = Math.round(Math.abs(v) / 10000 * 10) / 10;
       }
       imported++;
     });
   });
 
-  if(imported>0){
+  if(imported > 0){
     initPlCash();
     hideCsvImport();
-    alert(`${imported}項目を取込みました`);
+    alert(`✅ ${imported}項目を取込みました`);
   } else {
-    alert('取込できませんでした。freeeの月次推移CSVをご確認ください。');
+    alert('取込できませんでした。\n\nfreeeの月次推移CSVか確認してください。\nShift-JIS形式のCSVは「📂 CSVファイルを選択」から直接アップロードしてください。');
   }
 }
 
@@ -1944,6 +3314,36 @@ document.addEventListener('DOMContentLoaded',()=>{
   nav('dashboard');
   initGuide();
 });
+
+function exbToggleNenkin(which){
+  const cells = document.querySelectorAll('.exb-nenkin-' + which);
+  const arrow = document.getElementById('exb-' + which + '-arrow');
+  if(!cells.length) return;
+  const isHidden = cells[0].style.display === 'none';
+  cells.forEach(c => c.style.display = isHidden ? 'table-cell' : 'none');
+  if(arrow) arrow.textContent = isHidden ? ' ▼' : ' ▶';
+}
+
+function showColTip(el){
+  const t = document.getElementById('col-tooltip');
+  if(!t) return;
+  t.textContent = el.dataset.tip || '';
+  t.style.display = 'block';
+  const r = el.getBoundingClientRect();
+  const tw = t.offsetWidth, th = t.offsetHeight;
+  let left = r.left + r.width / 2 - tw / 2;
+  if(left < 8) left = 8;
+  if(left + tw > window.innerWidth - 8) left = window.innerWidth - tw - 8;
+  let top = r.top - th - 7;
+  if(top < 8) top = r.bottom + 7;
+  t.style.left = left + 'px';
+  t.style.top  = top  + 'px';
+}
+function hideColTip(){
+  const t = document.getElementById('col-tooltip');
+  if(t) t.style.display = 'none';
+}
 </script>
+<div id="col-tooltip"></div>
 </body>
 </html>
